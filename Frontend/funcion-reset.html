@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset | Softstop</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/funcion-reset.css">
+</head>
+
+<body class="CuerpoFuncionReset">
+
+    <div class="PaginaFuncionReset">
+
+        <!-- HEADER -->
+        <header class="ResetHeader">
+            <span class="ResetMarca">SOFTSTOP</span>
+            <div class="ResetAccionesHeader">
+                <a href="index.html" class="ResetSalir">Salir</a>
+                <button class="ResetCerrar" id="BtnCerrar" aria-label="Cerrar ejercicio">✕</button>
+            </div>
+        </header>
+
+        <main class="ResetPrincipal">
+
+            <!-- ================= SELECTOR DE MODO ================= -->
+            <section class="SelectorModos" id="SelectorModos">
+                <div class="ResetEncabezado">
+                    <h1 class="ResetTitulo">RESET</h1>
+                    <p class="ResetSubtitulo">Elige la técnica que necesitas ahora.</p>
+                </div>
+
+                <div class="ListaModos">
+
+                    <button class="TarjetaModo" data-modo="478">
+                        <span class="ModoNombre">Respiración 4-7-8</span>
+                        <span class="ModoDescripcion">Calma el sistema nervioso y baja el ritmo cardíaco.</span>
+                        <span class="ModoDuracion">4 ciclos · ~1 min</span>
+                    </button>
+
+                    <button class="TarjetaModo" data-modo="caja">
+                        <span class="ModoNombre">Respiración en caja</span>
+                        <span class="ModoDescripcion">Recupera la concentración y el control mental.</span>
+                        <span class="ModoDuracion">4 ciclos · ~1 min</span>
+                    </button>
+
+                    <button class="TarjetaModo" data-modo="grounding">
+                        <span class="ModoNombre">Técnica 5-4-3-2-1</span>
+                        <span class="ModoDescripcion">Vuelve al presente a través de tus sentidos.</span>
+                        <span class="ModoDuracion">5 pasos · a tu ritmo</span>
+                    </button>
+
+                </div>
+            </section>
+
+            <!-- ================= VISTA RESPIRACIÓN (blob) ================= -->
+            <section class="VistaRespiracion" id="VistaRespiracion" hidden>
+
+                <div class="ResetEncabezado">
+                    <h1 class="ResetTitulo" id="TituloModoResp">RESET</h1>
+                    <p class="ResetSubtitulo" id="SubtituloModoResp">Baja el ruido.</p>
+                </div>
+
+                <div class="ContenedorBlobRespiracion">
+                    <div class="BlobRespiracion" id="BlobRespiracion"></div>
+                </div>
+
+                <div class="ResetEstado">
+                    <span class="ResetFase" id="ResetFase">INHALA</span>
+                    <span class="ResetContador" id="ResetContador">4</span>
+                    <span class="ResetCiclo" id="ResetCiclo">Ciclo 1 de 4</span>
+                    <p class="ResetFrase">No tienes que resolverlo todo ahora.</p>
+                </div>
+
+                <button class="ResetPausar" id="BtnPausar">Pausar</button>
+            </section>
+
+            <!-- ================= VISTA GROUNDING (5-4-3-2-1) ================= -->
+            <section class="VistaGrounding" id="VistaGrounding" hidden>
+
+                <div class="ResetEncabezado">
+                    <h1 class="ResetTitulo">5-4-3-2-1</h1>
+                    <p class="ResetSubtitulo">Mira a tu alrededor y nombra, en silencio o en voz alta:</p>
+                </div>
+
+                <div class="TarjetaGrounding">
+                    <span class="GroundingIcono" id="GroundingIcono">👀</span>
+                    <span class="GroundingNumero" id="GroundingNumero">5</span>
+                    <p class="GroundingPregunta" id="GroundingPregunta">cosas que puedas ver</p>
+                    <p class="GroundingEjemplos" id="GroundingEjemplos">Una planta, una ventana, tu propia mano, una silla, un cuadro.</p>
+                </div>
+
+                <div class="GroundingPuntos" id="GroundingPuntos"></div>
+
+                <button class="ResetPausar" id="BtnSiguientePaso">Ya identifiqué esto →</button>
+            </section>
+
+            <!-- ================= PANTALLA FINAL ================= -->
+            <section class="VistaFinal" id="VistaFinal" hidden>
+                <div class="ResetEncabezado">
+                    <h1 class="ResetTitulo">LISTO</h1>
+                    <p class="ResetSubtitulo" id="MensajeFinal">Bien hecho. Vuelve cuando lo necesites.</p>
+                </div>
+                <button class="ResetPausar" id="BtnOtraVez">Elegir otra técnica</button>
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="js/funcion-reset.js"></script>
+</body>
+</html>

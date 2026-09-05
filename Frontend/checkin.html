@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check-in | Softstop</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/checkin.css">
+</head>
+
+<body class="CuerpoCheckIn">
+
+    <div class="PaginaCheckIn">
+
+        <!-- HEADER -->
+        <header class="CheckInHeader">
+            <span class="CheckInMarca">SOFTSTOP</span>
+            <a href="dashboard.html" class="CheckInSalir">Salir</a>
+        </header>
+
+        <main class="CheckInPrincipal">
+
+            <!-- Columna Izquierda: Blobs + Texto -->
+            <div class="CheckInIzquierda">
+                <div class="CheckInFondo" aria-hidden="true">
+                    <div class="BlobGrande"></div>
+                    <div class="BlobFlotante BlobUno"></div>
+                    <div class="BlobFlotante BlobDos"></div>
+                </div>
+
+                <div class="CheckInTexto">
+                    <span class="CheckInEyebrow">Check-in</span>
+                    <h1 class="CheckInTitulo">¿Qué te<br>detiene hoy?</h1>
+                    <p class="CheckInDescripcion">
+                        No tienes que explicarlo.<br>
+                        Solo elige lo que más se parece a este momento.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Opciones -->
+            <div class="CheckInDerecha">
+
+                <!-- Estoy saturado -->
+                <button class="OpcionCheckIn" data-valor="saturado">
+                    <span class="IconoOpcion">
+                        <svg viewBox="0 0 60 60" width="34" height="34">
+                            <defs>
+                                <radialGradient id="gradSaturado" cx="35%" cy="30%" r="70%">
+                                    <stop offset="0%" stop-color="#FFB3C6"/>
+                                    <stop offset="100%" stop-color="#E85D9E"/>
+                                </radialGradient>
+                                <filter id="blurSaturado"><feGaussianBlur stdDeviation="3.5"/></filter>
+                            </defs>
+                            <circle cx="30" cy="30" r="19" fill="url(#gradSaturado)" filter="url(#blurSaturado)"/>
+                        </svg>
+                    </span>
+                    <span class="TextoOpcion">Estoy saturado</span>
+                </button>
+
+                <!-- No consigo empezar -->
+                <button class="OpcionCheckIn" data-valor="no-empezar">
+                    <span class="IconoOpcion">
+                        <svg viewBox="0 0 60 60" width="34" height="34">
+                            <defs>
+                                <linearGradient id="gradEmpezar" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#C9BBFF"/>
+                                    <stop offset="100%" stop-color="#7A5FE0"/>
+                                </linearGradient>
+                                <filter id="blurEmpezar"><feGaussianBlur stdDeviation="1.2"/></filter>
+                            </defs>
+                            <path d="M10 34 C16 20, 24 20, 30 30 C36 40, 44 40, 50 26"
+                                  stroke="url(#gradEmpezar)" stroke-width="9" stroke-linecap="round"
+                                  fill="none" filter="url(#blurEmpezar)"/>
+                        </svg>
+                    </span>
+                    <span class="TextoOpcion">No consigo empezar</span>
+                </button>
+
+                <!-- Estoy frustrado -->
+                <!-- Estoy frustrado -->
+<button class="OpcionCheckIn" data-valor="frustrado">
+    <span class="IconoOpcion">
+        <svg viewBox="0 0 60 60" width="34" height="34">
+            <defs>
+                <linearGradient id="gradFrustrado" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#C9BBFF"/>
+                    <stop offset="100%" stop-color="#8A5FE8"/>
+                </linearGradient>
+            </defs>
+            <path d="M30 4
+                     C31 20, 32 28, 47 30
+                     C32 32, 31 40, 30 56
+                     C29 40, 28 32, 13 30
+                     C28 28, 29 20, 30 4 Z"
+                  fill="url(#gradFrustrado)"/>
+        </svg>
+    </span>
+    <span class="TextoOpcion">Estoy frustrado</span>
+</button>
+
+                <!-- Tengo la mente dispersa -->
+                <button class="OpcionCheckIn" data-valor="disperso">
+                    <span class="IconoOpcion">
+                        <svg viewBox="0 0 60 60" width="34" height="34">
+                            <defs>
+                                <linearGradient id="gradDisperso" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#B8F0E2"/>
+                                    <stop offset="100%" stop-color="#4FBFA8"/>
+                                </linearGradient>
+                                <filter id="blurDisperso"><feGaussianBlur stdDeviation="1.2"/></filter>
+                            </defs>
+                            <circle cx="22" cy="30" r="13" fill="url(#gradDisperso)" filter="url(#blurDisperso)"/>
+                            <circle cx="38" cy="30" r="13" fill="url(#gradDisperso)" filter="url(#blurDisperso)" opacity="0.9"/>
+                        </svg>
+                    </span>
+                    <span class="TextoOpcion">Tengo la mente dispersa</span>
+                </button>
+
+                <!-- Estoy bien, pero quiero avanzar -->
+                <button class="OpcionCheckIn" data-valor="avanzar">
+                    <span class="IconoOpcion">
+                        <svg viewBox="0 0 60 60" width="34" height="34">
+                            <defs>
+                                <radialGradient id="gradAvanzar" cx="35%" cy="30%" r="70%">
+                                    <stop offset="0%" stop-color="#FFD3B0"/>
+                                    <stop offset="60%" stop-color="#FE94A8"/>
+                                    <stop offset="100%" stop-color="#E0729A"/>
+                                </radialGradient>
+                                <filter id="blurAvanzar"><feGaussianBlur stdDeviation="3.5"/></filter>
+                            </defs>
+                            <circle cx="30" cy="30" r="19" fill="url(#gradAvanzar)" filter="url(#blurAvanzar)"/>
+                        </svg>
+                    </span>
+                    <span class="TextoOpcion">Estoy bien, pero quiero avanzar</span>
+                </button>
+
+                <!-- Otra razón (input libre) -->
+                <button class="OpcionCheckIn OpcionOtra" id="BtnOtraRazon">
+                    <span class="IconoOpcion IconoLapiz">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 3L21 7L8 20H4V16L17 3Z" stroke="#AE98F0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span class="TextoOpcion TextoOtra">
+                        <span class="TituloOtra">Otra razón...</span>
+                        <span class="SubtituloOtra">Escribe lo que estás sintiendo</span>
+                    </span>
+                </button>
+
+                <!-- Textarea oculta, se muestra al hacer click en "Otra razón" -->
+                <div class="CajaOtraRazon" id="CajaOtraRazon">
+                    <textarea id="TextoLibre" placeholder="Cuéntanos qué sientes..." rows="3"></textarea>
+                    <button class="BtnEnviarRazon" id="BtnEnviarRazon">Continuar</button>
+                    
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <script src="js/checkin.js"></script>
+</body>
+</html>

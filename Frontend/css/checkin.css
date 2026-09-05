@@ -1,0 +1,312 @@
+/* ==============================================
+   PÁGINA CHECK-IN
+============================================== */
+
+.CuerpoCheckIn {
+    background:
+        radial-gradient(ellipse 800px 600px at 0% 0%, rgba(255, 200, 200, 0.45), transparent 60%),
+        radial-gradient(ellipse 800px 600px at 100% 100%, rgba(190, 230, 220, 0.4), transparent 60%),
+        linear-gradient(135deg, #FDF6F4 0%, #F7F2F6 50%, #F1F4F6 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.PaginaCheckIn {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- HEADER --- */
+.CheckInHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 5%;
+}
+
+.CheckInMarca {
+    font-family: var(--fuente-principal);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--color-texto);
+}
+
+.CheckInSalir {
+    font-family: var(--fuente-principal);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: var(--color-gris);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.CheckInSalir:hover {
+    color: var(--color-acento);
+}
+
+/* --- LAYOUT PRINCIPAL --- */
+.CheckInPrincipal {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 40px;
+    padding: 20px 5% 60px;
+    max-width: 1300px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* --- COLUMNA IZQUIERDA --- */
+.CheckInIzquierda {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 480px;
+}
+
+.CheckInFondo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: visible;
+}
+
+.BlobGrande {
+    position: absolute;
+    top: -8%;
+    left: -18%;
+    width: 620px;
+    height: 620px;
+    border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+    background:
+        radial-gradient(ellipse at 30% 25%, rgba(255, 154, 183, 0.55), transparent 60%),
+        radial-gradient(ellipse at 70% 65%, rgba(174, 152, 240, 0.4), transparent 55%),
+        radial-gradient(ellipse at 40% 85%, rgba(160, 232, 216, 0.35), transparent 60%);
+    filter: blur(35px);
+    animation: MorfoBlob 14s ease-in-out infinite;
+}
+
+.BlobFlotante {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(1px);
+}
+
+.BlobUno {
+    top: 22%;
+    left: 52%;
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle at 35% 30%, rgba(255, 154, 183, 0.9), rgba(255, 201, 167, 0.5));
+    filter: blur(3px);
+    animation: Flotar 5s ease-in-out infinite;
+}
+
+.BlobDos {
+    bottom: 10%;
+    left: 76%;
+    width: 22px;
+    height: 22px;
+    background: radial-gradient(circle at 35% 30%, rgba(174, 152, 240, 0.9), rgba(218, 112, 214, 0.5));
+    filter: blur(2px);
+    animation: Flotar 7s ease-in-out infinite reverse;
+}
+
+@keyframes MorfoBlob {
+    0%, 100% { border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%; transform: scale(1); }
+    50% { border-radius: 58% 42% 40% 60% / 55% 60% 40% 45%; transform: scale(1.04); }
+}
+
+@keyframes Flotar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+}
+
+.CheckInTexto {
+    position: relative;
+    z-index: 1;
+    max-width: 420px;
+}
+
+.CheckInEyebrow {
+    font-family: var(--fuente-principal);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--logo-morado);
+}
+
+.CheckInTitulo {
+    font-family: var(--fuente-principal);
+    font-size: clamp(36px, 4.5vw, 52px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--color-texto);
+    margin: 14px 0 20px;
+}
+
+.CheckInDescripcion {
+    font-family: var(--fuente-secundaria);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-gris);
+}
+
+/* --- COLUMNA DERECHA: OPCIONES --- */
+.CheckInDerecha {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 420px;
+    margin-left: auto;
+    width: 100%;
+}
+
+.OpcionCheckIn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 26px;
+    padding: 16px 24px;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--fuente-principal);
+    box-shadow: 0 4px 16px rgba(174, 152, 240, 0.06);
+    backdrop-filter: blur(12px);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.OpcionCheckIn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(174, 152, 240, 0.12);
+    background: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.OpcionCheckIn.seleccionada {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: var(--sombra-boton);
+    border-color: var(--logo-morado);
+}
+
+.TextoOpcion {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-texto);
+}
+
+/* --- ICONOS (formas SVG orgánicas por opción) --- */
+.IconoOpcion {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.IconoOpcion svg {
+    display: block;
+    overflow: visible;
+}
+/* --- OPCIÓN "OTRA RAZÓN" (estilo punteado) --- */
+.OpcionOtra {
+    background: transparent;
+    border: 1.5px dashed rgba(174, 152, 240, 0.5);
+    box-shadow: none;
+}
+
+.OpcionOtra:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.IconoLapiz {
+    background: rgba(174, 152, 240, 0.12);
+}
+
+.TextoOtra {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.TituloOtra {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-texto);
+}
+
+.SubtituloOtra {
+    font-family: var(--fuente-secundaria);
+    font-size: 12.5px;
+    color: var(--color-gris);
+}
+
+/* --- CAJA DE TEXTO LIBRE (oculta por defecto) --- */
+.CajaOtraRazon {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: var(--radio-grande);
+    padding: 20px;
+    box-shadow: var(--sombra-suave);
+}
+
+.CajaOtraRazon.visible {
+    display: flex;
+}
+
+#TextoLibre {
+    resize: none;
+    border: 1px solid rgba(174, 152, 240, 0.3);
+    border-radius: 14px;
+    padding: 12px 16px;
+    font-family: var(--fuente-secundaria);
+    font-size: 14px;
+    color: var(--color-texto);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+#TextoLibre:focus {
+    outline: none;
+    border-color: var(--logo-morado);
+}
+
+.BtnEnviarRazon {
+    align-self: flex-end;
+    background: var(--logo-morado);
+    color: white;
+    border: none;
+    padding: 10px 26px;
+    border-radius: var(--radio-pill);
+    font-family: var(--fuente-principal);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.BtnEnviarRazon:hover {
+    opacity: 0.85;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+    .CheckInPrincipal {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+    .CheckInIzquierda { min-height: 300px; justify-content: center; text-align: center; }
+    .CheckInTexto { max-width: 100%; }
+    .BlobGrande { left: 20%; width: 320px; height: 320px; }
+    .CheckInDerecha { margin: 0 auto; }
+}

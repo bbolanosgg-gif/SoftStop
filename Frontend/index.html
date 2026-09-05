@@ -28,7 +28,7 @@
 
         <!-- Derecha: Entrar y Logo -->
         <div class="AccionesUsuario">
-            <a href="#" class="enlaceEntrar">ENTRAR</a>
+            <a href="dashboard.html" class="enlaceEntrar">ENTRAR</a>
             <div class="LogoSoftStop">
                 <img src="img/Logo.png" alt="Logo Soft Stop">
             </div>
@@ -39,31 +39,38 @@
     <!--HERO (Sección Principal)-->
     <main>
         <section class="HeroPrincipal">
-            
-            <!-- Textos fantasma de fondo -->
-            <div class="FondoTexto" aria-hidden="true">
-                <span class="TextoCalm">CALM</span>
-                <span class="TextoStop">STOP</span>
+    
+    <!-- Textos giratorios 3D (Efecto Saturno) -->
+    <div class="ContenedorOrbita" aria-hidden="true">
+        <div class="Anillo">
+            <div class="Satelite" style="--rotacion: 0deg;">
+                <div class="TextoOrbita">CALM</div>
             </div>
-
-            <!-- Titlo Central SoftStop -->
-            <div class="ContenidoCentral">
-                <h1 class="TituloPrincipal">SOFTSTOP</h1>
-                
-                <!-- Imagen de la Medusa -->
-                <div class="ContenedorMedusa">
-                    <img src="img/medusa.png" alt="Ilustración de medusa translúcida" class="ImagenMedusa">
-                </div>
+            <div class="Satelite" style="--rotacion: 120deg;">
+                <div class="TextoOrbita">STOP</div>
             </div>
-
-            <!-- Subtítulo inferior -->
-            <div class="ContenedorSubtitulo">
-                <p class="SubtituloHero">
-                    Un espacio creado para tu bienestar, para un segundo y recuerda cuidar de ti.
-                </p>
+            <div class="Satelite" style="--rotacion: 240deg;">
+                <div class="TextoOrbita">BREATHE</div>
             </div>
+        </div>
+    </div>
 
-        </section>
+    <!-- Contenido Central y Medusa -->
+    <div class="ContenidoCentral">
+        <h1 class="TituloPrincipal">SOFTSTOP</h1>
+        <div class="ContenedorMedusa">
+            <img src="img/medusa.png" alt="Ilustración de medusa translúcida" class="ImagenMedusa">
+        </div>
+    </div>
+
+    <!-- Subtítulo inferior -->
+    <div class="ContenedorSubtitulo">
+        <p class="SubtituloHero">
+            Un espacio creado para tu bienestar, para un segundo y recuerda cuidar de ti.
+        </p>
+    </div>
+
+</section>
 
         <!-- SECCIÓN FUNCIONES y Carrusel -->
         <section class="SeccionFunciones" id="funciones">
@@ -103,6 +110,7 @@
                 <h3 id="TituloFuncion">Cargando...</h3>
                 <h4 id="SubtituloFuncion"></h4>
                 <p id="DescripcionFuncion"></p>
+                <button class="BotonEntrarFuncion">ENTRAR</button>
             </div>
 
         </section>

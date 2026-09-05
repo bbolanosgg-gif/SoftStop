@@ -69,7 +69,7 @@
 }
 
 .RedesSociales a:hover {
-    color: var(----colorfooter);
+    color: var(--colorfooter);
 }
 
 /* --- COLUMNAS 2, 3 Y 4: ENLACES --- */

@@ -1,38 +1,74 @@
 /* ==============================================
-   HERO (Sección Principal Soft Stop)
+   HERO (Sección Principal Softstop)
 ============================================== */
 
 .HeroPrincipal {
     position: relative;
-    min-height: 100vh; /* Ocupa toda la pantalla */
+    min-height: 100vh; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Evita que el texto gigante cree barras de desplazamiento */
-    
+    overflow: hidden; 
 }
 
-/* --- TEXTOS FANTASMA (CALM / STOP) --- */
+/* --- TEXTOS EN ÓRBITA (Efecto Saturno 3D) --- */
 
-.FondoTexto {
+.ContenedorOrbita {
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 100vw;
+    height: 100vh;
     transform: translate(-50%, -50%);
-    width: 85%; /* Separa las palabras hacia los bordes */
+    perspective: 1200px; 
+    z-index: 1; /* Detrás de la medusa */
+    pointer-events: none;
     display: flex;
-    justify-content: space-between;
-    z-index: 1; /* Se queda en el fondo */
-    pointer-events: none; /* Evita que el usuario seleccione este texto por error */
+    justify-content: center;
+    align-items: center;
 }
 
-.TextoCalm, .TextoStop {
+.Anillo {
+    position: relative;
+    transform-style: preserve-3d;
+    animation: orbita 25s linear infinite;
+}
+
+.Satelite {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-style: preserve-3d;
+    transform: rotateZ(var(--rotacion)) translateX(40vw); 
+}
+
+.TextoOrbita {
+    position: absolute;
     font-family: var(--fuente-principal);
-    font-size: clamp(80px, 15vw, 180px); /* Tamaño fluido que se adapta a la pantalla */
+    font-size: clamp(60px, 8vw, 100px);
     font-weight: 700;
-    color: rgba(224, 224, 224, 0.4); /* Un gris muy transparente */
+    color: rgba(224, 224, 224, 0.4); 
     letter-spacing: 15px;
+    animation: anti-orbita 25s linear infinite;
+}
+
+@keyframes orbita {
+    0% { transform: rotateX(70deg) rotateZ(0deg); }
+    100% { transform: rotateX(70deg) rotateZ(360deg); }
+}
+
+@keyframes anti-orbita {
+    0% { 
+        transform: translate(-50%, -50%) 
+                   rotateZ(calc(-1 * var(--rotacion))) 
+                   rotateX(-70deg); 
+    }
+    100% { 
+        transform: translate(-50%, -50%) 
+                   rotateZ(calc(-1 * var(--rotacion) - 360deg)) 
+                   rotateX(-70deg); 
+    }
 }
 
 /* --- CONTENIDO CENTRAL (Título y Medusa) --- */
@@ -50,31 +86,30 @@
     font-family: var(--fuente-principal);
     font-size: clamp(40px, 6vw, 75px);
     font-weight: 600;
-    letter-spacing: 25px; /* Espaciado amplio y elegante */
+    letter-spacing: 25px; 
     color: var(--color-texto);
-    margin-left: 25px; /* Compensa el letter-spacing para que quede 100% centrado */
-    margin-bottom: -20px; /* Acerca el título un poco a la medusa */
+    margin-left: 25px; 
+    margin-bottom: -20px; 
+    margin-top: -90px;
     z-index: 3;
 }
 
 .ContenedorMedusa {
     position: relative;
-    width: clamp(250px, 35vw, 450px); /* La medusa crece o se encoge según la pantalla */
+    width: clamp(200px, 30vw, 400px); 
     z-index: 2;
-    
-    /* Animación de flotación suave */
     animation: flotar 6s ease-in-out infinite;
+    margin-top: 60px;
 }
 
 .ImagenMedusa {
-    width: 100%;
+    width: 60%; /* Corregido para que la medusa vuelva a ser visible */
     height: auto;
     object-fit: contain;
-    /* Una sombra rosa/orquídea muy sutil para darle volumen */
-    filter: drop-shadow(0 20px 30px rgba(218, 112, 214, 0.25));
+    display: block; 
+    margin: 0 auto; 
 }
 
-/* --- ANIMACIÓN --- */
 @keyframes flotar {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-20px); }
@@ -93,9 +128,9 @@
 }
 
 .SubtituloHero {
-    font-family: var(--fuente-secundaria); /* Usamos Nunito que es excelente para lectura larga */
+    font-family: var(--fuente-secundaria); 
     font-size: 16px;
-    color: #666666; /* Un gris un poco más oscuro para que sea legible */
+    color: #666666; 
     max-width: 600px;
     margin: 0 auto;
     font-weight: 300;

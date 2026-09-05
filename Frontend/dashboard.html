@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Softstop</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body class="CuerpoDashboard">
+
+    <div class="PaginaDashboard">
+
+        <!-- HEADER -->
+        <header class="DashHeader">
+            <span class="DashMarca">SOFTSTOP</span>
+
+            <nav class="DashNav">
+                <a href="#" class="DashNavLink activo">Home</a>
+                <a href="#" class="DashNavLink">Journey</a>
+                <a href="#" class="DashNavLink">Perfil</a>
+            </nav>
+
+            <button class="DashCerrar" id="BtnCerrarDash" aria-label="Cerrar">✕</button>
+        </header>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="DashPrincipal">
+
+            <!-- Resplandor central -->
+            <div class="DashResplandor" aria-hidden="true"></div>
+
+            <!-- Centro: saludo + botón -->
+            <div class="DashCentro">
+                <h1 class="DashSaludo">Hola, <span id="NombreUsuario">Xiomara</span>.</h1>
+                <p class="DashFrase">Respira. Estás aquí.</p>
+                <button class="DashNuevaPausa" id="BtnNuevaPausa">
+                    <span class="DashMas">+</span> NUEVA PAUSA
+                </button>
+            </div>
+
+            <!-- Tarjetas de funciones -->
+            <a href="checkin.html" class="TarjetaFuncionDash TarjetaCheckIn">
+                <h3>Check-in</h3>
+                <p>¿Cómo estoy ahora?</p>
+                <span class="FlechaTarjeta FlechaRosa">→</span>
+            </a>
+
+            <a href="#" class="TarjetaFuncionDash TarjetaUnstuck">
+                <h3>Unstuck</h3>
+                <p>Sal cuando<br>te sientas atascado.</p>
+                <span class="FlechaTarjeta FlechaVerde">→</span>
+            </a>
+
+            <a href="#" class="TarjetaFuncionDash TarjetaThink">
+                <h3>Think</h3>
+                <p>Ideas claras<br>cuando lo necesitas.</p>
+                <span class="FlechaTarjeta FlechaMorada">→</span>
+            </a>
+
+            <a href="#" class="TarjetaFuncionDash TarjetaPath">
+                <h3>Path</h3>
+                <p>¿Qué necesito<br>ahora?</p>
+                <span class="FlechaTarjeta FlechaMorada">→</span>
+            </a>
+
+            <a href="funcion-reset.html" class="TarjetaFuncionDash TarjetaReset">
+                <h3>Reset</h3>
+                <p>Baja el ruido.</p>
+                <span class="FlechaTarjeta FlechaRosa">→</span>
+            </a>
+
+        </main>
+
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

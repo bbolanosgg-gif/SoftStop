@@ -1,0 +1,255 @@
+/* ==============================================
+   DASHBOARD PRINCIPAL
+============================================== */
+
+.CuerpoDashboard {
+    background:
+        radial-gradient(ellipse 900px 600px at 0% 0%, rgba(255, 205, 205, 0.35), transparent 60%),
+        radial-gradient(ellipse 900px 600px at 100% 100%, rgba(190, 225, 235, 0.3), transparent 60%),
+        #FBF6F3;
+    min-height: 100vh;
+}
+
+.PaginaDashboard {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- HEADER --- */
+.DashHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 26px 5%;
+    position: relative;
+    z-index: 5;
+}
+
+.DashMarca {
+    font-family: var(--fuente-principal);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--color-texto);
+}
+
+.DashNav {
+    display: flex;
+    gap: 36px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.DashNavLink {
+    font-family: var(--fuente-principal);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-gris);
+    text-decoration: none;
+    padding-bottom: 6px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.DashNavLink:hover {
+    color: var(--color-texto);
+}
+
+.DashNavLink.activo {
+    color: var(--logo-morado);
+    border-bottom-color: var(--logo-morado);
+}
+
+.DashCerrar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 154, 183, 0.25);
+    color: var(--color-texto);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.DashCerrar:hover {
+    background: rgba(255, 154, 183, 0.45);
+    transform: rotate(90deg);
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.DashPrincipal {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 5% 60px;
+    max-width: 1300px;
+    margin: 0 auto;
+    width: 100%;
+    min-height: 620px;
+}
+
+/* --- RESPLANDOR CENTRAL --- */
+.DashResplandor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 620px;
+    height: 620px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(255, 210, 220, 0.65) 0%,
+        rgba(220, 195, 235, 0.4) 45%,
+        rgba(200, 215, 235, 0.15) 70%,
+        transparent 85%);
+    filter: blur(10px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* --- CENTRO: SALUDO Y BOTÓN --- */
+.DashCentro {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 480px;
+}
+
+.DashSaludo {
+    font-family: var(--fuente-principal);
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 500;
+    color: var(--color-texto);
+    margin-bottom: 10px;
+}
+
+.DashFrase {
+    font-family: var(--fuente-secundaria);
+    font-style: italic;
+    font-size: 16px;
+    color: #8A8388;
+    margin-bottom: 34px;
+}
+
+.DashNuevaPausa {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: var(--radio-pill);
+    padding: 15px 34px;
+    font-family: var(--fuente-principal);
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--color-texto);
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 26px rgba(174, 152, 240, 0.18);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.DashNuevaPausa:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(174, 152, 240, 0.26);
+}
+
+.DashMas {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--logo-morado);
+}
+
+/* ==============================================
+   TARJETAS DE FUNCIONES (posición radial)
+============================================== */
+
+.TarjetaFuncionDash {
+    position: absolute;
+    z-index: 2;
+    width: 190px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 22px;
+    padding: 20px 22px;
+    text-decoration: none;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 22px rgba(174, 152, 240, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.TarjetaFuncionDash:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 14px 28px rgba(174, 152, 240, 0.16);
+}
+
+.TarjetaFuncionDash h3 {
+    font-family: var(--fuente-principal);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-texto);
+    margin-bottom: 6px;
+}
+
+.TarjetaFuncionDash p {
+    font-family: var(--fuente-secundaria);
+    font-size: 12.5px;
+    line-height: 1.4;
+    color: var(--color-gris);
+    margin-bottom: 16px;
+}
+
+.FlechaTarjeta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 13px;
+    color: var(--color-texto);
+}
+
+.FlechaRosa { background: rgba(255, 154, 183, 0.35); }
+.FlechaVerde { background: rgba(160, 232, 216, 0.45); }
+.FlechaMorada { background: rgba(174, 152, 240, 0.3); }
+
+/* --- POSICIONES DE CADA TARJETA --- */
+.TarjetaCheckIn  { top: 14%;  left: 10%; }
+.TarjetaUnstuck  { top: 14%;  right: 10%; }
+.TarjetaThink    { top: 46%;  left: 8%; }
+.TarjetaPath     { top: 52%;  right: 8%; }
+.TarjetaReset    { bottom: 6%; left: 50%; transform: translateX(-50%); }
+.TarjetaReset:hover { transform: translateX(-50%) translateY(-4px); }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1000px) {
+    .DashPrincipal {
+        flex-direction: column;
+        min-height: unset;
+        gap: 24px;
+        padding-top: 20px;
+    }
+    .DashResplandor { display: none; }
+    .TarjetaFuncionDash {
+        position: static;
+        width: 100%;
+        max-width: 340px;
+        transform: none !important;
+    }
+    .DashCentro { order: -1; margin-bottom: 10px; }
+    .DashNav { position: static; transform: none; margin-top: 14px; }
+    .DashHeader { flex-direction: column; gap: 14px; }
+}
