@@ -1,0 +1,688 @@
+/* ==============================================
+   SECCIÓN PROPÓSITO (Transición)
+============================================== */
+
+.SeccionProposito {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  background: transparent;
+  padding: 120px 5% 60px;
+}
+
+/* --- CONECTORES (Scroll Arriba / Abajo) --- */
+.ConectorSuperior,
+.ConectorInferior {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  z-index: 5;
+  opacity: 0.7;
+}
+
+.ConectorSuperior {
+  margin-bottom: 60px;
+}
+
+.ConectorInferior {
+  margin-top: 80px;
+}
+
+.CirculoIcono {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(174, 152, 240, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+}
+
+.TextoConector {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  color: var(--logo-morado);
+  text-transform: uppercase;
+}
+
+.LineaVertical {
+  width: 1px;
+  height: 60px;
+  background: rgba(174, 152, 240, 0.4);
+}
+
+/* --- GRÁFICO CENTRAL (Tu Ilustración flotante) --- */
+.ContenedorPlaneta {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  /* Reducido al no tener anillos */
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 60px;
+  z-index: 2;
+}
+/* Profundidad detrás de la ilustración */
+.ContenedorPlaneta::before{
+  content:'';
+  position:absolute;
+  inset:-120px;
+  z-index:0;
+  background:radial-gradient(
+    circle at center,
+    rgba(255,170,205,0.32) 0%,
+    rgba(168,144,254,0.24) 35%,
+    rgba(185,215,245,0.18) 55%,
+    transparent 75%
+  );
+  filter:blur(50px);
+  animation:PulsoRadial 6s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes PulsoRadial{
+  0%,100%{ transform:scale(1); opacity:0.9; }
+  50%{ transform:scale(1.08); opacity:1; }
+}
+
+/* Imagen personalizada (Tu ilustración más grande) */
+.ImagenPlaneta {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 540px;
+  /* Imagen notablemente más grande */
+  height: auto;
+  object-fit: contain;
+  z-index: 2;
+  animation: FlotarImagen 5s ease-in-out infinite;
+  filter: drop-shadow(0 15px 35px rgba(230, 168, 215, 0.25));
+}
+
+@keyframes FlotarImagen {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+
+  50% {
+    transform: translate(-50%, calc(-50% - 12px));
+  }
+
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Lunas pequeñitas flotando */
+.Luna {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #FFFFFF, #EAD6EE);
+  box-shadow: 0 4px 12px rgba(216, 191, 216, 0.5);
+  z-index: 3;
+  animation: FlotarLuna 6s ease-in-out infinite alternate;
+}
+
+.Flotante1 {
+  width: 22px;
+  height: 22px;
+  top: 25%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.Flotante2 {
+  width: 14px;
+  height: 14px;
+  top: 60%;
+  left: 25%;
+  animation-delay: 1.5s;
+  background: radial-gradient(circle at 30% 30%, #FFF, #C9BBFF);
+}
+
+.Flotante3 {
+  width: 18px;
+  height: 18px;
+  top: 15%;
+  right: 20%;
+  animation-delay: 3s;
+  filter: blur(0.5px);
+}
+
+.Flotante4 {
+  width: 12px;
+  height: 12px;
+  top: 65%;
+  right: 18%;
+  animation-delay: 2s;
+}
+
+@keyframes FlotarLuna {
+  0% {
+    transform: translateY(0px);
+  }
+
+  100% {
+    transform: translateY(-20px);
+  }
+}
+
+/* --- TEXTOS --- */
+.TextosProposito {
+  text-align: center;
+  z-index: 5;
+  margin-bottom: 50px;
+  /* Animación suave de entrada al cargar la página */
+  animation: AparecerTexto 1.5s ease-out forwards;
+}
+
+@keyframes AparecerTexto {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.TituloProposito {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: clamp(34px, 4.5vw, 54px);
+  font-weight: 600;
+  /* Un poco más de peso para darle presencia */
+  line-height: 1.25;
+  color: #3B3645;
+  /* Un gris un tono más profundo para contrastar con el fondo claro */
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+  /* Acerca sutilmente las letras para un toque moderno */
+}
+
+/* Efecto de degradado y resplandor para la frase clave */
+.ResalteEtereo {
+  background: linear-gradient(135deg, #A890FE 0%, #EA8DCE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  display: inline-block;
+}
+
+/* Brillo sutil detrás del texto degradado */
+.ResalteEtereo::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 12px;
+  background: rgba(174, 152, 240, 0.25);
+  z-index: -1;
+  border-radius: 4px;
+  filter: blur(4px);
+}
+
+.SubtituloProposito {
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px;
+  /* Texto un poco más grande para mejorar la legibilidad */
+  font-weight: 400;
+  line-height: 1.8;
+  color: #7A7485;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+/* --- BOTÓN EFECTO CAPAS --- */
+.ContenedorBotonCapas {
+  position: relative;
+  z-index: 5;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+/* Capa 1 (Intermedia) */
+.ContenedorBotonCapas::before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 4%;
+  width: 92%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 24px;
+  z-index: -1;
+  backdrop-filter: blur(10px);
+  transition: bottom 0.3s ease;
+}
+
+/* Capa 2 (Fondo) */
+.ContenedorBotonCapas::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 10%;
+  width: 80%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 24px;
+  z-index: -2;
+  backdrop-filter: blur(5px);
+  transition: bottom 0.3s ease;
+}
+
+/* Botón Principal (Capa Superior) */
+.BotonCapas {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  padding: 12px 30px 12px 14px;
+  text-decoration: none;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 15px rgba(174, 152, 240, 0.05);
+  transition: transform 0.3s ease;
+}
+
+/* Animación al pasar el cursor (Hover) */
+.ContenedorBotonCapas:hover .BotonCapas {
+  transform: translateY(-4px);
+}
+
+.ContenedorBotonCapas:hover::before {
+  bottom: -14px;
+}
+
+.ContenedorBotonCapas:hover::after {
+  bottom: -26px;
+}
+
+/* Elementos internos del botón */
+.IconoBoton {
+  width: 48px;
+  height: 48px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(174, 152, 240, 0.1);
+}
+
+.TextosBoton {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.TituloBoton {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 15.5px;
+  font-weight: 500;
+  color: #433E4F;
+  letter-spacing: 0.2px;
+}
+
+.SubtituloBoton {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13.5px;
+  color: #9C96A6;
+  margin-top: 3px;
+}
+
+.FlechaBoton {
+  color: #C1BCCC;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.ContenedorBotonCapas:hover .FlechaBoton {
+  transform: translateX(6px);
+  color: var(--logo-morado);
+}
+
+
+
+.OndasMar{
+  position:absolute;
+  bottom:-1vh;
+  left:0;
+  width:100%;
+  height:70vh;
+  overflow:visible;
+  z-index:0;
+  pointer-events:none;
+}
+
+.OlaCapa{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:100%;
+}
+
+/* Capa trasera: azul-morado, curva más alta y suave */
+.OlaFondo{
+  background:linear-gradient(135deg, #D8E7F9 0%, #E9D8F5 100%);
+  filter:blur(32px);
+  opacity:0.62;
+  clip-path:shape(
+    from 0% 100%,
+    line to 0% 55%,
+    arc by 50% 14% of 55% cw,
+    arc by 50% 14% of 55% cw,
+    line to 100% 100%,
+    close
+  );
+  animation:WaveFondo 14s ease-in-out infinite;
+}
+
+/* Capa media */
+.OlaMedia{
+  background:linear-gradient(135deg, #E2D8F7 0%, #F4DCF0 100%);
+  filter:blur(24px);
+  opacity:0.98;
+  clip-path:shape(
+    from 0% 100%,
+    line to 0% 62%,
+    arc by 50% 12% of 75% cw,
+    arc by 50% 12% of 75% cw,
+    line to 100% 100%,
+    close
+  );
+  animation:WaveMedia 11s ease-in-out infinite reverse;
+}
+
+/* Capa frontal: la más definida */
+.OlaFrente{
+  background:linear-gradient(135deg, #FADCE8 0%, #EDD8F5 100%);
+  filter:blur(17px);
+  opacity:0.92;
+  clip-path:shape(
+    from 0% 100%,
+    line to 0% 70%,
+    arc by 50% 10% of 95% cw,
+    arc by 50% 10% of 95% cw,
+    line to 100% 100%,
+    close
+  );
+  animation:WaveFrente 8s ease-in-out infinite;
+}
+
+/* Velo suave para unificar todo */
+.OndasMar::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(253,251,255,0.12);
+  backdrop-filter:blur(2px);
+}
+
+@keyframes WaveFondo{
+  50%{
+    clip-path:shape(
+      from 0% 100%,
+      line to 0% 48%,
+      arc by 50% 16% of 45% cw,
+      arc by 50% 16% of 45% cw,
+      line to 100% 100%,
+      close
+    );
+  }
+}
+
+@keyframes WaveMedia{
+  50%{
+    clip-path:shape(
+      from 0% 100%,
+      line to 0% 68%,
+      arc by 50% 10% of 90% cw,
+      arc by 50% 10% of 90% cw,
+      line to 100% 100%,
+      close
+    );
+  }
+}
+
+@keyframes WaveFrente{
+  50%{
+    clip-path:shape(
+      from 0% 100%,
+      line to 0% 63%,
+      arc by 50% 13% of 65% cw,
+      arc by 50% 13% of 65% cw,
+      line to 100% 100%,
+      close
+    );
+  }
+}
+
+/* Fallback para navegadores sin soporte de shape() */
+@supports not (clip-path: shape(from 0% 0%, close)) {
+  .OlaFondo, .OlaMedia, .OlaFrente{
+    clip-path:none;
+    border-radius:50% 50% 0 0 / 100% 100% 0 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .OndasMar{
+    height:30vh;
+  }
+}
+
+
+
+
+
+
+/* --- TARJETAS FLOTANTES (Minimalistas) --- */
+.TarjetaFlotante {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 20px;
+  padding: 22px 26px;
+  width: 240px;
+  z-index: 3;
+    box-shadow:
+    0 12px 35px rgba(174, 152, 240, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(234, 141, 206, 0.15),
+    inset 0 0 40px 18px rgba(234, 216, 250, 0.18);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: FlotarTarjeta 8s ease-in-out infinite;
+}
+
+.TarjetaFlotante::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
+}
+.TarjetaFlotante::after{
+  content:'';
+  position:absolute;
+  top:0; left:0;
+  width:1px;
+  height:100%;
+  background:linear-gradient(180deg, rgba(255,255,255,0.9), transparent, rgba(234,141,206,0.25));
+}
+
+.TarjetaFlotante p {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #7A7485;
+  margin: 0;
+}
+
+.IconoTarjeta {
+  font-size: 20px;
+  color: var(--logo-morado);
+  opacity: 0.8;
+}
+
+.TarjetaIzq {
+  --rotacion-inicial: -4deg;
+  top: 25%;
+  left: 6%;
+}
+
+.TarjetaDer {
+  --rotacion-inicial: 5deg;
+  bottom: 30%;
+  right: 6%;
+  animation-delay: -3.5s;
+  align-items: flex-end;
+  text-align: right;
+}
+
+@keyframes FlotarTarjeta {
+  0% {
+    transform: translateY(0) rotate(var(--rotacion-inicial));
+  }
+
+  50% {
+    transform: translateY(-18px) rotate(calc(var(--rotacion-inicial) + 2deg));
+  }
+
+  100% {
+    transform: translateY(0) rotate(var(--rotacion-inicial));
+  }
+}
+
+
+/* Responsive del botón */
+@media (max-width: 768px) {
+  .BotonCapas {
+    padding: 10px 24px 10px 12px;
+    gap: 16px;
+  }
+
+  .IconoBoton {
+    width: 44px;
+    height: 44px;
+  }
+
+  .TituloBoton {
+    font-size: 14.5px;
+  }
+
+  .SubtituloBoton {
+    font-size: 12.5px;
+  }
+
+  .FlechaBoton {
+    margin-left: 10px;
+  }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .ContenedorPlaneta {
+    height: 260px;
+    margin-bottom: 40px;
+  }
+
+  .ImagenPlaneta {
+    width: 240px;
+  }
+
+  /* Imagen también más grande en móvil */
+  .TituloProposito {
+    font-size: 32px;
+  }
+
+  .SubtituloProposito {
+    padding: 0 20px;
+    font-size: 15px;
+  }
+
+  .ConectorSuperior {
+    margin-bottom: 40px;
+  }
+
+  .ConectorInferior {
+    margin-top: 50px;
+  }
+
+  .BotonEntrarProposito {
+    padding: 14px 45px;
+    gap: 25px;
+  }
+
+  .TarjetaFlotante {
+    display: none;
+  }
+
+  /* Oculta el texto en celular */
+  .OlasDifuminadas {
+    opacity: 0.4;
+  }
+
+  /* Baja la luz para no saturar */
+}
+
+/* ===== Fondo ambiental difuminado ===== */
+.FondoDegradado{
+  position: fixed;
+  inset:-100px;
+  z-index:-1;
+  background:
+    repeating-linear-gradient(
+      190deg,
+      rgba(255,170,205,0.18) 0px,
+      rgba(234,141,206,0.15) 60px,
+      rgba(168,144,254,0.15) 120px,
+      rgba(201,187,255,0.15) 180px,
+      rgba(185,215,245,0.18) 240px,
+      rgba(215,165,235,0.15) 300px,
+      rgba(255,170,205,0.18) 360px
+    ),
+    repeating-linear-gradient(
+      -190deg,
+      rgba(185,215,245,0.13) 0px,
+      rgba(201,187,255,0.13) 70px,
+      rgba(234,141,206,0.13) 140px,
+      rgba(255,170,205,0.13) 210px,
+      rgba(215,165,235,0.13) 280px,
+      rgba(185,215,245,0.13) 350px
+    );
+  filter:blur(100px);
+  opacity:0.45;
+  animation:MoverFondo 25s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+@keyframes MoverFondo{
+  0%{ transform:translate(0,0) scale(1); }
+  100%{ transform:translate(30px,-20px) scale(1.05); }
+}

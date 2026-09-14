@@ -11,11 +11,11 @@ html {
 }
 
 body {
-    /* Aplicamos la imagen de fondo */
+    /* Aquí aplicamos el nuevo fondo.jpg a todo el sitio */
     background-image: url('../img/fondo.png'); 
-    background-size: cover;       /* Hace que la imagen cubra toda la pantalla */
-    background-position: center;  /* Centra el degradado */
-    background-attachment: fixed; /* Hace que el fondo se quede quieto al hacer scroll */
+    background-size: cover;       
+    background-position: center;  
+    background-attachment: fixed; 
     background-repeat: no-repeat;
     
     color: var(--color-texto);
