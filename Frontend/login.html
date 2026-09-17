@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Empático</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Transición suave para ocultar/mostrar elementos */
+        .smooth-collapse { transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="m-0 p-4 min-h-screen w-full flex justify-center items-center font-sans bg-gradient-to-br from-[#e0c3fc] to-[#8ec5fc]">
+
+    <div class="flex flex-col md:flex-row w-full max-w-4xl bg-white/30 backdrop-blur-xl border border-white/50 rounded-3xl overflow-hidden shadow-[0_8px_32px_0_rgba(31,38,135,0.15)]">
+        
+        <!-- Panel Izquierdo: Motivación -->
+        <div class="md:w-5/12 p-10 flex flex-col justify-center items-center text-center bg-white/10">
+            <div class="w-16 h-16 mb-6 rounded-full bg-white/40 flex items-center justify-center shadow-sm">
+                <svg class="w-8 h-8 text-[#9d82f5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h2 id="panelTitle" class="text-2xl font-bold text-[#4a4a4a] mb-4">Un respiro a la vez</h2>
+            <p id="panelText" class="text-[#555] text-lg leading-relaxed">Tu progreso es constante. Tómate un momento, respira profundo y continuemos donde lo dejaste.</p>
+        </div>
+
+        <!-- Panel Derecho: Formulario -->
+        <div class="md:w-7/12 p-10 lg:p-14 bg-white/50">
+            <h3 id="formTitle" class="text-2xl font-semibold text-[#333] mb-8">Bienvenido de vuelta</h3>
+            
+            <div id="statusMessage" class="hidden mb-6 p-4 rounded-xl text-sm font-medium fade-in"></div>
+
+            <form id="loginForm" class="space-y-5" novalidate>
+                
+                <!-- Input: Nombre (Oculto por defecto en Login) -->
+                <div id="nameContainer" class="relative hidden smooth-collapse">
+                    <label for="name" class="block text-sm font-medium text-[#4a4a4a] mb-1.5">Tu nombre</label>
+                    <input type="text" id="name" placeholder="¿Cómo prefieres que te llamemos?" 
+                        class="w-full p-4 border-2 border-transparent rounded-xl bg-white/70 text-[#333] text-base outline-none transition-all duration-300 focus:bg-white focus:border-[#b8a4f5] focus:shadow-sm">
+                    <p id="nameError" class="text-red-500 text-xs mt-1.5 hidden ml-1">Por favor, compártenos tu nombre para continuar.</p>
+                </div>
+
+                <!-- Input: Correo -->
+                <div class="relative">
+                    <label for="email" class="block text-sm font-medium text-[#4a4a4a] mb-1.5">Correo electrónico</label>
+                    <input type="email" id="email" placeholder="usuario@correo.com" 
+                        class="w-full p-4 border-2 border-transparent rounded-xl bg-white/70 text-[#333] text-base outline-none transition-all duration-300 focus:bg-white focus:border-[#b8a4f5] focus:shadow-sm">
+                    <p id="emailError" class="text-red-500 text-xs mt-1.5 hidden ml-1">Hay un pequeño detalle en el formato del correo. Verifica el '@' y el dominio.</p>
+                </div>
+                
+                <!-- Input: Contraseña -->
+                <div class="relative">
+                    <label for="password" class="block text-sm font-medium text-[#4a4a4a] mb-1.5">Contraseña</label>
+                    <div class="relative">
+                        <input type="password" id="password" placeholder="Tu clave de acceso" 
+                            class="w-full p-4 pr-12 border-2 border-transparent rounded-xl bg-white/70 text-[#333] text-base outline-none transition-all duration-300 focus:bg-white focus:border-[#b8a4f5] focus:shadow-sm">
+                        
+                        <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 px-4 text-[#888] hover:text-[#555] transition-colors focus:outline-none flex items-center justify-center">
+                            <svg id="eyeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        </button>
+                    </div>
+                    <p id="passwordError" class="text-red-500 text-xs mt-1.5 hidden ml-1">Necesitamos tu contraseña para dejarte entrar de forma segura.</p>
+                </div>
+
+                <!-- Botón de Envío -->
+                <button type="submit" id="submitBtn" 
+                    class="w-full p-4 mt-4 border-none rounded-xl bg-[#b8a4f5] hover:bg-[#9d82f5] text-white text-lg font-semibold cursor-pointer transition-all duration-300 flex justify-center items-center shadow-md active:scale-[0.98]">
+                    <span id="submitText">Entrar a mi espacio</span>
+                </button>
+
+                <!-- Alternar entre Login y Registro -->
+                <p class="text-center text-sm text-[#666] mt-6">
+                    <span id="toggleContextText">¿Nuevo en este espacio?</span> 
+                    <a href="#" id="switchModeBtn" class="text-[#9d82f5] font-semibold hover:text-[#7b5eea] transition-colors ml-1">Regístrate aquí</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Estado del formulario
+        let isLoginMode = true; // Empieza asumiendo que el usuario ya tiene cuenta
+
+        // Elementos del DOM
+        const form = document.getElementById('loginForm');
+        const nameContainer = document.getElementById('nameContainer');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const eyeIcon = document.getElementById('eyeIcon');
+        const statusMessage = document.getElementById('statusMessage');
+        const submitBtn = document.getElementById('submitBtn');
+        const submitText = document.getElementById('submitText');
+        
+        // Elementos de texto dinámico
+        const formTitle = document.getElementById('formTitle');
+        const panelTitle = document.getElementById('panelTitle');
+        const panelText = document.getElementById('panelText');
+        const toggleContextText = document.getElementById('toggleContextText');
+        const switchModeBtn = document.getElementById('switchModeBtn');
+
+        // Lógica para alternar entre Iniciar Sesión y Registro
+        switchModeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            isLoginMode = !isLoginMode; // Invertir el estado
+
+            // Ocultar mensajes de error previos al cambiar de modo
+            statusMessage.classList.add('hidden');
+            
+            if (isLoginMode) {
+                // Configuración para Iniciar Sesión
+                formTitle.textContent = "Bienvenido de vuelta";
+                panelTitle.textContent = "Un respiro a la vez";
+                panelText.textContent = "Tu progreso es constante. Tómate un momento, respira profundo y continuemos donde lo dejaste.";
+                submitText.textContent = "Entrar a mi espacio";
+                toggleContextText.textContent = "¿Nuevo en este espacio?";
+                switchModeBtn.textContent = "Regístrate aquí";
+                
+                // Ocultar campo de nombre
+                nameContainer.classList.add('hidden');
+            } else {
+                // Configuración para Registrarse
+                formTitle.textContent = "Comienza tu viaje";
+                panelTitle.textContent = "Un nuevo comienzo";
+                panelText.textContent = "Nos alegra que decidas cuidar de ti. Crea tu espacio personal y empieza a construir mejores hábitos.";
+                submitText.textContent = "Crear mi espacio";
+                toggleContextText.textContent = "¿Ya tienes una cuenta?";
+                switchModeBtn.textContent = "Inicia sesión";
+                
+                // Mostrar campo de nombre
+                nameContainer.classList.remove('hidden');
+            }
+        });
+
+        // Mostrar/Ocultar Contraseña
+        togglePasswordBtn.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            if (type === 'text') {
+                eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>';
+            } else {
+                eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>';
+            }
+        });
+
+        // Funciones de validación visual
+        const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        const showError = (input, errorId, show) => {
+            const errorElement = document.getElementById(errorId);
+            if (show) {
+                input.classList.add('border-red-400', 'bg-red-50');
+                input.classList.remove('border-transparent', 'focus:border-[#b8a4f5]');
+                errorElement.classList.remove('hidden');
+            } else {
+                input.classList.remove('border-red-400', 'bg-red-50');
+                input.classList.add('border-transparent', 'focus:border-[#b8a4f5]');
+                errorElement.classList.add('hidden');
+            }
+        };
+
+        // Limpiar errores al escribir
+        nameInput.addEventListener('input', () => showError(nameInput, 'nameError', false));
+        emailInput.addEventListener('input', () => showError(emailInput, 'emailError', false));
+        passwordInput.addEventListener('input', () => showError(passwordInput, 'passwordError', false));
+
+        // Intercepción del envío y Redirección
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            statusMessage.classList.add('hidden');
+
+            // Validar Nombre SOLO si está en modo registro
+            if (!isLoginMode && nameInput.value.trim() === '') {
+                showError(nameInput, 'nameError', true);
+                isValid = false;
+            }
+
+            if (!validateEmail(emailInput.value.trim())) {
+                showError(emailInput, 'emailError', true);
+                isValid = false;
+            }
+
+            if (passwordInput.value.trim() === '') {
+                showError(passwordInput, 'passwordError', true);
+                isValid = false;
+            }
+
+            if (!isValid) {
+                statusMessage.className = 'mb-6 p-4 rounded-xl text-sm font-medium fade-in bg-amber-50 text-amber-700 border border-amber-200 block';
+                statusMessage.innerHTML = 'Parece que faltan algunos datos. Tómate tu tiempo y revisa los campos señalados antes de continuar.';
+                return;
+            }
+
+            // Estado de carga empático
+            const originalBtnText = submitText.textContent;
+            submitText.innerHTML = `<svg class="animate-spin h-5 w-5 mr-3 text-white inline" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Preparando tu espacio...`;
+            submitBtn.disabled = true;
+
+            // Simular validación de 1.5 segundos y luego REDIRECCIONAR
+            setTimeout(() => {
+                if (isLoginMode) {
+                    // Si estaba iniciando sesión, va al dashboard
+                    window.location.href = 'dashboard.html';
+                } else {
+                    // Si se estaba registrando, va al checkin
+                    window.location.href = 'checkin.html';
+                }
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

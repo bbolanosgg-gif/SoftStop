@@ -43,16 +43,18 @@
 }
 
 /* Base de las Tarjetas */
+
 .TarjetaCarrusel {
     position: absolute;
-    width: 260px;
-    height: 260px;
+    width: 220px;
+    height: 300px;
     border-radius: var(--radio-mediano);
     overflow: hidden;
     transition: transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease;
     box-shadow: var(--sombra-suave);
     cursor: pointer;
 }
+
 
 .TarjetaCarrusel img {
     width: 120%;
@@ -62,11 +64,7 @@
     mask-image: radial-gradient(circle, black 55%, transparent 95%);
 }
 
-/* ESTADOS EN FILA RECTA (rectángulos, sin rotación) */
-.TarjetaCarrusel {
-    width: 220px;
-    height: 300px;
-}
+
 
 .TarjetaCarrusel.activa {
     transform: translateX(0) scale(1.1);

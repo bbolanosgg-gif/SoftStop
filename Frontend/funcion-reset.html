@@ -28,11 +28,15 @@
                 <button class="ResetCerrar" id="BtnCerrar" aria-label="Cerrar ejercicio">✕</button>
             </div>
         </header>
-
         <main class="ResetPrincipal">
 
+            <!-- ================= VISTA DE TRANSICIÓN ================= -->
+            <section class="VistaTransicion" id="VistaTransicion">
+                <h2 id="TextoTransicion"></h2>
+            </section>
+
             <!-- ================= SELECTOR DE MODO ================= -->
-            <section class="SelectorModos" id="SelectorModos">
+            <section class="SelectorModos" id="SelectorModos" hidden>
                 <div class="ResetEncabezado">
                     <h1 class="ResetTitulo">RESET</h1>
                     <p class="ResetSubtitulo">Elige la técnica que necesitas ahora.</p>
@@ -113,8 +117,7 @@
             </section>
 
         </main>
-
-    </div>
+        
 
     <script src="js/funcion-reset.js"></script>
 </body>

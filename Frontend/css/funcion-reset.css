@@ -308,3 +308,33 @@
     .ResetTitulo { letter-spacing: 6px; }
     .TarjetaGrounding { padding: 32px 24px; }
 }
+
+/* ==============================================
+   VISTA DE TRANSICIÓN
+============================================== */
+.VistaTransicion {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    text-align: center;
+    transition: opacity 1s ease-in-out;
+}
+
+.VistaTransicion[hidden] {
+    display: none;
+}
+
+.SelectorModos {
+    transition: opacity 1s ease-in-out;
+}
+
+#TextoTransicion {
+    font-size: 1.5rem;
+    color: var(--color-texto, #4a4a4a);
+    max-width: 600px;
+    line-height: 1.6;
+    font-weight: 500;
+    padding: 0 20px;
+}

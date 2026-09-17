@@ -51,6 +51,47 @@ document.addEventListener("DOMContentLoaded", () => {
     const vistaFinal       = document.getElementById("VistaFinal");
 
     const tarjetasModo = document.querySelectorAll(".TarjetaModo");
+    const vistaTransicion = document.getElementById("VistaTransicion");
+    const textoTransicion = document.getElementById("TextoTransicion");
+
+    // Leer el parámetro "?origen=" de la URL
+    const parametros = new URLSearchParams(window.location.search);
+    const origen = parametros.get("origen");
+
+    function ejecutarTransicion(mensaje) {
+        // Asegurarnos de que el menú esté oculto
+        vistaSelector.hidden = true;
+        vistaTransicion.hidden = false;
+        vistaTransicion.style.opacity = 1;
+        textoTransicion.innerHTML = mensaje;
+
+        // Esperar 4.5 segundos para que lea, luego desvanecer
+        setTimeout(() => {
+            vistaTransicion.style.opacity = 0;
+            
+            // Esperar 1 segundo a que desaparezca por completo y mostrar el menú
+            setTimeout(() => {
+                vistaTransicion.hidden = true;
+                vistaSelector.hidden = false;
+                vistaSelector.style.opacity = 0;
+                
+                // Pequeño empujón para que el menú aparezca suavemente
+                setTimeout(() => vistaSelector.style.opacity = 1, 50);
+            }, 1000);
+        }, 4500); 
+    }
+
+    // Evaluar de dónde viene el usuario
+    if (origen === "saturado") {
+        ejecutarTransicion("Calma.<br><br>Desconectar por unos minutos es vital para que tu mente pueda procesar todo lo que has absorbido hoy.");
+    } else if (origen === "no_lo_se") {
+        ejecutarTransicion("¿Sabías que empezar a entenderte inicia por escuchar tu cuerpo?<br><br>Relajemos el sistema nervioso primero.");
+    } else {
+        // Si el usuario entró a Reset directo (ej: desde el Dashboard), nos saltamos la transición
+        vistaTransicion.hidden = true;
+        vistaSelector.hidden = false;
+        vistaSelector.style.opacity = 1;
+    }
 
     // Respiración
     const blob        = document.getElementById("BlobRespiracion");

@@ -5,7 +5,7 @@
     
     /* --- HEADER Y HERO --- */
     .EncabezadoSoft { padding: 20px 5%; }
-    .TextoCalm, .TextoStop { letter-spacing: 8px; }
+    
     .TituloPrincipal { letter-spacing: 15px; margin-left: 15px; }
 
     /* --- FOOTER TABLET --- */
@@ -42,16 +42,8 @@
     .LogoSoftStop img { width: 32px; height: 32px; }
 
     /* --- HERO MÓVIL --- */
-    .FondoTexto {
-        flex-direction: column; 
-        gap: 200px; 
-        top: 45%; 
-    }
-    .TextoCalm, .TextoStop {
-        letter-spacing: 10px;
-        text-align: center;
-        font-size: clamp(60px, 20vw, 100px); 
-    }
+    
+
     .TituloPrincipal {
         letter-spacing: 8px;
         margin-left: 8px;
