@@ -3,18 +3,60 @@
 ============================================== */
 
 .CuerpoCheckIn {
-    background:
-        radial-gradient(ellipse 800px 600px at 0% 0%, rgba(255, 200, 200, 0.45), transparent 60%),
-        radial-gradient(ellipse 800px 600px at 100% 100%, rgba(190, 230, 220, 0.4), transparent 60%),
-        linear-gradient(135deg, #FDF6F4 0%, #F7F2F6 50%, #F1F4F6 100%);
-    background-attachment: fixed;
+    position: relative;
+    background: linear-gradient(135deg, #FDF6F4 0%, #F7F2F6 50%, #F1F4F6 100%);
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 .PaginaCheckIn {
+    position: relative;
+    z-index: 2;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+}
+
+/* ==============================================
+   FONDO ANIMADO (blobs orgánicos rotando muy despacio)
+============================================== */
+.CheckInFondoAnimado {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.CheckInFondoAnimado svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: blur(60px) saturate(115%);
+    opacity: 0.55;
+    transform: scale(1.3);
+}
+
+.CheckInVelo {
+    position: absolute;
+    inset: 0;
+    background: rgba(253, 250, 249, 0.55);
+}
+
+.BlobFondoUno   { fill: #AE98F0; animation: GirarBlob 22s linear infinite; transform-origin: 13px 25px; }
+.BlobFondoDos   { fill: #FF9AB7; animation: GirarBlob 12s linear infinite reverse; transform-origin: 13px 25px; }
+.BlobFondoTres  { fill: #A0E8D8; animation: GirarBlob 28s linear infinite; transform-origin: 84px 93px; }
+.BlobFondoCuatro{ fill: #FFC9A7; animation: GirarBlob 17s linear infinite reverse; transform-origin: 84px 93px; }
+
+@keyframes GirarBlob {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .BlobFondoUno, .BlobFondoDos, .BlobFondoTres, .BlobFondoCuatro { animation: none; }
 }
 
 /* --- HEADER --- */
@@ -75,21 +117,6 @@
     overflow: visible;
 }
 
-.BlobGrande {
-    position: absolute;
-    top: -8%;
-    left: -18%;
-    width: 620px;
-    height: 620px;
-    border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
-    background:
-        radial-gradient(ellipse at 30% 25%, rgba(255, 154, 183, 0.55), transparent 60%),
-        radial-gradient(ellipse at 70% 65%, rgba(174, 152, 240, 0.4), transparent 55%),
-        radial-gradient(ellipse at 40% 85%, rgba(160, 232, 216, 0.35), transparent 60%);
-    filter: blur(35px);
-    animation: MorfoBlob 14s ease-in-out infinite;
-}
-
 .BlobFlotante {
     position: absolute;
     border-radius: 50%;
@@ -97,28 +124,23 @@
 }
 
 .BlobUno {
-    top: 22%;
-    left: 52%;
-    width: 30px;
-    height: 30px;
-    background: radial-gradient(circle at 35% 30%, rgba(255, 154, 183, 0.9), rgba(255, 201, 167, 0.5));
-    filter: blur(3px);
-    animation: Flotar 5s ease-in-out infinite;
+    top: 10%;
+    left: 8%;
+    width: 130px;
+    height: 130px;
+    background: radial-gradient(circle at 32% 30%, rgba(174, 152, 240, 0.5), rgba(143, 224, 236, 0.25) 70%, transparent 80%);
+    filter: blur(6px);
+    animation: Flotar 8s ease-in-out infinite;
 }
 
 .BlobDos {
-    bottom: 10%;
-    left: 76%;
-    width: 22px;
-    height: 22px;
-    background: radial-gradient(circle at 35% 30%, rgba(174, 152, 240, 0.9), rgba(218, 112, 214, 0.5));
+    bottom: 14%;
+    left: 68%;
+    width: 26px;
+    height: 26px;
+    background: radial-gradient(circle at 35% 30%, rgba(255, 154, 183, 0.9), rgba(218, 112, 214, 0.5));
     filter: blur(2px);
     animation: Flotar 7s ease-in-out infinite reverse;
-}
-
-@keyframes MorfoBlob {
-    0%, 100% { border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%; transform: scale(1); }
-    50% { border-radius: 58% 42% 40% 60% / 55% 60% 40% 45%; transform: scale(1.04); }
 }
 
 @keyframes Flotar {
@@ -156,44 +178,195 @@
     color: var(--color-gris);
 }
 
-/* --- COLUMNA DERECHA: OPCIONES --- */
+/* ==============================================
+   COLUMNA DERECHA: OPCIONES (botón vidrio iridiscente)
+============================================== */
 .CheckInDerecha {
     display: flex;
     flex-direction: column;
     gap: 14px;
-    max-width: 420px;
+    max-width: 440px;
     margin-left: auto;
     width: 100%;
 }
 
+/* --- Duraciones lentas y deliberadas, propias de este efecto --- */
 .OpcionCheckIn {
+    --color-opcion: #AE98F0;
+    --brdr: 1.5px;
+    --dur-in: 0.9s;
+    --dur-out: 1.3s;
+    --ease-in: cubic-bezier(0.32, 0, 0.67, 0);
+    --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+
+    position: relative;
+    isolation: isolate;
+    z-index: 1;
     display: flex;
     align-items: center;
     gap: 16px;
-    background: rgba(255, 255, 255, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    border-radius: 26px;
-    padding: 16px 24px;
-    cursor: pointer;
+    width: 100%;
+    padding: 17px 24px;
     text-align: left;
+    cursor: pointer;
     font-family: var(--fuente-principal);
-    box-shadow: 0 4px 16px rgba(174, 152, 240, 0.06);
-    backdrop-filter: blur(12px);
-    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    color: var(--color-texto);
+
+    border-radius: var(--radio-pill);
+    border: var(--brdr) solid transparent;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+
+    background:
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.85),
+            rgba(255, 255, 255, 0.55) 45%,
+            rgba(255, 255, 255, 0.78)) padding-box,
+        linear-gradient(165deg,
+            rgba(255, 255, 255, 0.95),
+            rgba(255, 255, 255, 0.5)) border-box;
+
+    --inset-shadow:
+        inset -0.35em -0.35em 0.3em -0.25em rgba(255, 255, 255, 0.95),
+        inset -0.3em -0.9em 0.75em -0.75em rgba(255, 255, 255, 0.85);
+    --outer-shadow:
+        rgba(120, 100, 170, 0.14) 0 6px 14px 0,
+        rgba(120, 100, 170, 0.1) 0 3px 6px 0,
+        rgba(120, 100, 170, 0.08) 0 1px 2px 0;
+
+    box-shadow: var(--inset-shadow), var(--outer-shadow);
+    transition: box-shadow var(--dur-out) var(--ease-in), transform var(--dur-out) var(--ease-in), color 0.5s ease;
 }
 
-.OpcionCheckIn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 22px rgba(174, 152, 240, 0.12);
-    background: rgba(255, 255, 255, 0.75);
+/* Todas las capas de brillo comparten la misma geometría */
+.OpcionCheckIn::before,
+.OpcionCheckIn::after,
+.OpcionDropShadow,
+.OpcionDropShadow::before,
+.OpcionDropShadow::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    pointer-events: none;
+    transition: all var(--dur-out) var(--ease-in);
 }
 
+/* Realce superior tipo vidrio */
+.OpcionCheckIn::after {
+    opacity: 0.25;
+    background: transparent;
+    box-shadow:
+        inset 0 -0.3em 2px 1px rgba(255, 255, 255, 0.9),
+        inset 0 -0.3em 0.25em rgba(255, 255, 255, 0.9),
+        inset 0 -0.3em 0.5em rgba(255, 255, 255, 0.85);
+    mix-blend-mode: lighten;
+    z-index: 2;
+}
 
+.OpcionDropShadow {
+    box-shadow: var(--outer-shadow);
+    z-index: -2;
+}
 
-.OpcionCheckIn.seleccionada {
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: var(--sombra-boton);
-    border-color: var(--logo-morado);
+/* Barrido de color iridiscente (usa el color propio de cada opción) */
+.OpcionCheckIn::before,
+.OpcionDropShadow::after {
+    opacity: 0;
+    translate: 1.1em 0em;
+    scale: 0.8;
+    background: linear-gradient(98deg,
+        var(--color-opcion) -5%,
+        #FF9AB7 45%,
+        #A0E8D8 140%);
+    -webkit-mask: linear-gradient(166deg, transparent 60%, black);
+            mask: linear-gradient(166deg, transparent 60%, black);
+    filter: blur(5px) brightness(1.05) contrast(1.2);
+    z-index: 3;
+}
+
+.OpcionDropShadow::after {
+    translate: -0.25em 1.2em;
+    filter: blur(9px) brightness(1.15);
+    mix-blend-mode: lighten;
+    background-position: center;
+    -webkit-mask: radial-gradient(closest-side, white 0%, transparent 100%);
+            mask: radial-gradient(closest-side, white 0%, transparent 100%);
+    z-index: -2;
+}
+
+.OpcionDropShadow::before {
+    opacity: 1;
+    translate: 1.2em 1.1em;
+    scale: 1.5 0.8;
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-mask: radial-gradient(closest-side, white 0%, transparent 100%);
+            mask: radial-gradient(closest-side, white 0%, transparent 100%);
+    z-index: -1;
+}
+
+/* --- ESTADO HOVER / FOCUS: el brillo se desliza a su lugar, lento --- */
+.OpcionCheckIn:hover,
+.OpcionCheckIn:focus-visible {
+    transition: box-shadow var(--dur-in) var(--ease-out), transform var(--dur-in) var(--ease-out), color 0.5s ease;
+}
+
+.OpcionCheckIn:hover::before,
+.OpcionCheckIn:hover::after,
+.OpcionCheckIn:hover .OpcionDropShadow,
+.OpcionCheckIn:hover .OpcionDropShadow::after,
+.OpcionCheckIn:hover .OpcionDropShadow::before,
+.OpcionCheckIn:focus-visible::before,
+.OpcionCheckIn:focus-visible::after,
+.OpcionCheckIn:focus-visible .OpcionDropShadow,
+.OpcionCheckIn:focus-visible .OpcionDropShadow::after,
+.OpcionCheckIn:focus-visible .OpcionDropShadow::before {
+    transition-duration: var(--dur-in);
+    transition-timing-function: var(--ease-out);
+}
+
+.OpcionCheckIn:hover::after,
+.OpcionCheckIn:hover .OpcionDropShadow::after,
+.OpcionCheckIn:focus-visible::after,
+.OpcionCheckIn:focus-visible .OpcionDropShadow::after {
+    opacity: 0.8;
+}
+
+.OpcionCheckIn:hover::before,
+.OpcionCheckIn:focus-visible::before {
+    opacity: 0.65;
+    translate: 0em;
+    scale: 1;
+}
+
+.OpcionCheckIn:hover .OpcionDropShadow::after,
+.OpcionCheckIn:focus-visible .OpcionDropShadow::after {
+    opacity: 0.6;
+    translate: 0.33em 1.2em;
+    scale: 1.3 0.66;
+}
+
+.OpcionCheckIn:hover,
+.OpcionCheckIn:focus-visible {
+    box-shadow: var(--inset-shadow), var(--outer-shadow);
+    outline-color: color-mix(in srgb, var(--color-opcion) 45%, transparent);
+}
+
+/* --- ESTADO ACTIVO (pulsado) --- */
+.OpcionCheckIn:active {
+    transition: transform 0.15s var(--ease-out), box-shadow 0.15s var(--ease-out);
+    transform: translateY(1px);
+}
+
+/* Contenido siempre legible por encima de las capas de brillo */
+.OpcionContenido {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
 }
 
 .TextoOpcion {
@@ -202,10 +375,25 @@
     color: var(--color-texto);
 }
 
-/* --- ICONOS (formas SVG orgánicas por opción) --- */
+.FlechaOpcion {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    color: var(--color-gris);
+    transition: transform var(--dur-in) var(--ease-out), color 0.5s ease;
+    flex-shrink: 0;
+}
+
+.OpcionCheckIn:hover .FlechaOpcion,
+.OpcionCheckIn:focus-visible .FlechaOpcion {
+    transform: translateX(4px);
+    color: var(--color-opcion);
+}
+
+/* --- ICONOS --- */
 .IconoOpcion {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -216,19 +404,17 @@
     display: block;
     overflow: visible;
 }
-/* --- OPCIÓN "OTRA RAZÓN" (estilo punteado) --- */
-.OpcionOtra {
-    background: transparent;
-    border: 1.5px dashed rgba(174, 152, 240, 0.5);
-    box-shadow: none;
-}
 
-.OpcionOtra:hover {
-    background: rgba(255, 255, 255, 0.35);
+/* --- OPCIÓN "OTRA RAZÓN" (borde punteado, mismo vidrio) --- */
+.OpcionOtra {
+    border-style: dashed;
+    background:
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2)) padding-box,
+        linear-gradient(165deg, rgba(174, 152, 240, 0.4), rgba(255, 255, 255, 0.2)) border-box;
 }
 
 .IconoLapiz {
-    background: rgba(174, 152, 240, 0.12);
+    color: var(--logo-morado);
 }
 
 .TextoOtra {
@@ -307,6 +493,23 @@
     }
     .CheckInIzquierda { min-height: 300px; justify-content: center; text-align: center; }
     .CheckInTexto { max-width: 100%; }
-    .BlobGrande { left: 20%; width: 320px; height: 320px; }
+    .BlobUno { left: 30%; width: 90px; height: 90px; }
     .CheckInDerecha { margin: 0 auto; }
+}
+
+@media (max-width: 480px) {
+    .OpcionCheckIn { padding: 14px 18px; gap: 12px; }
+    .TextoOpcion { font-size: 14.5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .OpcionCheckIn,
+    .OpcionCheckIn::before,
+    .OpcionCheckIn::after,
+    .OpcionDropShadow,
+    .OpcionDropShadow::before,
+    .OpcionDropShadow::after,
+    .FlechaOpcion {
+        transition: none !important;
+    }
 }

@@ -378,56 +378,39 @@
   position:absolute;
   bottom:0;
   left:0;
-  width:100%;
+  width:200%;
   height:100%;
+  background-repeat: repeat-x;
+  background-position: 0 bottom;
+  background-size: 50% 100%;
 }
+
+/* Cada capa es una ola SVG (compatible en todos los navegadores,
+   a diferencia de clip-path:shape() que aún casi nadie soporta
+   y por eso se veía como un óvalo cortado en vez de una ola). */
 
 /* Capa trasera: azul-morado, curva más alta y suave */
 .OlaFondo{
-  background:linear-gradient(135deg, #D8E7F9 0%, #E9D8F5 100%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 220' preserveAspectRatio='none'%3E%3Cpath d='M0,120 C150,40 350,40 600,110 C850,180 1050,180 1200,100 L1200,220 L0,220 Z' fill='%23D8E7F9'/%3E%3C/svg%3E");
   filter:blur(32px);
   opacity:0.62;
-  clip-path:shape(
-    from 0% 100%,
-    line to 0% 55%,
-    arc by 50% 14% of 55% cw,
-    arc by 50% 14% of 55% cw,
-    line to 100% 100%,
-    close
-  );
-  animation:WaveFondo 14s ease-in-out infinite;
+  animation:WaveFondo 18s linear infinite;
 }
 
 /* Capa media */
 .OlaMedia{
-  background:linear-gradient(135deg, #E2D8F7 0%, #F4DCF0 100%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 220' preserveAspectRatio='none'%3E%3Cpath d='M0,140 C200,80 400,180 600,130 C800,80 1000,160 1200,120 L1200,220 L0,220 Z' fill='%23E2D8F7'/%3E%3C/svg%3E");
   filter:blur(24px);
-  opacity:0.98;
-  clip-path:shape(
-    from 0% 100%,
-    line to 0% 62%,
-    arc by 50% 12% of 75% cw,
-    arc by 50% 12% of 75% cw,
-    line to 100% 100%,
-    close
-  );
-  animation:WaveMedia 11s ease-in-out infinite reverse;
+  opacity:0.85;
+  animation:WaveMedia 14s linear infinite reverse;
 }
 
 /* Capa frontal: la más definida */
 .OlaFrente{
-  background:linear-gradient(135deg, #FADCE8 0%, #EDD8F5 100%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 220' preserveAspectRatio='none'%3E%3Cpath d='M0,160 C180,190 420,110 600,150 C780,190 1020,150 1200,170 L1200,220 L0,220 Z' fill='%23FADCE8'/%3E%3C/svg%3E");
   filter:blur(17px);
-  opacity:0.92;
-  clip-path:shape(
-    from 0% 100%,
-    line to 0% 70%,
-    arc by 50% 10% of 95% cw,
-    arc by 50% 10% of 95% cw,
-    line to 100% 100%,
-    close
-  );
-  animation:WaveFrente 8s ease-in-out infinite;
+  opacity:0.8;
+  animation:WaveFrente 10s linear infinite;
 }
 
 /* Velo suave para unificar todo */
@@ -439,51 +422,19 @@
   backdrop-filter:blur(2px);
 }
 
+/* Las olas se deslizan lateralmente en bucle (el SVG está duplicado
+   al 200% de ancho, así el loop es perfecto y sin salto) */
 @keyframes WaveFondo{
-  50%{
-    clip-path:shape(
-      from 0% 100%,
-      line to 0% 48%,
-      arc by 50% 16% of 45% cw,
-      arc by 50% 16% of 45% cw,
-      line to 100% 100%,
-      close
-    );
-  }
+  0%{ transform: translateX(0); }
+  100%{ transform: translateX(-50%); }
 }
-
 @keyframes WaveMedia{
-  50%{
-    clip-path:shape(
-      from 0% 100%,
-      line to 0% 68%,
-      arc by 50% 10% of 90% cw,
-      arc by 50% 10% of 90% cw,
-      line to 100% 100%,
-      close
-    );
-  }
+  0%{ transform: translateX(0); }
+  100%{ transform: translateX(-50%); }
 }
-
 @keyframes WaveFrente{
-  50%{
-    clip-path:shape(
-      from 0% 100%,
-      line to 0% 63%,
-      arc by 50% 13% of 65% cw,
-      arc by 50% 13% of 65% cw,
-      line to 100% 100%,
-      close
-    );
-  }
-}
-
-/* Fallback para navegadores sin soporte de shape() */
-@supports not (clip-path: shape(from 0% 0%, close)) {
-  .OlaFondo, .OlaMedia, .OlaFrente{
-    clip-path:none;
-    border-radius:50% 50% 0 0 / 100% 100% 0 0;
-  }
+  0%{ transform: translateX(0); }
+  100%{ transform: translateX(-50%); }
 }
 
 /* Responsive */
@@ -652,37 +603,5 @@
   /* Baja la luz para no saturar */
 }
 
-/* ===== Fondo ambiental difuminado ===== */
-.FondoDegradado{
-  position: fixed;
-  inset:-100px;
-  z-index:-1;
-  background:
-    repeating-linear-gradient(
-      190deg,
-      rgba(255,170,205,0.18) 0px,
-      rgba(234,141,206,0.15) 60px,
-      rgba(168,144,254,0.15) 120px,
-      rgba(201,187,255,0.15) 180px,
-      rgba(185,215,245,0.18) 240px,
-      rgba(215,165,235,0.15) 300px,
-      rgba(255,170,205,0.18) 360px
-    ),
-    repeating-linear-gradient(
-      -190deg,
-      rgba(185,215,245,0.13) 0px,
-      rgba(201,187,255,0.13) 70px,
-      rgba(234,141,206,0.13) 140px,
-      rgba(255,170,205,0.13) 210px,
-      rgba(215,165,235,0.13) 280px,
-      rgba(185,215,245,0.13) 350px
-    );
-  filter:blur(100px);
-  opacity:0.45;
-  animation:MoverFondo 25s ease-in-out infinite alternate;
-  pointer-events:none;
-}
-@keyframes MoverFondo{
-  0%{ transform:translate(0,0) scale(1); }
-  100%{ transform:translate(30px,-20px) scale(1.05); }
-}
+/* El fondo ambiental (.FondoDegradado) ahora vive en global.css,
+   fijo al <body>, para que cubra TODA la página sin apagarse. */
