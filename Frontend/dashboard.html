@@ -13,76 +13,181 @@
 
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/checkin.css">
+
+    <style>
+        .CuerpoDashboard {
+            position: relative;
+            background: linear-gradient(135deg, #FDF6F4 0%, #F7F2F6 50%, #F1F4F6 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: var(--fuente-secundaria);
+            color: var(--color-texto);
+        }
+
+        .DashContenedor {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 5%;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+
+        .DashHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 0;
+        }
+
+        .DashNavLinks {
+            display: flex;
+            gap: 25px;
+            font-family: var(--fuente-principal);
+            font-size: 13.5px;
+            font-weight: 500;
+        }
+
+        .DashNavLinks a {
+            color: var(--color-gris);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .DashNavLinks a:hover {
+            color: var(--logo-morado);
+        }
+
+        .DashCentro {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin: auto 0;
+            padding: 40px 0;
+        }
+
+        .DashSaludoEyebrow {
+            font-family: var(--fuente-principal);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--logo-morado);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .DashTitulo {
+            font-family: var(--fuente-principal);
+            font-size: clamp(38px, 5vw, 56px);
+            font-weight: 600;
+            color: var(--color-texto);
+            margin-bottom: 10px;
+        }
+
+        .DashSubtitulo {
+            font-size: 16px;
+            color: var(--color-gris);
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .BtnIniciarPausa {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #AE98F0, #9370DB);
+            color: white;
+            padding: 18px 36px;
+            border-radius: var(--radio-pill);
+            font-family: var(--fuente-principal);
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(174, 152, 240, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .BtnIniciarPausa:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(174, 152, 240, 0.5);
+        }
+
+        .BtnSecundarioFunciones {
+            font-family: var(--fuente-principal);
+            font-size: 13.5px;
+            color: var(--color-gris);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-bottom: 1px dashed rgba(120, 100, 170, 0.4);
+            padding-bottom: 2px;
+        }
+
+        .BtnSecundarioFunciones:hover {
+            color: var(--logo-morado);
+            border-bottom-color: var(--logo-morado);
+        }
+
+        .DashFooterInfo {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 13px;
+            color: var(--color-gris);
+            border-top: 1px solid rgba(174, 152, 240, 0.15);
+        }
+    </style>
 </head>
 
 <body class="CuerpoDashboard">
 
-    <div class="PaginaDashboard">
+    <div class="CheckInFondoAnimado" aria-hidden="true">
+        <svg preserveAspectRatio="xMidYMid slice" viewBox="10 10 80 80">
+            <path class="BlobFondo BlobFondoUno"   d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z"/>
+            <path class="BlobFondo BlobFondoDos"   d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z"/>
+        </svg>
+        <div class="CheckInVelo"></div>
+    </div>
 
-        <!-- HEADER -->
+    <div class="DashContenedor">
+
         <header class="DashHeader">
-            <span class="DashMarca">SOFTSTOP</span>
-
-            <nav class="DashNav">
-                <a href="#" class="DashNavLink activo">Home</a>
-                <a href="#" class="DashNavLink">Journey</a>
-                <a href="#" class="DashNavLink">Perfil</a>
+            <span class="CheckInMarca">SOFTSTOP</span>
+            <nav class="DashNavLinks">
+                <a href="dashboard.html" style="color: var(--logo-morado); font-weight: 700;">Home</a>
+                <a href="Funciones.html">Funciones</a>
+                <a href="journey.html">Journey</a>
+                <a href="journey.html">Perfil</a>
+                <a href="login.html" style="color: #E86A6A;">Salir</a>
             </nav>
-
-            <button class="DashCerrar" id="BtnCerrarDash" aria-label="Cerrar">✕</button>
         </header>
 
-        <!-- CONTENIDO PRINCIPAL -->
-        <main class="DashPrincipal">
+        <main class="DashCentro">
+            <span class="DashSaludoEyebrow">Espacio seguro</span>
+            <h1 class="DashTitulo">Hola, Briyith.</h1>
+            <p class="DashSubtitulo">Respira. Estás en un lugar seguro para ordenar tus ideas.</p>
 
-            <!-- Resplandor central -->
-            <div class="DashResplandor" aria-hidden="true"></div>
-
-            <!-- Centro: saludo + botón -->
-            <div class="DashCentro">
-                <h1 class="DashSaludo">Hola, <span id="NombreUsuario">Xiomara</span>.</h1>
-                <p class="DashFrase">Respira. Estás aquí.</p>
-                <button class="DashNuevaPausa" id="BtnNuevaPausa">
-                    <span class="DashMas">+</span> NUEVA PAUSA
-                </button>
-            </div>
-
-            <!-- Tarjetas de funciones -->
-            <a href="checkin.html" class="TarjetaFuncionDash TarjetaCheckIn">
-                <h3>Check-in</h3>
-                <p>¿Cómo estoy ahora?</p>
-                <span class="FlechaTarjeta FlechaRosa">→</span>
+            <a href="checkin.html" class="BtnIniciarPausa">
+                + Iniciar pausa funcional
             </a>
 
-            <a href="#" class="TarjetaFuncionDash TarjetaUnstuck">
-                <h3>Unstuck</h3>
-                <p>Sal cuando<br>te sientas atascado.</p>
-                <span class="FlechaTarjeta FlechaVerde">→</span>
+            <!-- Redirige directo a la vista de Funciones -->
+            <a href="Funciones.html" class="BtnSecundarioFunciones">
+                Explorar funciones secundarias
             </a>
-
-            <a href="#" class="TarjetaFuncionDash TarjetaThink">
-                <h3>Think</h3>
-                <p>Ideas claras<br>cuando lo necesitas.</p>
-                <span class="FlechaTarjeta FlechaMorada">→</span>
-            </a>
-
-            <a href="#" class="TarjetaFuncionDash TarjetaPath">
-                <h3>Path</h3>
-                <p>¿Qué necesito<br>ahora?</p>
-                <span class="FlechaTarjeta FlechaMorada">→</span>
-            </a>
-
-            <a href="funcion-reset.html" class="TarjetaFuncionDash TarjetaReset">
-                <h3>Reset</h3>
-                <p>Baja el ruido.</p>
-                <span class="FlechaTarjeta FlechaRosa">→</span>
-            </a>
-
         </main>
+
+        <footer class="DashFooterInfo">
+            <p>SoftStop · Diseñado para cuidar de tu mente mientras avanzas.</p>
+        </footer>
 
     </div>
 
-    <script src="js/dashboard.js"></script>
 </body>
 </html>

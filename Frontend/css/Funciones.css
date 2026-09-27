@@ -230,7 +230,7 @@
 .TarjetaCheckIn  { top: 14%;  left: 10%; }
 .TarjetaUnstuck  { top: 14%;  right: 10%; }
 .TarjetaThink    { top: 46%;  left: 8%; }
-.TarjetaPath     { top: 52%;  right: 8%; }
+.Tarjetajournaling     { top: 52%;  right: 8%; }
 .TarjetaReset    { bottom: 6%; left: 50%; transform: translateX(-50%); }
 .TarjetaReset:hover { transform: translateX(-50%) translateY(-4px); }
 

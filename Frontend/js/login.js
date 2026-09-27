@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     emailInput.addEventListener('input', () => showError(emailInput, 'emailError', false));
     passwordInput.addEventListener('input', () => showError(passwordInput, 'passwordError', false));
 
-    // Intercepción del envío y Redirección
+    // Intercepción del envío y Redirección Inteligente
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         let isValid = true;
@@ -112,13 +112,21 @@ document.addEventListener("DOMContentLoaded", () => {
         submitText.innerHTML = `<svg class="LoginSpinner" width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" opacity="0.25"></circle><path fill="currentColor" opacity="0.85" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Preparando tu espacio...`;
         submitBtn.disabled = true;
 
-        // Simular validación de 1.5 segundos y luego REDIRECCIONAR
+        // Simular validación de 1.5 segundos y luego REDIRECCIONAR SEGÚN EL ROL
         setTimeout(() => {
+            const correoIngresado = emailInput.value.trim().toLowerCase();
+
             if (isLoginMode) {
-                // Si estaba iniciando sesión, va al dashboard
-                window.location.href = 'dashboard.html';
+                // Validación inteligente de rol basada en el correo
+                if (correoIngresado === "admin@softstop.com") {
+                    // Si es el admin, va directo al panel de gestión interna
+                    window.location.href = 'admin-dashboard.html';
+                } else {
+                    // Si es un estudiante normal, va al dashboard de usuario
+                    window.location.href = 'dashboard.html';
+                }
             } else {
-                // Si se estaba registrando, va al checkin
+                // Si se estaba registrando por primera vez, va al check-in inicial
                 window.location.href = 'checkin.html';
             }
         }, 1500);

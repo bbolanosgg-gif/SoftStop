@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión Interna | Softstop Admin</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/checkin.css">
+
+    <style>
+        .CuerpoAdmin {
+            position: relative;
+            background: linear-gradient(135deg, #FDF6F4 0%, #F7F2F6 50%, #F1F4F6 100%);
+            min-height: 100vh;
+            font-family: var(--fuente-secundaria);
+            color: var(--color-texto);
+        }
+
+        .AdminContenedor {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 5% 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .AdminHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(174, 152, 240, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .AdminUserBadge {
+            font-family: var(--fuente-principal);
+            font-size: 13px;
+            color: var(--color-gris);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .AdminGrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .AdminCardStat {
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(174, 152, 240, 0.3);
+            border-radius: 24px;
+            padding: 25px;
+            backdrop-filter: blur(12px);
+        }
+
+        .AdminCardStat h3 {
+            font-family: var(--fuente-principal);
+            font-size: 13px;
+            color: var(--color-gris);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .AdminCardStat .Numero {
+            font-family: var(--fuente-principal);
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--color-texto);
+        }
+
+        /* Tabla de gestión */
+        .AdminSeccionTabla {
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(174, 152, 240, 0.25);
+            border-radius: 28px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
+        }
+
+        .AdminSeccionTabla h2 {
+            font-family: var(--fuente-principal);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            font-family: var(--fuente-principal);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-gris);
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(174, 152, 240, 0.2);
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(174, 152, 240, 0.1);
+            color: var(--color-texto);
+        }
+
+        .BadgeEstado {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: var(--radio-pill);
+            font-size: 11.5px;
+            font-family: var(--fuente-principal);
+            font-weight: 600;
+            background: rgba(58, 169, 199, 0.15);
+            color: #257d94;
+        }
+
+        @media (max-width: 900px) {
+            .AdminGrid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body class="CuerpoAdmin">
+
+    <!-- FONDO ANIMADO SUTIL -->
+    <div class="CheckInFondoAnimado" aria-hidden="true">
+        <svg preserveAspectRatio="xMidYMid slice" viewBox="10 10 80 80">
+            <path class="BlobFondo BlobFondoUno"   d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z"/>
+            <path class="BlobFondo BlobFondoDos"   d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z"/>
+        </svg>
+        <div class="CheckInVelo"></div>
+    </div>
+
+    <div class="AdminContenedor">
+
+        <!-- HEADER -->
+        <header class="AdminHeader">
+            <span class="CheckInMarca">SOFTSTOP · PANEL ADMIN</span>
+            <div class="AdminUserBadge">
+                <span>Hola, Administradora</span>
+                <a href="admin-login.html" class="CheckInSalir">Cerrar Sesión</a>
+            </div>
+        </header>
+
+        <!-- TARJETAS DE MÉTRICAS GENERALES -->
+        <div class="AdminGrid">
+            <div class="AdminCardStat">
+                <h3>Estudiantes Activos</h3>
+                <div class="Numero">128</div>
+            </div>
+            <div class="AdminCardStat">
+                <h3>Pausas Realizadas (Hoy)</h3>
+                <div class="Numero">42</div>
+            </div>
+            <div class="AdminCardStat">
+                <h3>Mensajes de Soporte</h3>
+                <div class="Numero">3</div>
+            </div>
+        </div>
+
+        <!-- TABLA DE GESTIÓN DE CONTENIDOS / REPORTES -->
+        <section class="AdminSeccionTabla">
+            <h2>Actividad Reciente del Sistema</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Usuario / Estudiante</th>
+                        <th>Módulo Utilizado</th>
+                        <th>Estado Emocional Inicial</th>
+                        <th>Fecha</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Briyith Xiomara (UNAL)</td>
+                        <td>Ruta Think (Claridad)</td>
+                        <td><span class="BadgeEstado">Organizar</span></td>
+                        <td>Hoy, 10:45 AM</td>
+                        <td><a href="#" style="color: var(--logo-morado); text-decoration: none; font-weight: 500;">Ver detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>Estudiante Anónimo</td>
+                        <td>Journal & Unstuck</td>
+                        <td><span class="BadgeEstado" style="background: rgba(255, 154, 183, 0.2); color: #c24667;">Sin energía</span></td>
+                        <td>Ayer, 4:20 PM</td>
+                        <td><a href="#" style="color: var(--logo-morado); text-decoration: none; font-weight: 500;">Ver detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>Estudiante Anónimo</td>
+                        <td>Función Reset</td>
+                        <td><span class="BadgeEstado" style="background: rgba(138, 111, 232, 0.2); color: #6248c4;">Saturado</span></td>
+                        <td>Ayer, 2:10 PM</td>
+                        <td><a href="#" style="color: var(--logo-morado); text-decoration: none; font-weight: 500;">Ver detalle</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal | Softstop</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <!-- Puedes reutilizar estilos de think o crear un journal.css sencillo más adelante -->
+    <link rel="stylesheet" href="css/ruta-think.css"> 
+</head>
+
+<body class="CuerpoThink">
+
+    <div class="PaginaThink">
+
+        <header class="ThinkHeader">
+            <span class="ThinkIndicador">Espacio de desahogo</span>
+            <span class="ThinkMarca">SOFTSTOP</span>
+            <a href="dashboard.html" class="ThinkSalir">← Salir</a>
+        </header>
+
+        <main class="ThinkPrincipal">
+
+            <section class="ThinkVista ThinkPaso" id="VistaJournal">
+                <span class="ThinkEyebrow">JOURNAL</span>
+                <h1 class="ThinkPasoTitulo">Escribe lo que estás cargando</h1>
+                <p class="ThinkPasoSubtitulo">Saca de tu cabeza aquello que estás pensando o evitando. Sin filtros ni juicios.</p>
+
+                <div class="ThinkInputGrupo">
+                    <textarea 
+                        id="TextoJournal" 
+                        rows="6" 
+                        placeholder="¿Qué es lo que más pereza te da de empezar hoy? Cuéntanos..."
+                        style="width: 100%; border: 1px solid rgba(174, 152, 240, 0.3); border-radius: 20px; padding: 20px; font-family: var(--fuente-secundaria); font-size: 15px; background: rgba(255, 255, 255, 0.8); resize: none; color: var(--color-texto);"
+                    ></textarea>
+                </div>
+
+                <button class="BtnThinkContinuar" id="BtnTerminarJournal">Terminar desahogo →</button>
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="js/journal.js"></script>
+</body>
+</html>

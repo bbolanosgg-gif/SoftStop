@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto | Softstop</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/checkin.css"> <!-- Reutilizamos el fondo animado y estructura -->
+
+    <style>
+        .CuerpoContacto {
+            position: relative;
+            background: linear-gradient(135deg, #FDF6F4 0%, #F7F2F6 50%, #F1F4F6 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: var(--fuente-secundaria);
+            color: var(--color-texto);
+        }
+
+        .ContactoContenedor {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 5% 60px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .ContactoHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0 40px;
+        }
+
+        .MenuLinks {
+            display: flex;
+            gap: 25px;
+            font-family: var(--fuente-principal);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .MenuLinks a {
+            color: var(--color-gris);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .MenuLinks a:hover, .MenuLinks a.activo {
+            color: var(--logo-morado);
+        }
+
+        .ContactoGrid {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 60px;
+            align-items: center;
+            flex: 1;
+        }
+
+        .ContactoInfo h1 {
+            font-family: var(--fuente-principal);
+            font-size: clamp(36px, 4vw, 48px);
+            font-weight: 600;
+            line-height: 1.15;
+            color: var(--color-texto);
+            margin: 14px 0 20px;
+        }
+
+        .ContactoInfo p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--color-gris);
+            margin-bottom: 40px;
+        }
+
+        .BeneficiosContacto {
+            display: flex;
+            gap: 30px;
+        }
+
+        .BeneficioItem {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .BeneficioItem span:first-child {
+            font-family: var(--fuente-principal);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-texto);
+        }
+
+        .BeneficioItem span:last-child {
+            font-size: 13px;
+            color: var(--color-gris);
+            line-height: 1.4;
+        }
+
+        /* Tarjeta del formulario */
+        .FormularioCard {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1.5px solid rgba(174, 152, 240, 0.3);
+            border-radius: 28px;
+            padding: 40px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 15px 35px rgba(120, 100, 170, 0.08);
+        }
+
+        .FormularioCard h2 {
+            font-family: var(--fuente-principal);
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--color-texto);
+            margin-bottom: 6px;
+        }
+
+        .FormularioCard > p {
+            font-size: 14px;
+            color: var(--color-gris);
+            margin-bottom: 25px;
+        }
+
+        .InputGrupo {
+            margin-bottom: 20px;
+        }
+
+        .InputRow {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        label {
+            display: block;
+            font-family: var(--fuente-principal);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-texto);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid rgba(174, 152, 240, 0.35);
+            border-radius: 14px;
+            font-family: var(--fuente-secundaria);
+            font-size: 14px;
+            color: var(--color-texto);
+            background: rgba(255, 255, 255, 0.9);
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--logo-morado);
+        }
+
+        textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        .BtnEnviarContacto {
+            width: 100%;
+            background: linear-gradient(135deg, #AE98F0, #9370DB);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: var(--radio-pill);
+            font-family: var(--fuente-principal);
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+            box-shadow: 0 6px 16px rgba(174, 152, 240, 0.3);
+        }
+
+        .BtnEnviarContacto:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .ContactoDirecto {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(174, 152, 240, 0.2);
+            text-align: center;
+        }
+
+        .ContactoDirecto p {
+            font-size: 12.5px;
+            color: var(--color-gris);
+            margin-bottom: 12px;
+        }
+
+        .DirectoLinks {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            font-size: 13px;
+            color: var(--color-texto);
+            font-family: var(--fuente-principal);
+        }
+
+        @media (max-width: 900px) {
+            .ContactoGrid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .BeneficiosContacto {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .InputRow {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body class="CuerpoContacto">
+
+    <!-- FONDO ANIMADO SUTIL -->
+    <div class="CheckInFondoAnimado" aria-hidden="true">
+        <svg preserveAspectRatio="xMidYMid slice" viewBox="10 10 80 80">
+            <path class="BlobFondo BlobFondoUno"   d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z"/>
+            <path class="BlobFondo BlobFondoDos"   d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z"/>
+        </svg>
+        <div class="CheckInVelo"></div>
+    </div>
+
+    <div class="ContactoContenedor">
+
+        <!-- HEADER -->
+        <header class="ContactoHeader">
+            <span class="CheckInMarca">SOFTSTOP</span>
+            <nav class="MenuLinks">
+                <a href="index.html">Inicio</a>
+                <a href="index.html#funciones">Funciones</a>
+                <a href="contacto.html" class="activo">Contacto</a>
+            </nav>
+        </header>
+
+        <!-- GRID PRINCIPAL -->
+        <div class="ContactoGrid">
+
+            <!-- Columna Izquierda: Mensaje institucional y confianza -->
+            <div class="ContactoInfo">
+                <span class="CheckInEyebrow">CONTÁCTANOS</span>
+                <h1>Estamos aquí<br>para ayudarte.</h1>
+                <p>
+                    Si tienes dudas, sugerencias o simplemente quieres saber más sobre Softstop, completa el formulario y te responderemos lo antes posible.
+                </p>
+
+                <div class="BeneficiosContacto">
+                    <div class="BeneficioItem">
+                        <span>💬 Respuesta rápida</span>
+                        <span>Te contestamos en menos de 24 h.</span>
+                    </div>
+                    <div class="BeneficioItem">
+                        <span>🔒 Información segura</span>
+                        <span>Tus datos están protegidos y son confidenciales.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Tarjeta del Formulario -->
+            <div class="FormularioCard">
+                <h2>Envíanos un mensaje</h2>
+                <p>Cuéntanos en qué podemos ayudarte hoy.</p>
+
+                <form onsubmit="event.preventDefault(); alert('¡Mensaje enviado con éxito! Te responderemos pronto 🤍');">
+                    <div class="InputRow">
+                        <div class="InputGrupo">
+                            <label>Nombre completo *</label>
+                            <input type="text" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="InputGrupo">
+                            <label>Correo electrónico *</label>
+                            <input type="email" placeholder="tu@ejemplo.com" required>
+                        </div>
+                    </div>
+
+                    <div class="InputGrupo">
+                        <label>Asunto *</label>
+                        <select required>
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="duda">Duda o soporte técnico</option>
+                            <option value="sugerencia">Sugerencia para la app</option>
+                            <option value="otro">Otro motivo</option>
+                        </select>
+                    </div>
+
+                    <div class="InputGrupo">
+                        <label>Mensaje *</label>
+                        <textarea placeholder="Escribe tu mensaje aquí..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="BtnEnviarContacto">Enviar mensaje →</button>
+                </form>
+
+                <div class="ContactoDirecto">
+                    <p>O también puedes escribirnos a:</p>
+                    <div class="DirectoLinks">
+                        <span>✉️ hola@softstop.com</span>
+                        <span>📱 +57 300 123 4567</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
