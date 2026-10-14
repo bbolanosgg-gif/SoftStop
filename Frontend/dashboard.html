@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,186 +7,312 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/checkin.css">
+    <!-- Importación de las tipografías del diseño -->
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Marcellus+SC&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            /* Tipografías (las 4 del diseño) */
+            --fuente-marca: 'Sora', sans-serif;                           /* SOFTSTOP */
+            --fuente-titulo: 'Libre Caslon Text', Georgia, serif;        /* Títulos y mensajes */
+            --fuente-texto: 'Google Sans Code', ui-monospace, monospace; /* Texto complementario */
+            --fuente-display: 'Marcellus SC', Georgia, serif;            /* DESACELERA, PARA TI... */
+
+            /* Alias por si otra página usa los nombres viejos */
+            --fuente-principal: var(--fuente-marca);
+            --fuente-secundaria: var(--fuente-texto);
+
+            /* Colores */
+            --color-tinta: #3f2a4e;
+            --color-texto: #3f2a4e;
+            --color-suave: #7a6585;
+            --colorfooter: #5d4a6b;
+            --color-hero: #1a1a1a;      /* título del hero adaptado */
+            --color-marca: #4b1d3d;     /* SOFTSTOP y ENTRAR */
+            --rosa-palo: #d68a96;
+            --crema-papel: #fbf4ea;
+            --logo-morado: #a890fe;
+            --color-acento: #d68a96;
+            --bg-crema: #f6e6ee;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Contenedor principal con la imagen de fondo */
         .CuerpoDashboard {
             position: relative;
-            background: linear-gradient(135deg, #FDF6F4 0%, #F7F2F6 50%, #F1F4F6 100%);
+            /* AQUÍ DEBES PONER LA RUTA DE TU IMAGEN DE PAISAJE */
+            background: url('img/FondoDasboard.png') center center / cover no-repeat;
+            background-color: var(--bg-crema); /* Fallback por si la imagen no carga */
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            font-family: var(--fuente-secundaria);
+            align-items: center;
+            justify-content: center;
+            font-family: var(--fuente-texto);
             color: var(--color-texto);
+            overflow: hidden;
         }
 
-        .DashContenedor {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px 5%;
+        /* Cabecera superior */
+        .HeaderEspacio {
+            position: absolute;
+            top: 0;
             width: 100%;
-            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 40px;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .TextoBienvenida {
+            font-family: var(--fuente-display);
+            color: white;
+            letter-spacing: 5px;
+            font-size: 14px;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+        }
+
+        .BotonCerrar {
+            position: absolute;
+            right: 40px;
+            color: white;
+            font-family: var(--fuente-marca);
+            font-size: 22px;
+            text-decoration: none;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+        }
+
+        .BotonCerrar:hover {
+            transform: scale(1.2);
+        }
+
+        /* Navegación lateral izquierda */
+        .NavegacionLateral {
+            position: absolute;
+            left: 40px;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            z-index: 2;
-        }
-
-        .DashHeader {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 30px 0;
+            gap: 30px;
+            z-index: 10;
         }
 
-        .DashNavLinks {
+        /* Línea punteada que conecta los iconos */
+        .NavegacionLateral::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            bottom: 10%;
+            width: 2px;
+            background: repeating-linear-gradient(to bottom, transparent, transparent 8px, rgba(255,255,255,0.7) 8px, rgba(255,255,255,0.7) 16px);
+            z-index: -1;
+        }
+
+        .IconoNav {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             display: flex;
-            gap: 25px;
-            font-family: var(--fuente-principal);
-            font-size: 13.5px;
-            font-weight: 500;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .DashNavLinks a {
-            color: var(--color-gris);
-            text-decoration: none;
-            transition: color 0.3s ease;
+        .IconoNav:hover {
+            transform: scale(1.15) translateY(-2px);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 6px 15px rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.8);
         }
 
-        .DashNavLinks a:hover {
-            color: var(--logo-morado);
+        .IconoNav img {
+            width: 55%;
+            height: 55%;
+            object-fit: contain;
         }
 
-        .DashCentro {
+        /* Contenido Central (Efecto Glassmorphism) */
+        .ContenidoCentral {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            margin: auto 0;
-            padding: 40px 0;
+            z-index: 5;
+            padding: 20px;
         }
 
-        .DashSaludoEyebrow {
-            font-family: var(--fuente-principal);
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 4px;
-            color: var(--logo-morado);
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
-
-        .DashTitulo {
-            font-family: var(--fuente-principal);
-            font-size: clamp(38px, 5vw, 56px);
-            font-weight: 600;
-            color: var(--color-texto);
-            margin-bottom: 10px;
-        }
-
-        .DashSubtitulo {
-            font-size: 16px;
-            color: var(--color-gris);
-            margin-bottom: 40px;
+        .SaludoUsuario {
+            font-family: var(--fuente-titulo);
+            font-size: clamp(36px, 5vw, 54px);
+            color: var(--color-hero);
+            margin-bottom: 25px;
             font-weight: 400;
         }
 
-        .BtnIniciarPausa {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: linear-gradient(135deg, #AE98F0, #9370DB);
-            color: white;
-            padding: 18px 36px;
-            border-radius: var(--radio-pill);
-            font-family: var(--fuente-principal);
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            box-shadow: 0 10px 25px rgba(174, 152, 240, 0.4);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .TarjetaCristal {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            padding: 35px 50px;
+            max-width: 500px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .TarjetaCristal p {
+            font-family: var(--fuente-texto);
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--color-tinta);
             margin-bottom: 20px;
         }
 
-        .BtnIniciarPausa:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 30px rgba(174, 152, 240, 0.5);
+        .TarjetaCristal p:last-child {
+            margin-bottom: 0;
         }
 
-        .BtnSecundarioFunciones {
-            font-family: var(--fuente-principal);
-            font-size: 13.5px;
-            color: var(--color-gris);
+        /* Botón Mágico con CSS puro */
+        .BotonMagico {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px 36px;
+            font-family: var(--fuente-texto);
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
             text-decoration: none;
-            transition: color 0.3s ease;
-            border-bottom: 1px dashed rgba(120, 100, 170, 0.4);
-            padding-bottom: 2px;
+            background: linear-gradient(135deg, var(--rosa-palo), #c2707e);
+            border-radius: 50px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 20px rgba(214, 138, 150, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1;
         }
 
-        .BtnSecundarioFunciones:hover {
-            color: var(--logo-morado);
-            border-bottom-color: var(--logo-morado);
+        /* Destello constante que pasa por encima */
+        .BotonMagico::before {
+            content: '';
+            position: absolute;
+            top: 0; 
+            left: -150%;
+            width: 50%; 
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent);
+            transform: skewX(-25deg);
+            animation: destello-magico 4s infinite;
+            z-index: -1;
         }
 
-        .DashFooterInfo {
-            text-align: center;
-            padding: 20px 0;
-            font-size: 13px;
-            color: var(--color-gris);
-            border-top: 1px solid rgba(174, 152, 240, 0.15);
+        /* Aura interior al pasar el cursor */
+        .BotonMagico::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50px;
+            box-shadow: inset 0 0 15px rgba(255,255,255,0.6);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .BotonMagico:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 
+                0 12px 25px rgba(214, 138, 150, 0.6),
+                0 0 20px var(--logo-morado); /* Brillo exterior integrando el morado de Softstop */
+            border-color: rgba(255,255,255,0.6);
+            color: #fff;
+        }
+
+        .BotonMagico:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes destello-magico {
+            0% { left: -150%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        /* Adaptabilidad para pantallas más pequeñas */
+        @media (max-width: 768px) {
+            .NavegacionLateral {
+                left: 15px;
+            }
+            .TarjetaCristal {
+                padding: 25px;
+                max-width: 85%;
+            }
+            .SaludoUsuario {
+                font-size: 38px;
+            }
         }
     </style>
 </head>
 
 <body class="CuerpoDashboard">
 
-    <div class="CheckInFondoAnimado" aria-hidden="true">
-        <svg preserveAspectRatio="xMidYMid slice" viewBox="10 10 80 80">
-            <path class="BlobFondo BlobFondoUno"   d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z"/>
-            <path class="BlobFondo BlobFondoDos"   d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z"/>
-        </svg>
-        <div class="CheckInVelo"></div>
-    </div>
+    <!-- Header superior -->
+    <header class="HeaderEspacio">
+        <span class="TextoBienvenida">BIENVENIDO A TU ESPACIO</span>
+        <!-- Asumiendo que la X de la esquina te saca a otra parte -->
+        <a href="login.html" class="BotonCerrar" title="Cerrar">X</a>
+    </header>
 
-    <div class="DashContenedor">
+    <!-- Navegación Lateral (Izquierda) -->
+    <nav class="NavegacionLateral">
+        <!-- 1. Icono de Cartas -> Funciones.html -->
+        <a href="Funciones.html" class="IconoNav" title="Funciones">
+            <img src="img/cards.png" alt="Cartas">
+        </a>
+        
+        <!-- 2. Icono Centro -> index.html -->
+        <a href="index.html" class="IconoNav" title="Inicio">
+            <img src="img/Logo.png" alt="Centro">
+        </a>
+        
+        <!-- 3. Icono Varita Mágica -> journey.html -->
+        <a href="journey.html" class="IconoNav" title="Journey">
+            <img src="img/vara.png" alt="Varita">
+        </a>
+    </nav>
 
-        <header class="DashHeader">
-            <span class="CheckInMarca">SOFTSTOP</span>
-            <nav class="DashNavLinks">
-                <a href="dashboard.html" style="color: var(--logo-morado); font-weight: 700;">Home</a>
-                <a href="Funciones.html">Funciones</a>
-                <a href="journey.html">Journey</a>
-                <a href="journey.html">Perfil</a>
-                <a href="login.html" style="color: #E86A6A;">Salir</a>
-            </nav>
-        </header>
+    <!-- Contenido central -->
+    <main class="ContenidoCentral">
+        <h1 class="SaludoUsuario">Hola, Xiomara</h1>
+        
+        <div class="TarjetaCristal">
+            <p>Explora nuestros espacios de calma y encuentra el que necesitas hoy.</p>
+            <p>Puedes comenzar con una pausa guiada para respirar, reconectar contigo y volver a tu ritmo.</p>
+        </div>
 
-        <main class="DashCentro">
-            <span class="DashSaludoEyebrow">Espacio seguro</span>
-            <h1 class="DashTitulo">Hola, Briyith.</h1>
-            <p class="DashSubtitulo">Respira. Estás en un lugar seguro para ordenar tus ideas.</p>
-
-            <a href="checkin.html" class="BtnIniciarPausa">
-                + Iniciar pausa funcional
-            </a>
-
-            <!-- Redirige directo a la vista de Funciones -->
-            <a href="Funciones.html" class="BtnSecundarioFunciones">
-                Explorar funciones secundarias
-            </a>
-        </main>
-
-        <footer class="DashFooterInfo">
-            <p>SoftStop · Diseñado para cuidar de tu mente mientras avanzas.</p>
-        </footer>
-
-    </div>
+        <!-- Botón mágico hacia tu pausa funcional -->
+        <a href="checkin.html" class="BotonMagico">
+            Ir a mi pausa funcional
+        </a>
+    </main>
 
 </body>
 </html>

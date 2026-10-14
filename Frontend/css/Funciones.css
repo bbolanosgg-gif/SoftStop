@@ -1,6 +1,4 @@
-/* ==============================================
-   DASHBOARD PRINCIPAL
-============================================== */
+/* DASHBOARD de funciones */
 
 .CuerpoDashboard {
     background:
@@ -98,7 +96,7 @@
     min-height: 620px;
 }
 
-/* --- RESPLANDOR CENTRAL --- */
+
 .DashResplandor {
     position: absolute;
     top: 50%;
@@ -117,7 +115,6 @@
     pointer-events: none;
 }
 
-/* --- CENTRO: SALUDO Y BOTÓN --- */
 .DashCentro {
     position: relative;
     z-index: 2;
@@ -171,10 +168,6 @@
     color: var(--logo-morado);
 }
 
-/* ==============================================
-   TARJETAS DE FUNCIONES (posición radial)
-============================================== */
-
 .TarjetaFuncionDash {
     position: absolute;
     z-index: 2;
@@ -226,7 +219,7 @@
 .FlechaVerde { background: rgba(160, 232, 216, 0.45); }
 .FlechaMorada { background: rgba(174, 152, 240, 0.3); }
 
-/* --- POSICIONES DE CADA TARJETA --- */
+/* POSICIONES DE CADA TARJETA */
 .TarjetaCheckIn  { top: 14%;  left: 10%; }
 .TarjetaUnstuck  { top: 14%;  right: 10%; }
 .TarjetaThink    { top: 46%;  left: 8%; }
@@ -234,7 +227,7 @@
 .TarjetaReset    { bottom: 6%; left: 50%; transform: translateX(-50%); }
 .TarjetaReset:hover { transform: translateX(-50%) translateY(-4px); }
 
-/* --- RESPONSIVE --- */
+/* RESPONSIVE */
 @media (max-width: 1000px) {
     .DashPrincipal {
         flex-direction: column;

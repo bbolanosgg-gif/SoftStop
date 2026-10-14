@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar sesión | Softstop</title>
 
+    <!-- Google Sans Code (texto), Marcellus SC (acentos) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Marcellus+SC&family=Sora:wght@100..800&display=swap"
+        rel="stylesheet">
 
-    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/login.css">
 </head>
@@ -23,17 +25,10 @@
         <!-- ================= PANEL IZQUIERDO: FORMULARIO ================= -->
         <div class="LoginIzquierda">
 
-            <div class="LoginLogoWrap">
-                <div class="LoginLogoIcono">
-                    <img src="img/Logo.png" alt="Logo Soft Stop">
-                </div>
-                <span class="LoginLogoTexto">SOFTSTOP</span>
-            </div>
-
             <div class="LoginFormWrap">
 
-                <h1 class="LoginTitulo" id="LoginTitulo">Bienvenido de nuevo</h1>
-                <p class="LoginSubtitulo" id="LoginSubtitulo">Inicia sesión para continuar con tu proceso.</p>
+                <h1 class="LoginTitulo" id="LoginTitulo">Bienvenido</h1>
+                <p class="LoginSubtitulo" id="LoginSubtitulo">Inicia sesion para continuar</p>
 
                 <div id="statusMessage" class="LoginStatusMessage" hidden></div>
 
@@ -44,14 +39,19 @@
                         <label for="name">Tu nombre</label>
                         <div class="LoginInputWrap">
                             <span class="LoginInputIcono">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="currentColor" stroke-width="1.5"/>
-                                    <path d="M3 21C3 17.134 7.02944 14 12 14C16.9706 14 21 17.134 21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                                        stroke="currentColor" stroke-width="1.5" />
+                                    <path d="M3 21C3 17.134 7.02944 14 12 14C16.9706 14 21 17.134 21 21"
+                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                                 </svg>
                             </span>
-                            <input type="text" id="name" placeholder="¿Cómo prefieres que te llamemos?" autocomplete="name">
+                            <input type="text" id="name" placeholder="¿Cómo prefieres que te llamemos?"
+                                autocomplete="name">
                         </div>
-                        <p class="LoginError" id="nameError" hidden>Por favor, compártenos tu nombre para continuar.</p>
+                        <p class="LoginError" id="nameError" hidden>Por favor, compártenos tu nombre.</p>
                     </div>
 
                     <!-- Correo -->
@@ -59,14 +59,18 @@
                         <label for="email">Correo electrónico</label>
                         <div class="LoginInputWrap">
                             <span class="LoginInputIcono">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M3 6.5L10.89 12.1C11.5624 12.5773 12.4376 12.5773 13.11 12.1L21 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.5"/>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 6.5L10.89 12.1C11.5624 12.5773 12.4376 12.5773 13.11 12.1L21 6.5"
+                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor"
+                                        stroke-width="1.5" />
                                 </svg>
                             </span>
                             <input type="email" id="email" placeholder="ejemplo@correo.com" autocomplete="email">
                         </div>
-                        <p class="LoginError" id="emailError" hidden>Hay un pequeño detalle en el formato del correo. Verifica el '@' y el dominio.</p>
+                        <p class="LoginError" id="emailError" hidden>Verifica el formato de tu correo.</p>
                     </div>
 
                     <!-- Contraseña -->
@@ -74,20 +78,29 @@
                         <label for="password">Contraseña</label>
                         <div class="LoginInputWrap">
                             <span class="LoginInputIcono">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="5" y="10" width="14" height="10" rx="2.5" stroke="currentColor" stroke-width="1.5"/>
-                                    <path d="M8 10V7.5C8 5.29086 9.79086 3.5 12 3.5C14.2091 3.5 16 5.29086 16 7.5V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="5" y="10" width="14" height="10" rx="2.5" stroke="currentColor"
+                                        stroke-width="1.5" />
+                                    <path d="M8 10V7.5C8 5.29086 9.79086 3.5 12 3.5C14.2091 3.5 16 5.29086 16 7.5V10"
+                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                                 </svg>
                             </span>
-                            <input type="password" id="password" placeholder="Ingresa tu contraseña" autocomplete="current-password">
-                            <button type="button" id="togglePassword" class="LoginTogglePass" aria-label="Mostrar contraseña">
-                                <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" stroke-width="1.5"/>
-                                    <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke="currentColor" stroke-width="1.5"/>
+                            <input type="password" id="password" placeholder="Ingresa tu contraseña"
+                                autocomplete="current-password">
+                            <button type="button" id="togglePassword" class="LoginTogglePass"
+                                aria-label="Mostrar contraseña">
+                                <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor"
+                                        stroke-width="1.5" />
+                                    <path
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                        stroke="currentColor" stroke-width="1.5" />
                                 </svg>
                             </button>
                         </div>
-                        <p class="LoginError" id="passwordError" hidden>Necesitamos tu contraseña para dejarte entrar de forma segura.</p>
+                        <p class="LoginError" id="passwordError" hidden>Necesitamos tu contraseña.</p>
                     </div>
 
                     <div class="LoginFilaExtra" id="filaRecordarme">
@@ -98,14 +111,11 @@
                         <a href="#" class="LoginOlvidaste">¿Olvidaste tu contraseña?</a>
                     </div>
 
-                    <button type="submit" class="LoginBotonSubmit" id="submitBtn">
-                        <span id="submitText">Iniciar sesión</span>
-                        <span class="LoginFlechaBtn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </span>
-                    </button>
+                    <div style="text-align: center; width: 100%;">
+                        <button type="submit" class="LoginBotonSubmit" id="submitBtn">
+                            <span id="submitText">Iniciar sesión</span>
+                        </button>
+                    </div>
 
                     <p class="LoginToggleTexto">
                         <span id="toggleContextText">¿No tienes una cuenta?</span>
@@ -118,36 +128,24 @@
         </div>
 
         <!-- ================= PANEL DERECHO: ILUSTRACIÓN ================= -->
+        <!-- ================= PANEL DERECHO: ILUSTRACIÓN ================= -->
         <div class="LoginDerecha" aria-hidden="true">
-
-            <div class="LoginBadgeFlotante">
-                <span class="LoginBadgeTitulo">RESET</span>
-                <span class="LoginBadgeLinea"></span>
-                <span class="LoginBadgeSub">Baja el ruido.</span>
+            <!-- Imagen colocada directamente en el HTML -->
+            <img src="img/FondoLogin.png" alt="Fondo de caldero mágico" class="LoginImagenFondo">
+            
+            <!-- Título central en texto -->
+            <div class="LoginTituloCentro">
+                 <span class="LoginAcentoRojo">S O F T S T O P</span>
             </div>
-
-            <div class="LoginIlustracion">
-                <img src="img/saturno.png" alt="" class="LoginPlaneta">
-                <div class="LoginLuna LoginLunaUno"></div>
-                <div class="LoginLuna LoginLunaDos"></div>
-                <div class="LoginLuna LoginLunaTres"></div>
-            </div>
-
-            <div class="LoginOlas">
-                <div class="LoginOlaCapa LoginOlaFondo"></div>
-                <div class="LoginOlaCapa LoginOlaFrente"></div>
-            </div>
-
+            
             <div class="LoginCita">
-                <h2>Tu bienestar también es parte del progreso.</h2>
-                <p>En SoftStop, no solo organizas tu día, también te das el espacio para sentir, entender y volver a ti.</p>
+                <h2>Tu bienestar<br>tambien es parte<br>del progreso</h2>
             </div>
-
         </div>
 
     </div>
 
     <script src="js/login.js"></script>
 </body>
+
 </html>
-    

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,48 +7,302 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <!-- Importación de tipografías -->
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Marcellus+SC&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <!-- Puedes reutilizar estilos de think o crear un journal.css sencillo más adelante -->
-    <link rel="stylesheet" href="css/ruta-think.css"> 
+    <style>
+        :root {
+            --fuente-marca: 'Sora', sans-serif;
+            --fuente-titulo: 'Libre Caslon Text', Georgia, serif;
+            --fuente-texto: 'Google Sans Code', ui-monospace, monospace;
+            --fuente-display: 'Marcellus SC', Georgia, serif;
+            
+            --color-tinta: #3f2a4e; /* El color morado oscuro de tus textos */
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .CuerpoJournal {
+            position: relative;
+            background: url('img/FondoJournal.png') center center / cover no-repeat;
+            background-color: #f1d5d5; /* Fallback de color suave */
+            min-height: 100vh;
+            overflow: hidden; /* Evita barras de desplazamiento */
+        }
+
+        /* --- BOTÓN SALIR (Arriba a la derecha) --- */
+        .BtnSalir {
+            position: absolute;
+            top: 40px;
+            right: 50px;
+            color: var(--color-tinta);
+            font-family: var(--fuente-marca);
+            font-size: 15px;
+            letter-spacing: 5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
+
+        .BtnSalir:hover {
+            transform: scale(1.05);
+            font-weight: 600;
+        }
+
+        /* --- CABECERA (Títulos centrales) --- */
+        .CabeceraJournal {
+            position: absolute;
+            top: 10%;
+            width: 100%;
+            text-align: center;
+            z-index: 5;
+        }
+
+        .TituloJournal {
+            font-family: var(--fuente-display);
+            font-size: clamp(40px, 6vw, 56px);
+            color: white; /* Letras blancas como en tu diseño */
+            letter-spacing: 14px;
+            margin: 0 0 15px 0;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .SubtituloJournal {
+            font-family: var(--fuente-texto);
+            font-size: 13.5px;
+            color: var(--color-tinta);
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        /* --- CONTENEDOR DE ESCRITURA (Abajo a la derecha) --- */
+        .ContenedorTexto {
+            position: absolute;
+            bottom: 12%;
+            right: 8%;
+            width: 45%;
+            max-width: 650px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .EtiquetaEscribe {
+            font-family: var(--fuente-display);
+            font-size: 15px;
+            color: var(--color-tinta);
+            letter-spacing: 6px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        /* El cuadro de cristal */
+        .TextareaCristal {
+            width: 100%;
+            height: 220px;
+            background: rgba(255, 255, 255, 0.15); /* Fondo blanco casi transparente */
+            backdrop-filter: blur(20px); /* Efecto esmerilado fuerte */
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4); /* Borde blanco sutil */
+            border-radius: 40px; /* Bordes muy redondeados */
+            padding: 35px;
+            box-sizing: border-box;
+            font-family: var(--fuente-texto);
+            font-size: 15px;
+            color: var(--color-tinta);
+            resize: none; /* Evita que el usuario cambie el tamaño de la caja */
+            outline: none;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .TextareaCristal:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .TextareaCristal::placeholder {
+            color: rgba(63, 42, 78, 0.65); /* Color tinta transparente */
+        }
+
+        /* --- BOTÓN TERMINAR --- */
+        .BtnTerminar {
+            background: none;
+            border: none;
+            color: white;
+            font-family: var(--fuente-marca);
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 5px;
+            margin-top: 25px;
+            cursor: pointer;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, letter-spacing 0.3s ease;
+        }
+
+        .BtnTerminar:hover {
+            transform: translateY(-2px);
+            letter-spacing: 6px;
+        }
+
+        /* --- ICONO FLOTANTE INFERIOR --- */
+        .MenuInferiorFlotante {
+            position: absolute;
+            bottom: -20px; /* Escondemos un poco la parte inferior */
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px 25px 35px 25px;
+            border-radius: 30px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            z-index: 10;
+        }
+
+        .MenuInferiorFlotante svg {
+            width: 22px;
+            height: 22px;
+            color: var(--color-tinta);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .MenuInferiorFlotante svg:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .ContenedorTexto { width: 70%; right: 15%; bottom: 15%; }
+            .TituloJournal { font-size: 40px; }
+        }
+
+        @media (max-width: 600px) {
+            .ContenedorTexto { width: 90%; right: 5%; bottom: 10%; }
+            .TextareaCristal { padding: 25px; height: 180px; border-radius: 25px; }
+            .BtnSalir { top: 20px; right: 20px; font-size: 13px; }
+            .CabeceraJournal { top: 12%; }
+            .MenuInferiorFlotante { padding: 10px 20px 25px 20px; }
+        }
+    
+        /* --- PASO UNSTUCK (reemplaza la caja de escritura al terminar) --- */
+        .PanelUnstuck {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            outline: none;
+        }
+        .PanelUnstuck[hidden] { display: none; }
+
+        .UnstuckTitulo {
+            font-family: var(--fuente-titulo);
+            font-weight: 400;
+            font-size: clamp(20px, 2.4vw, 28px);
+            color: var(--color-tinta);
+            margin: 0 0 10px;
+        }
+
+        .UnstuckTexto {
+            font-family: var(--fuente-texto);
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--color-tinta);
+            margin: 0 0 22px;
+            max-width: 480px;
+        }
+
+        .UnstuckPaso {
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 30px;
+            padding: 26px 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        }
+        .UnstuckIcono { display: block; font-size: 30px; margin-bottom: 6px; }
+        .UnstuckPaso h3 {
+            font-family: var(--fuente-marca);
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-tinta);
+            margin: 0 0 8px;
+        }
+        .UnstuckPaso p {
+            font-family: var(--fuente-texto);
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--color-tinta);
+            margin: 0;
+        }
+
+        .UnstuckVolver { text-decoration: none; display: inline-block; }
+    </style>
 </head>
+<body class="CuerpoJournal">
 
-<body class="CuerpoThink">
+    <!-- Botón Salir (Esquina superior derecha) -->
+    <a href="dashboard.html" class="BtnSalir">SALIR</a>
 
-    <div class="PaginaThink">
+    <!-- Títulos Centrales Superiores -->
+    <header class="CabeceraJournal">
+        <h1 class="TituloJournal" id="TituloJournal">JOURNAL</h1>
+        <p class="SubtituloJournal" id="SubtituloJournal">Ten la libertad de expresar tus pensamientos</p>
+    </header>
 
-        <header class="ThinkHeader">
-            <span class="ThinkIndicador">Espacio de desahogo</span>
-            <span class="ThinkMarca">SOFTSTOP</span>
-            <a href="dashboard.html" class="ThinkSalir">← Salir</a>
-        </header>
+    <!-- Zona de escritura cristalina (Abajo a la derecha) -->
+    <main class="ContenedorTexto" id="VistaJournal">
+        <label for="TextoJournal" class="EtiquetaEscribe" id="EtiquetaJournal">ESCRIBE AQUI</label>
+        
+        <textarea 
+            id="TextoJournal" 
+            class="TextareaCristal" 
+            placeholder="¿Qué es lo que mas te abruma de empezar hoy...?"></textarea>
+        
+        <!-- Mantengo el mismo id del botón para que el JS siga funcionando -->
+        <button id="BtnTerminarJournal" class="BtnTerminar">TERMINAR</button>
+    
+        <!-- Paso Unstuck: aparece al pulsar TERMINAR -->
+        <section class="PanelUnstuck" id="PanelUnstuck" tabindex="-1" aria-live="polite" hidden>
+            <h2 class="UnstuckTitulo">Ya sacaste el peso de tu cabeza 🤍</h2>
+            <p class="UnstuckTexto">Escribir lo que sientes frena la inercia del estrés. Ahora, rompamos la parálisis con el cuerpo, no con la mente.</p>
+            <div class="UnstuckPaso">
+                <span class="UnstuckIcono" aria-hidden="true">💧</span>
+                <h3>Tu micro-paso de ahora</h3>
+                <p>Levántate, ve por un vaso con agua fría, estira los brazos hacia arriba durante 10 segundos y vuelve.</p>
+            </div>
+            <a href="dashboard.html" class="BtnTerminar UnstuckVolver">YA ME ACTIVÉ · VOLVER</a>
+        </section>
+    </main>
 
-        <main class="ThinkPrincipal">
-
-            <section class="ThinkVista ThinkPaso" id="VistaJournal">
-                <span class="ThinkEyebrow">JOURNAL</span>
-                <h1 class="ThinkPasoTitulo">Escribe lo que estás cargando</h1>
-                <p class="ThinkPasoSubtitulo">Saca de tu cabeza aquello que estás pensando o evitando. Sin filtros ni juicios.</p>
-
-                <div class="ThinkInputGrupo">
-                    <textarea 
-                        id="TextoJournal" 
-                        rows="6" 
-                        placeholder="¿Qué es lo que más pereza te da de empezar hoy? Cuéntanos..."
-                        style="width: 100%; border: 1px solid rgba(174, 152, 240, 0.3); border-radius: 20px; padding: 20px; font-family: var(--fuente-secundaria); font-size: 15px; background: rgba(255, 255, 255, 0.8); resize: none; color: var(--color-texto);"
-                    ></textarea>
-                </div>
-
-                <button class="BtnThinkContinuar" id="BtnTerminarJournal">Terminar desahogo →</button>
-            </section>
-
-        </main>
-
+    <!-- Icono blanco de la parte inferior central -->
+    <div class="MenuInferiorFlotante">
+        <!-- Recreé el ícono de rombo/cuadros de la imagen con SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
     </div>
 
+    <!-- Tu script original (No se toca para que la lógica siga igual) -->
     <script src="js/journal.js"></script>
+
 </body>
 </html>

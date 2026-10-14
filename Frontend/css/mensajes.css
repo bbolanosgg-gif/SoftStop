@@ -1,0 +1,113 @@
+/*MENSAJES que cambian con el SCROLL*/
+
+.Mensajes {
+  position: relative;
+  background-color: transparent !important;
+  --n: 6;
+  --tramo: 60;
+  height: calc(100vh + var(--n) * var(--tramo) * 1vh);
+  height: calc(100svh + var(--n) * var(--tramo) * 1svh);
+}
+
+.MensajesStage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: transparent;
+}
+
+.MensajesKicker {
+  position: absolute;
+  top: 11%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 90%;
+  text-align: center;
+  font-family: var(--fuente-texto);
+  font-size: clamp(10px, 0.9vw, 13px);
+  letter-spacing: 0.35em;
+  line-height: 1.8;
+  text-transform: uppercase;
+  color: #6d5a7d;
+}
+
+.MensajesEscena {
+  position: absolute;
+  left: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(62%, 860px);
+  display: grid;
+}
+
+.Mensaje {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(14px);
+  filter: blur(4px);
+  pointer-events: none;
+  transition: opacity 0.7s ease, transform 0.7s ease, filter 0.7s ease;
+}
+
+.Mensaje.activo {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition-delay: 0.3s;
+}
+
+.Mensaje .linea {
+  display: block;
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+  font-size: clamp(27px, 4.2vw, 65px);
+  line-height: 1.18;
+  white-space: nowrap;
+  color: var(--color-tinta);
+}
+
+.Mensaje .acento {
+  display: block;
+  margin-top: 0.35em;
+  font-family: var(--fuente-display);
+  font-size: clamp(24px, 3.9vw, 60px);
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 2px 18px rgba(150, 100, 160, 0.25);
+}
+
+.Mensaje .fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: clamp(12px, 1.6vw, 26px);
+  margin-top: 0.25em;
+}
+
+.Mensaje .fila .linea,
+.Mensaje .fila .acento {
+  display: inline;
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+
+  .MensajesEscena {
+    left: 7%;
+    top: 29%;
+    width: 86%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .Mensaje,
+  .Mensaje.activo {
+    transition: none;
+    transform: none;
+    filter: none;
+  }
+}

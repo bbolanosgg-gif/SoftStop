@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         paso3: "Si un día te da pereza empezar, no pienses en toda la montaña. Pregúntate cuál es el paso más pequeño que puedes dar ahora mismo."
     };
 
-    /* ============ LOCAL STORAGE ============ */
+    
     function guardarEstado() {
         localStorage.setItem('softstop_estado', JSON.stringify(thinkState));
     }
@@ -50,12 +50,12 @@ document.addEventListener("DOMContentLoaded", () => {
             chip.style.color = materia.color;
             listaMaterias.appendChild(chip);
         });
-        renderSelectorMateria(); // Esto ya existe en tu código, reconstruye los radios
+        renderSelectorMateria(); 
 
         // 2. Repintar Pendientes
         const listaPendientes = document.getElementById("ListaPendientes");
         listaPendientes.innerHTML = "";
-            thinkState.pendientes.forEach(p => {
+        thinkState.pendientes.forEach(p => {
             const materia = thinkState.materias.find(m => m.id === p.id_materia);
             const item = document.createElement("li");
             item.textContent = p.texto;
@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // 3. Repintar Micro-pasos
-                // 3. Repintar Micro-pasos
         const listaMicroPasos = document.getElementById("ListaMicroPasos");
         listaMicroPasos.innerHTML = "";
         thinkState.microPasos.forEach(mp => {
@@ -73,7 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // 4. Saltar a la pantalla correcta sin esperar los 10 segundos
-        // SALVAVIDAS: Si por algún motivo pasoActual no existe, asume que es el paso 1
         const pasoSeguro = thinkState.pasoActual || 1; 
 
         if (pasoSeguro === 1) {
@@ -84,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (pasoSeguro === "claridad") {
             renderClaridadMental();
             mostrarVista("VistaClaridad", "Paso 3 de 4");
-         } else if (pasoSeguro === 3) {
+        } else if (pasoSeguro === 3) {
             pintarCabeceraComo();
             mostrarVista("VistaPaso3", "Paso 4 de 4");
         } else if (pasoSeguro === "final") {
@@ -105,7 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
         indicador.textContent = textoPaso || "";
     }
 
-    // Muestra un mensaje sin botón; se desvanece solo y avanza automáticamente
     function mostrarMensajeAuto(vistaId, siguienteVistaId, textoPaso) {
         mostrarVista(vistaId, textoPaso);
         const vista = document.getElementById(vistaId);
@@ -123,20 +120,14 @@ document.addEventListener("DOMContentLoaded", () => {
         mostrarMensajeAuto("VistaTransicion", siguienteVistaId, textoPaso);
     }
 
-
-
-
     /* ============ INICIO DEL FLUJO ============ */
-   /* ============ INICIO DEL FLUJO ============ */
     if (cargarEstado()) {
-        // Si hay datos guardados, repintamos y nos saltamos la bienvenida
         restaurarInterfaz();
     } else {
-        // Si es la primera vez, flujo normal con los 10 segundos
         mostrarMensajeAuto("VistaBienvenida", "VistaPaso1", "Paso 1 de 4");
     }
 
-        /* ============ PASO 1: ¿QUÉ? ============ */
+    /* ============ PASO 1: ¿QUÉ? ============ */
     const paletaColores = ["#AE98F0", "#FF9AB7", "#FFC9A7", "#A0E8D8", "#FE809F", "#C9BBFF"];
 
     function renderSelectorMateria() {
@@ -162,6 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const inputMateria = document.getElementById("InputMateria");
     const listaMaterias = document.getElementById("ListaMaterias");
+    
     document.getElementById("BtnAgregarMateria").addEventListener("click", () => {
         const valor = inputMateria.value.trim();
         if (valor === "") return;
@@ -181,7 +173,6 @@ document.addEventListener("DOMContentLoaded", () => {
         renderSelectorMateria();
     });
 
-        // --- Selección de día y prioridad (uno activo a la vez por grupo) ---
     let diaSeleccionado = null;
     let prioridadSeleccionada = null;
 
@@ -221,6 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const inputPendiente = document.getElementById("InputPendiente");
     const listaPendientes = document.getElementById("ListaPendientes");
+    
     document.getElementById("BtnAgregarPendiente").addEventListener("click", () => {
         const valor = inputPendiente.value.trim();
         if (valor === "") return;
@@ -228,14 +220,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const selectorMateria = document.getElementById("SelectorMateriaPendiente");
         const radioSeleccionado = selectorMateria.querySelector("input[type='radio']:checked");
 
-        // Si ya existen materias creadas, es obligatorio elegir una
         if (thinkState.materias.length > 0 && !radioSeleccionado) {
             selectorMateria.classList.add("ErrorSeleccion");
             setTimeout(() => selectorMateria.classList.remove("ErrorSeleccion"), 300);
             return;
         }
 
-        // Día y prioridad son obligatorios siempre
         const selectorDia = document.getElementById("SelectorDiaPendiente");
         const selectorPrioridad = document.getElementById("SelectorPrioridadPendiente");
         let faltaAlgo = false;
@@ -271,23 +261,29 @@ document.addEventListener("DOMContentLoaded", () => {
         item.appendChild(crearBadgePendiente(nuevoPendiente));
         listaPendientes.appendChild(item);
 
-        // Reset para el siguiente pendiente
         inputPendiente.value = "";
         diaSeleccionado = null;
         prioridadSeleccionada = null;
         document.querySelectorAll(".BtnDia, .BtnPrioridad").forEach(b => b.classList.remove("Activo"));
     });
 
-        document.getElementById("BtnPaso1Continuar").addEventListener("click", () => {
+    document.getElementById("BtnPaso1Continuar").addEventListener("click", () => {
+        // CORRECCIÓN: Prevenir el avance si no hay ninguna tarea pendiente agregada
+        if (thinkState.pendientes.length === 0) {
+            inputPendiente.style.border = "2px solid #E86A6A";
+            setTimeout(() => inputPendiente.style.border = "", 1500);
+            inputPendiente.focus();
+            return;
+        }
+
         thinkState.pasoActual = 2;
         guardarEstado();
         renderContenedorMateriasProposito();
         irATransicionAuto(frasesTransicion.paso2, "VistaPaso2", "Paso 2 de 4");
     });
 
-    /* ============ PASO 2: ¿PARA QUÉ? (filtrado + validación visual) ============ */
+    /* ============ PASO 2: ¿PARA QUÉ? ============ */
     function renderContenedorMateriasProposito() {
-        // Filtra: solo materias que sí tienen al menos un pendiente asociado
         const materiasConPendientes = thinkState.materias.filter(materia =>
             thinkState.pendientes.some(p => p.id_materia === materia.id)
         );
@@ -329,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-        document.getElementById("BtnPaso2Continuar").addEventListener("click", () => {
+    document.getElementById("BtnPaso2Continuar").addEventListener("click", () => {
         const inputs = document.querySelectorAll("#ContenedorMateriasProposito .InputProposito");
         let hayError = false;
         let primerErrorInput = null;
@@ -352,13 +348,13 @@ document.addEventListener("DOMContentLoaded", () => {
         irATransicionAuto(frasesTransicion.claridad, "VistaClaridad", "Paso 3 de 4");
     });
 
-    /* ============ CLARIDAD MENTAL: algoritmo + foco + carrusel ============ */
+    /* ============ CLARIDAD MENTAL ============ */
     const ordenDias = { Lun: 0, Mar: 1, Mié: 2, Jue: 3, Vie: 4, Sáb: 5, Dom: 6 };
     const ordenPrioridad = { A: 0, M: 1, B: 2 };
 
     function calcularDiasRestantes(dia) {
-        const hoyJS = new Date().getDay(); // 0 = Domingo en JS
-        const hoyConvertido = hoyJS === 0 ? 6 : hoyJS - 1; // convertimos a Lun=0...Dom=6
+        const hoyJS = new Date().getDay(); 
+        const hoyConvertido = hoyJS === 0 ? 6 : hoyJS - 1; 
         let diff = ordenDias[dia] - hoyConvertido;
         if (diff < 0) diff += 7;
         return diff;
@@ -430,7 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
         contenedor.appendChild(btn);
     }
 
-        function pintarCarrusel(pendientes) {
+    function pintarCarrusel(pendientes) {
         const pista = document.getElementById("PistaPendientes");
         const puntos = document.getElementById("PuntosCarrusel");
         pista.innerHTML = "";
@@ -463,16 +459,12 @@ document.addEventListener("DOMContentLoaded", () => {
             puntos.appendChild(punto);
         });
     }
-    
 
     function renderClaridadMental() {
         const ordenados = ordenarPendientesPorPrioridad(thinkState.pendientes);
 
-        // Caso borde: no se agregó ningún pendiente en el Paso 1
         if (ordenados.length === 0) {
-            thinkState.pasoActual = 3;
-            guardarEstado();
-            irATransicionAuto(frasesTransicion.paso3, "VistaPaso3", "Paso 4 de 4");
+            finalizarSesion();
             return;
         }
 
@@ -487,7 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pintarCarrusel(resto);
     }
 
-        /* ============ PASO 3: ¿CÓMO? (tarea enfocada) ============ */
+    /* ============ PASO 3: ¿CÓMO? ============ */
     function pintarCabeceraComo() {
         const pendiente = thinkState.pendientes.find(p => p.id === thinkState.enfoqueId);
         if (!pendiente) return;
@@ -531,6 +523,12 @@ document.addEventListener("DOMContentLoaded", () => {
     function agregarMicroPaso(texto) {
         const nuevo = { texto, hecho: false };
         thinkState.microPasos.push(nuevo);
+        
+        // CORRECCIÓN: Si es el primer micro-paso que agregamos, lo registramos como el "Primer paso" para el resumen
+        if (thinkState.microPasos.length === 1) {
+            thinkState.primerPaso = texto;
+        }
+
         guardarEstado();
         listaMicroPasos.appendChild(crearItemMicroPaso(nuevo));
     }
@@ -542,14 +540,12 @@ document.addEventListener("DOMContentLoaded", () => {
         inputMicroPaso.value = "";
     });
 
-    // Simulación de IA (Fase A). En Fase B esto llama a un backend real.
     document.getElementById("BtnDesglosarIA").addEventListener("click", (e) => {
         const boton = e.currentTarget;
         boton.disabled = true;
         boton.textContent = "✨ Pensando...";
 
         setTimeout(() => {
-            // TODO (Fase B): reemplazar por fetch real a /api/descomponer-tarea
             ["Abrir el material y leer lo esencial", "Resolver la parte más sencilla primero", "Revisar y ajustar el resultado"]
                 .forEach(paso => agregarMicroPaso(paso));
 
@@ -558,9 +554,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1200);
     });
 
-    // Panel colapsable "Estoy atascado"
     const btnUnstuck = document.getElementById("BtnUnstuck");
     const panelUnstuck = document.getElementById("UnstuckPanel");
+    
     btnUnstuck.addEventListener("click", () => {
         const abierto = panelUnstuck.classList.toggle("Abierto");
         panelUnstuck.hidden = !abierto;
@@ -594,7 +590,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return `<li style="border-left-color:${color}">${p.texto}</li>`;
             }).join("");
 
-                document.getElementById("ResumenRazones").innerHTML =
+        document.getElementById("ResumenRazones").innerHTML =
             thinkState.materias
                 .filter(m => thinkState.pendientes.some(p => p.id_materia === m.id))
                 .map(m => `<div class="TarjetaRazon" style="border-left:4px solid ${m.color}"><strong style="color:${m.color}">${m.nombre}:</strong> ${m.proposito || "(sin propósito escrito)"}</div>`)
@@ -605,10 +601,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.getElementById("ResumenPrimerPaso").textContent = `"${thinkState.primerPaso}"`;
 
-                thinkState.pasoActual = "final";
+        thinkState.pasoActual = "final";
         guardarEstado();
         mostrarVista("VistaFinal", "");
-        // TODO: guardar thinkState completo en registro_journey.html cuando exista
     }
 
     document.getElementById("BtnVolverDashboard").addEventListener("click", () => {
@@ -616,16 +611,14 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "dashboard.html";
     });
 
-        // Botón de flecha del carrusel: desplaza la pista horizontalmente
     document.getElementById("BtnCarruselSiguiente").addEventListener("click", () => {
         const pista = document.getElementById("PistaPendientes");
         pista.scrollBy({ left: 200, behavior: "smooth" });
     });
+
     document.getElementById("BtnComoContinuar").addEventListener("click", () => {
-        thinkState.pasoActual = "claridad";
-        thinkState.enfoqueId = null; // que elija la siguiente prioridad automáticamente
-        guardarEstado();
-        renderClaridadMental();
-        mostrarVista("VistaClaridad", "Paso 3 de 4");
+        // CORRECCIÓN: Al terminar de desglosar, en lugar de volver a Claridad y crear el bucle infinito,
+        // avanzamos al resumen final de la sesión para cerrar el flujo.
+        finalizarSesion();
     });
 });

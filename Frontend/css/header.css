@@ -1,0 +1,63 @@
+/*  HEADER: Titulo SOFTSTOP a la izquierda y ENTRAR + logo a la derecha  */
+
+.Encabezado {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 38px 7%;
+  z-index: 100;
+}
+
+.Marca {
+  font-family: var(--fuente-marca);
+  font-weight: 500;
+  font-size: clamp(12px, 1.05vw, 16px);
+  letter-spacing: 0.6em;
+  color: var(--color-marca);
+  text-decoration: none;
+}
+
+.EncabezadoAcciones {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.8vw, 26px);
+}
+
+.enlaceEntrar {
+  font-family: var(--fuente-texto);
+  font-size: clamp(11px, 0.9vw, 13px);
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  color: var(--color-marca);
+  transition: color 0.3s ease;
+}
+
+.enlaceEntrar:hover {
+  color: var(--rosa-palo);
+}
+
+.LogoSoftStop {
+  display: flex;
+}
+
+.LogoSoftStop img {
+  width: clamp(24px, 2.4vw, 38px);
+  height: clamp(24px, 2.4vw, 38px);
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: var(--sombra-suave);
+  transition: transform 0.3s ease;
+}
+
+.LogoSoftStop img:hover {
+  transform: scale(1.06);
+}
+
+@media (max-width: 640px) {
+  .Encabezado { padding: 24px 6%; }
+  .Marca { letter-spacing: 0.4em; }
+}

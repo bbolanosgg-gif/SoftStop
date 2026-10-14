@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,116 +7,301 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Marcellus+SC&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/variables.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/funcion-reset.css">
-</head>
 
-<body class="CuerpoFuncionReset">
+    <style>
+        :root {
+            --fuente-marca: 'Sora', sans-serif;
+            --fuente-titulo: 'Libre Caslon Text', Georgia, serif;
+            --fuente-texto: 'Google Sans Code', ui-monospace, monospace;
+            --fuente-display: 'Marcellus SC', Georgia, serif;
+            --color-tinta: #3f2a4e;
+        }
 
-    <div class="PaginaFuncionReset">
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            background-color: #f6e6ee;
+        }
 
-        <!-- HEADER -->
-        <header class="ResetHeader">
-            <span class="ResetMarca">SOFTSTOP</span>
-            <div class="ResetAccionesHeader">
-                <a href="index.html" class="ResetSalir">Salir</a>
-                <button class="ResetCerrar" id="BtnCerrar" aria-label="Cerrar ejercicio">✕</button>
-            </div>
-        </header>
-        <main class="ResetPrincipal">
+        /* ==============================================
+           PANTALLA 1: TRANSICIÓN "CALMA" (Pantalla completa superpuesta)
+        ============================================== */
+        .PantallaTransicion {
+            position: fixed;
+            inset: 0;
+            background: url('img/TReset.png') center center / cover no-repeat;
+            background-color: #e5d1e0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
 
-            <!-- ================= VISTA DE TRANSICIÓN ================= -->
-            <section class="VistaTransicion" id="VistaTransicion">
-                <h2 id="TextoTransicion"></h2>
-            </section>
+        .PantallaTransicion[hidden] {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            display: flex; /* Mantenemos flex para la transición suave */
+        }
 
-            <!-- ================= SELECTOR DE MODO ================= -->
-            <section class="SelectorModos" id="SelectorModos" hidden>
-                <div class="ResetEncabezado">
-                    <h1 class="ResetTitulo">RESET</h1>
-                    <p class="ResetSubtitulo">Elige la técnica que necesitas ahora.</p>
-                </div>
+        .TituloCalma {
+            font-family: var(--fuente-display);
+            font-size: clamp(36px, 5vw, 48px);
+            color: white;
+            letter-spacing: 16px;
+            margin-bottom: 50px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+        }
 
-                <div class="ListaModos">
+        .TextoCalma {
+            font-family: var(--fuente-titulo);
+            font-size: clamp(20px, 3vw, 26px);
+            color: var(--color-tinta);
+            line-height: 1.6;
+            max-width: 600px;
+            padding: 0 20px;
+        }
 
-                    <button class="TarjetaModo" data-modo="478">
-                        <span class="ModoNombre">Respiración 4-7-8</span>
-                        <span class="ModoDescripcion">Calma el sistema nervioso y baja el ritmo cardíaco.</span>
-                        <span class="ModoDuracion">4 ciclos · ~1 min</span>
-                    </button>
+        .BtnContinuar {
+            position: absolute;
+            bottom: 40px;
+            right: 50px;
+            background: none;
+            border: none;
+            color: var(--color-tinta);
+            font-family: var(--fuente-marca);
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: transform 0.3s ease;
+        }
+        .BtnContinuar:hover { transform: translateX(5px); }
 
-                    <button class="TarjetaModo" data-modo="caja">
-                        <span class="ModoNombre">Respiración en caja</span>
-                        <span class="ModoDescripcion">Recupera la concentración y el control mental.</span>
-                        <span class="ModoDuracion">4 ciclos · ~1 min</span>
-                    </button>
+        /* ==============================================
+           PANTALLA 2: FONDO PRINCIPAL "RESET" (Paisaje con puertas)
+        ============================================== */
+        .PantallaPrincipal {
+            position: relative;
+            width: 100%; height: 100%;
+            background: url('img/PReset.png') center bottom / cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-                    <button class="TarjetaModo" data-modo="grounding">
-                        <span class="ModoNombre">Técnica 5-4-3-2-1</span>
-                        <span class="ModoDescripcion">Vuelve al presente a través de tus sentidos.</span>
-                        <span class="ModoDuracion">5 pasos · a tu ritmo</span>
-                    </button>
+        /* HEADER DE RESET */
+        .ResetHeader {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 40px 50px;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 10;
+        }
 
-                </div>
-            </section>
+        .ResetTextoIntro {
+            font-family: var(--fuente-titulo);
+            color: var(--color-tinta);
+            font-size: 16px;
+            line-height: 1.4;
+            max-width: 280px;
+        }
 
-            <!-- ================= VISTA RESPIRACIÓN (blob) ================= -->
-            <section class="VistaRespiracion" id="VistaRespiracion" hidden>
+        .ResetTituloCentral {
+            font-family: var(--fuente-display);
+            font-size: 40px;
+            color: var(--color-tinta);
+            letter-spacing: 12px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 40px;
+        }
 
-                <div class="ResetEncabezado">
-                    <h1 class="ResetTitulo" id="TituloModoResp">RESET</h1>
-                    <p class="ResetSubtitulo" id="SubtituloModoResp">Baja el ruido.</p>
-                </div>
+        .BtnVolver {
+            color: var(--color-tinta);
+            font-family: var(--fuente-marca);
+            font-size: 15px;
+            letter-spacing: 5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+        .BtnVolver:hover { transform: scale(1.05); }
 
-                <div class="ContenedorBlobRespiracion">
-                    <div class="BlobRespiracion" id="BlobRespiracion"></div>
-                </div>
+        /* SELECTOR DE MODOS (Botones de las puertas) */
+        .SelectorModos {
+            position: absolute;
+            bottom: 10%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 5vw;
+            z-index: 5;
+            transition: opacity 0.5s ease;
+        }
 
-                <div class="ResetEstado">
-                    <span class="ResetFase" id="ResetFase">INHALA</span>
-                    <span class="ResetContador" id="ResetContador">4</span>
-                    <span class="ResetCiclo" id="ResetCiclo">Ciclo 1 de 4</span>
-                    <p class="ResetFrase">No tienes que resolverlo todo ahora.</p>
-                </div>
+        .SelectorModos[hidden] { display: none; }
 
-                <button class="ResetPausar" id="BtnPausar">Pausar</button>
-            </section>
+        .BotonPuerta {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            color: var(--color-tinta);
+            font-family: var(--fuente-marca);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 15px 30px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
 
-            <!-- ================= VISTA GROUNDING (5-4-3-2-1) ================= -->
-            <section class="VistaGrounding" id="VistaGrounding" hidden>
+        .BotonPuerta:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-5px);
+            border-color: white;
+        }
 
-                <div class="ResetEncabezado">
-                    <h1 class="ResetTitulo">5-4-3-2-1</h1>
-                    <p class="ResetSubtitulo">Mira a tu alrededor y nombra, en silencio o en voz alta:</p>
-                </div>
+        /* ==============================================
+           VISTAS DE EJERCICIOS (Cristal flotante central)
+        ============================================== */
+        .VistaEjercicio {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -45%);
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 40px;
+            padding: 40px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            z-index: 20;
+        }
+        .VistaEjercicio[hidden] { display: none; }
 
-                <div class="TarjetaGrounding">
-                    <span class="GroundingIcono" id="GroundingIcono">👀</span>
-                    <span class="GroundingNumero" id="GroundingNumero">5</span>
-                    <p class="GroundingPregunta" id="GroundingPregunta">cosas que puedas ver</p>
-                    <p class="GroundingEjemplos" id="GroundingEjemplos">Una planta, una ventana, tu propia mano, una silla, un cuadro.</p>
-                </div>
-
-                <div class="GroundingPuntos" id="GroundingPuntos"></div>
-
-                <button class="ResetPausar" id="BtnSiguientePaso">Ya identifiqué esto →</button>
-            </section>
-
-            <!-- ================= PANTALLA FINAL ================= -->
-            <section class="VistaFinal" id="VistaFinal" hidden>
-                <div class="ResetEncabezado">
-                    <h1 class="ResetTitulo">LISTO</h1>
-                    <p class="ResetSubtitulo" id="MensajeFinal">Bien hecho. Vuelve cuando lo necesites.</p>
-                </div>
-                <button class="ResetPausar" id="BtnOtraVez">Elegir otra técnica</button>
-            </section>
-
-        </main>
+        .EjercicioTitulo { font-family: var(--fuente-marca); color: var(--color-tinta); font-size: 24px; letter-spacing: 4px; margin-bottom: 10px; }
+        .EjercicioSubtitulo { font-family: var(--fuente-texto); color: var(--color-tinta); font-size: 14px; margin-bottom: 30px; }
         
+        /* BLOB RESPIRACIÓN */
+        .ContenedorBlobRespiracion { height: 200px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+        .BlobRespiracion { width: 140px; height: 140px; border-radius: 50%; background: linear-gradient(135deg, #a890fe, #d68a96); filter: blur(10px); transition: transform 4s ease-in-out; }
+        .BlobRespiracion.grande { transform: scale(1.6); }
+        .BlobRespiracion.pausado { transition-duration: 0s !important; }
+        
+        .ResetFase { display: block; font-family: var(--fuente-marca); font-size: 16px; font-weight: 600; color: var(--color-tinta); margin-bottom: 5px; }
+        .ResetContador { display: block; font-family: var(--fuente-texto); font-size: 40px; color: var(--color-tinta); margin-bottom: 5px; }
+        .ResetCiclo { display: block; font-family: var(--fuente-secundaria); font-size: 13px; color: var(--color-tinta); opacity: 0.8; margin-bottom: 20px;}
+
+        /* GROUNDING */
+        .GroundingIcono { font-size: 40px; margin-bottom: 10px; display: block; }
+        .GroundingNumero { font-family: var(--fuente-display); font-size: 50px; color: var(--color-tinta); line-height: 1; }
+        .GroundingPregunta { font-family: var(--fuente-titulo); font-size: 18px; color: var(--color-tinta); margin: 10px 0; }
+        .GroundingEjemplos { font-family: var(--fuente-texto); font-size: 14px; color: var(--color-tinta); opacity: 0.8; }
+        .GroundingPuntos { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
+        .GroundingPuntos span { width: 8px; height: 8px; border-radius: 50%; background: rgba(63, 42, 78, 0.3); transition: all 0.3s ease; }
+        .GroundingPuntos span.activo { background: var(--color-tinta); transform: scale(1.3); }
+
+        .BtnSecundario { background: none; border: 1px solid var(--color-tinta); border-radius: 20px; padding: 10px 25px; color: var(--color-tinta); font-family: var(--fuente-marca); font-size: 13px; font-weight: 600; cursor: pointer; text-transform: uppercase; transition: all 0.3s ease; }
+        .BtnSecundario:hover { background: var(--color-tinta); color: white; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .ResetHeader { padding: 20px; flex-direction: column; align-items: center; gap: 15px; }
+            .ResetTituloCentral { position: static; transform: none; margin-bottom: 10px; }
+            .ResetTextoIntro { display: none; } /* Ocultamos texto intro en móvil para dar espacio */
+            .BtnVolver { position: absolute; right: 20px; top: 20px; font-size: 12px; }
+            .SelectorModos { flex-direction: column; align-items: center; bottom: 5%; gap: 15px; }
+            .BotonPuerta { width: 80%; text-align: center; }
+            .BtnContinuar { right: 20px; bottom: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================================
+         VISTA 1: TRANSICIÓN CALMA (Superpuesta)
+    ======================================================== -->
+    <section class="PantallaTransicion" id="VistaTransicion" hidden>
+        <h1 class="TituloCalma">CALMA</h1>
+        <p class="TextoCalma" id="TextoTransicion">Regálate unos minutos para pausar. Tu mente también necesita espacio para procesar el día y volver a sentirse en calma.</p>
+        <button class="BtnContinuar" id="BtnContinuarTransicion">CONTINUAR</button>
+    </section>
+
+    <!-- ========================================================
+         VISTA 2: PRINCIPAL RESET (Paisaje puertas)
+    ======================================================== -->
+    <main class="PantallaPrincipal">
+        
+        <header class="ResetHeader">
+            <p class="ResetTextoIntro">Abre una puerta y descubre<br>como conectar contigo<br>desde la respiración consciente.</p>
+            <h1 class="ResetTituloCentral">RESET</h1>
+            <a href="dashboard.html" class="BtnVolver">VOLVER X</a>
+        </header>
+
+        <!-- Botones que activan los ejercicios -->
+        <section class="SelectorModos" id="SelectorModos">
+            <button class="BotonPuerta" data-modo="caja">Puerta Caja</button>
+            <button class="BotonPuerta" data-modo="478">Puerta 4-7-8</button>
+            <button class="BotonPuerta" data-modo="grounding">Puerta Presente</button>
+        </section>
+
+        <!-- ================= EJERCICIO: RESPIRACIÓN ================= -->
+        <section class="VistaEjercicio" id="VistaRespiracion" hidden>
+            <h2 class="EjercicioTitulo" id="TituloModoResp">RESET</h2>
+            <p class="EjercicioSubtitulo" id="SubtituloModoResp">Baja el ruido.</p>
+            <div class="ContenedorBlobRespiracion">
+                <div class="BlobRespiracion" id="BlobRespiracion"></div>
+            </div>
+            <span class="ResetFase" id="ResetFase">INHALA</span>
+            <span class="ResetContador" id="ResetContador">4</span>
+            <span class="ResetCiclo" id="ResetCiclo">Ciclo 1 de 4</span>
+            <button class="BtnSecundario" id="BtnPausar">Pausar</button>
+        </section>
+
+        <!-- ================= EJERCICIO: GROUNDING (5-4-3-2-1) ================= -->
+        <section class="VistaEjercicio" id="VistaGrounding" hidden>
+            <span class="GroundingIcono" id="GroundingIcono">👀</span>
+            <span class="GroundingNumero" id="GroundingNumero">5</span>
+            <p class="GroundingPregunta" id="GroundingPregunta">cosas que puedas ver</p>
+            <p class="GroundingEjemplos" id="GroundingEjemplos">Una planta, una ventana...</p>
+            
+            <div class="GroundingPuntos" id="GroundingPuntos"></div>
+            <button class="BtnSecundario" id="BtnSiguientePaso">Siguiente →</button>
+        </section>
+
+        <!-- ================= PANTALLA FINAL ================= -->
+        <section class="VistaEjercicio" id="VistaFinal" hidden>
+            <h2 class="EjercicioTitulo">LISTO</h2>
+            <p class="EjercicioSubtitulo" id="MensajeFinal">Bien hecho. Vuelve cuando lo necesites.</p>
+            <br>
+            <button class="BtnSecundario" id="BtnOtraVez">Elegir otra puerta</button>
+        </section>
+
+    </main>
 
     <script src="js/funcion-reset.js"></script>
 </body>

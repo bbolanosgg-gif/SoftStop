@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,130 +7,450 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Marcellus+SC&family=Google+Sans+Code&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/checkin.css">
+    <style>
+        /* ==============================================
+           BASE
+        ============================================== */
+        :root {
+            --fuente-marca: 'Sora', sans-serif;
+            --fuente-titulo: 'Libre Caslon Text', Georgia, serif;
+            --fuente-texto: 'Google Sans Code', ui-monospace, monospace;
+            --fuente-display: 'Marcellus SC', Georgia, serif;
+
+            --color-tinta: #3f2a4e;
+            --color-suave: #7a6585;
+            --rosa-palo: #d68a96;
+            --crema-papel: #fbf4ea;
+            --logo-morado: #a890fe;
+            --luz-calida: #ffe2aa;
+
+            /* Proporción real del fondo (1047 x 646) */
+            --ratio: 1.621;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body { height: 100%; overflow: hidden; }
+
+        body {
+            font-family: var(--fuente-texto);
+            color: var(--color-tinta);
+            line-height: 1.5;
+            background: #2c223a;
+        }
+
+        button { font: inherit; border: 0; background: none; color: inherit; cursor: pointer; }
+        a { color: inherit; text-decoration: none; }
+
+        /* ==============================================
+           EL MUNDO: el fondo + los lugares, todo en una sola
+           capa para que los puntos siempre queden sobre su sitio
+        ============================================== */
+        .Mundo {
+            --px: 0px; --py: 0px; --zoom: 1.04;
+            position: absolute;
+            left: 50%; top: 50%;
+            width: max(100vw, calc(100vh * var(--ratio)));
+            aspect-ratio: 1047 / 646;
+            background: url('img/FondoCheckin.png') center / 100% 100% no-repeat;
+            transform: translate(-50%, -50%) translate(var(--px), var(--py)) scale(var(--zoom));
+            transform-origin: var(--ox, 50%) var(--oy, 50%);
+            animation: llegar 2.6s cubic-bezier(.2, .7, .2, 1) both;
+            transition: transform 1.2s cubic-bezier(.65, 0, .25, 1), filter 1.2s ease;
+            will-change: transform;
+        }
+
+        @keyframes llegar {
+            from { filter: blur(10px) brightness(.7); opacity: 0; }
+            to   { filter: blur(0) brightness(1);     opacity: 1; }
+        }
+
+        /* Luz tibia que respira sobre el invernadero */
+        .Mundo::after {
+            content: "";
+            position: absolute;
+            left: 68%; top: 56%;
+            width: 26%; aspect-ratio: 1;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(255, 220, 150, .35), transparent 65%);
+            mix-blend-mode: soft-light;
+            animation: respirar 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes respirar {
+            0%, 100% { opacity: .5; transform: translate(-50%, -50%) scale(.92); }
+            50%      { opacity: 1;  transform: translate(-50%, -50%) scale(1.08); }
+        }
+
+        /* Luciérnagas (las crea el script) */
+        .Luciernaga {
+            position: absolute;
+            width: var(--t); height: var(--t);
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff6c9 0%, rgba(255, 230, 150, .6) 40%, transparent 70%);
+            opacity: 0;
+            animation: flotar var(--d) ease-in-out var(--r) infinite;
+            pointer-events: none;
+        }
+
+        @keyframes flotar {
+            0%   { opacity: 0;  transform: translate(0, 0); }
+            20%  { opacity: .95; }
+            50%  { transform: translate(var(--dx), var(--dy)); }
+            80%  { opacity: .9; }
+            100% { opacity: 0;  transform: translate(calc(var(--dx) * -.4), calc(var(--dy) * 1.6)); }
+        }
+
+        /* ==============================================
+           LOS TRES LUGARES
+        ============================================== */
+        .Puntos { position: absolute; inset: 0; }
+
+        .Punto {
+            position: absolute;
+            left: var(--x); top: var(--y);
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            animation: aparecer 1.2s ease var(--retraso) forwards;
+            outline: none;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; margin-top: 14px; }
+            to   { opacity: 1; margin-top: 0; }
+        }
+
+        /* Orbe luminoso */
+        .Orbe {
+            position: relative;
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #fff, var(--luz-calida) 45%, var(--rosa-palo) 100%);
+            box-shadow: 0 0 18px 6px rgba(255, 226, 170, .75), 0 0 46px 14px rgba(214, 138, 150, .35);
+            transition: transform .5s ease, box-shadow .5s ease;
+        }
+
+        .Orbe::before, .Orbe::after {
+            content: "";
+            position: absolute; inset: -8px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, .8);
+            animation: onda 3s ease-out infinite;
+        }
+        .Orbe::after { animation-delay: 1.5s; }
+
+        @keyframes onda {
+            from { transform: scale(.6); opacity: .9; }
+            to   { transform: scale(2.4); opacity: 0; }
+        }
+
+        /* Etiqueta de cristal */
+        .Etiqueta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            max-width: 190px;
+            padding: 12px 22px;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.45;
+            color: var(--color-tinta);
+            background: rgba(251, 244, 234, .55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, .7);
+            border-radius: 28px;
+            box-shadow: 0 8px 30px rgba(63, 42, 78, .22);
+            transition: transform .45s ease, background .45s ease, box-shadow .45s ease;
+        }
+
+        .Etiqueta small {
+            font-family: var(--fuente-display);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--color-suave);
+        }
+
+        .Punto:hover .Etiqueta,
+        .Punto:focus-visible .Etiqueta {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, .85);
+            box-shadow: 0 14px 40px rgba(63, 42, 78, .32);
+        }
+
+        .Punto:hover .Orbe,
+        .Punto:focus-visible .Orbe {
+            transform: scale(1.35);
+            box-shadow: 0 0 26px 10px rgba(255, 226, 170, .95), 0 0 70px 24px rgba(214, 138, 150, .5);
+        }
+
+        .Punto:focus-visible .Etiqueta { outline: 2px solid var(--logo-morado); outline-offset: 3px; }
+
+        /* Posiciones: cada opción sobre un lugar del paisaje */
+        #btnSinEnergia { --x: 86%; --y: 55%; --retraso: 1.6s; } /* el refugio entre las flores */
+        #btnSaturado   { --x: 20%; --y: 50%; --retraso: 1.9s; } /* el arco: salir del ruido */
+        #btnOrganizar  { --x: 68%; --y: 60%; --retraso: 2.2s; } /* el invernadero: ordenar y cultivar */
+
+        /* ==============================================
+           TEXTOS FIJOS (sobre el cielo)
+        ============================================== */
+        .TopBar {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            padding: 44px 40px 90px;
+            display: flex;
+            justify-content: center;
+            z-index: 10;
+            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(251, 244, 234, .55), transparent);
+        }
+
+        .TitulosCentrales {
+            text-align: center;
+            color: var(--color-tinta);
+            text-shadow: 0 2px 18px rgba(251, 244, 234, .9);
+            animation: subir 1.6s ease .6s both;
+        }
+
+        @keyframes subir {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        .Eyebrow {
+            font-family: var(--fuente-display);
+            font-size: 14px;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            opacity: .85;
+        }
+
+        .TituloPrincipal {
+            font-family: var(--fuente-titulo);
+            font-size: clamp(30px, 4.6vw, 46px);
+            font-weight: 400;
+            font-style: italic;
+            margin-top: 12px;
+        }
+
+        .BtnSalir {
+            position: absolute;
+            right: 44px; top: 48px;
+            pointer-events: auto;
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--color-tinta);
+            opacity: .75;
+            transition: opacity .3s ease;
+        }
+        .BtnSalir:hover { opacity: 1; }
+
+        .BottomText {
+            position: absolute;
+            bottom: 32px; left: 40px;
+            z-index: 10;
+            max-width: 330px;
+            padding: 14px 22px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--color-tinta);
+            background: rgba(251, 244, 234, .6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, .7);
+            border-radius: 22px;
+            animation: subir 1.6s ease 1s both;
+        }
+        .BottomText strong { font-weight: 600; font-size: 15px; }
+
+        /* Luz que sigue al cursor */
+        .Luz {
+            position: fixed; inset: 0;
+            z-index: 5;
+            pointer-events: none;
+            background: radial-gradient(circle 240px at var(--mx, 50%) var(--my, 50%), rgba(255, 226, 170, .22), transparent 70%);
+            mix-blend-mode: soft-light;
+            transition: opacity 1s ease;
+        }
+
+        /* Velo final al elegir */
+        .Velo {
+            position: fixed; inset: 0;
+            z-index: 20;
+            background: radial-gradient(circle at var(--ox, 50%) var(--oy, 50%), rgba(255, 226, 170, .85), #3f2a4e 85%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease .3s;
+        }
+
+        /* Estado: eligiendo (zoom hacia el lugar elegido) */
+        body.Eligiendo .Mundo { --zoom: 2.6; }
+        body.Eligiendo .Velo { opacity: 1; }
+        body.Eligiendo .TopBar,
+        body.Eligiendo .BottomText { opacity: 0; transition: opacity .5s ease; }
+        body.Eligiendo .Punto:not(.Elegido) { opacity: 0 !important; transition: opacity .4s ease; }
+        body.Eligiendo { pointer-events: none; }
+
+        /* ==============================================
+           RESPONSIVE
+        ============================================== */
+        /* Pantallas verticales (celular): el paisaje queda de fondo y
+           los lugares pasan a ser tarjetas apiladas, fáciles de tocar */
+        @media (max-aspect-ratio: 1/1) {
+            .Mundo {
+                inset: 0; left: 0; top: 0;
+                width: 100%; aspect-ratio: auto;
+                background-size: cover;
+                background-position: 58% center;
+                transform: none !important;
+            }
+            .Mundo::after { display: none; }
+
+            .Puntos {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                gap: 14px;
+                padding: 0 20px 150px;
+            }
+            .Punto {
+                position: static;
+                transform: none;
+                flex-direction: row-reverse;
+                justify-content: flex-end;
+                gap: 14px;
+                width: 100%;
+            }
+            .Orbe { width: 20px; height: 20px; flex-shrink: 0; }
+            .Etiqueta { max-width: none; flex: 1; align-items: flex-start; text-align: left; border-radius: 22px; }
+
+            .TopBar { padding: 28px 20px 70px; }
+            .BtnSalir { right: 20px; top: 24px; }
+            .BottomText { left: 20px; right: 20px; bottom: 20px; max-width: none; font-size: 13px; }
+            body.Eligiendo .Mundo { transform: none !important; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+            .Luciernaga { display: none; }
+        }
+    </style>
 </head>
+<body>
 
-<body class="CuerpoCheckIn">
+    <!-- EL PAISAJE: cada opción es un lugar -->
+    <div class="Mundo" id="mundo">
+        <div class="Puntos">
+            <!-- Refugio entre las flores -->
+            <button class="Punto" id="btnSinEnergia" aria-label="No tengo energía">
+                <span class="Orbe"></span>
+                <span class="Etiqueta">No tengo energía<small>el refugio</small></span>
+            </button>
 
-    <!-- ================= FONDO ANIMADO ================= -->
-    <div class="CheckInFondoAnimado" aria-hidden="true">
-        <svg preserveAspectRatio="xMidYMid slice" viewBox="10 10 80 80">
-            <path class="BlobFondo BlobFondoUno"   d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z"/>
-            <path class="BlobFondo BlobFondoDos"   d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z"/>
-            <path class="BlobFondo BlobFondoTres"  d="M105.9,48.6c-12.4-8.2-29.3-4.8-39.4.8-23.4,12.8-37.7,51.9-19.1,74.1s63.9,15.3,76-5.6c7.6-13.3,1.8-31.1-2.3-43.8C117.6,63.3,114.7,54.3,105.9,48.6Z"/>
-            <path class="BlobFondo BlobFondoCuatro" d="M102,67.1c-9.6-6.1-22-3.1-29.5,2-15.4,10.7-19.6,37.5-7.6,47.8s35.9,3.9,44.5-12.5C115.5,92.6,113.9,74.6,102,67.1Z"/>
-        </svg>
-        <div class="CheckInVelo"></div>
+            <!-- El arco de piedra: cruzar el umbral y soltar el ruido -->
+            <button class="Punto" id="btnSaturado" aria-label="Me siento saturado">
+                <span class="Orbe"></span>
+                <span class="Etiqueta">Me siento saturado<small>el umbral</small></span>
+            </button>
+
+            <!-- El invernadero: ordenar y hacer crecer -->
+            <button class="Punto" id="btnOrganizar" aria-label="Estoy bien, solo quiero organizarme">
+                <span class="Orbe"></span>
+                <span class="Etiqueta">Estoy bien, solo<br>quiero organizarme<small>el invernadero</small></span>
+            </button>
+        </div>
     </div>
 
-    <div class="PaginaCheckIn">
+    <div class="Luz" id="luz"></div>
+    <div class="Velo" id="velo"></div>
 
-        <!-- HEADER -->
-        <header class="CheckInHeader">
-            <span class="CheckInMarca">SOFTSTOP</span>
-            <a href="dashboard.html" class="CheckInSalir">Salir</a>
-        </header>
+    <!-- TÍTULOS -->
+    <header class="TopBar">
+        <div class="TitulosCentrales">
+            <span class="Eyebrow">CHECK - IN</span>
+            <h1 class="TituloPrincipal">¿Qué te detiene hoy?</h1>
+        </div>
+        <a href="dashboard.html" class="BtnSalir">SALIR X</a>
+    </header>
 
-        <main class="CheckInPrincipal">
+    <footer class="BottomText">
+        <p><strong>No tienes que explicarlo aún,</strong><br>Solo elige lo que más te identifique.</p>
+    </footer>
 
-            <!-- Columna Izquierda: Texto -->
-            <div class="CheckInIzquierda">
-                <div class="CheckInFondo" aria-hidden="true">
-                    <div class="BlobFlotante BlobUno"></div>
-                    <div class="BlobFlotante BlobDos"></div>
-                </div>
+    <!-- Interacciones visuales (no tocan la lógica de checkin.js) -->
+    <script>
+    (function () {
+        const mundo = document.getElementById('mundo');
+        const luz = document.getElementById('luz');
+        const velo = document.getElementById('velo');
+        const reducir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-                <div class="CheckInTexto">
-                    <span class="CheckInEyebrow">Check-in</span>
-                    <h1 class="CheckInTitulo">¿Qué te<br>detiene hoy?</h1>
-                    <p class="CheckInDescripcion">
-                        No tienes que explicarlo.<br>
-                        Solo elige lo que más se parece a este momento.
-                    </p>
-                </div>
-            </div>
+        // 1) Luciérnagas
+        if (!reducir) {
+            for (let i = 0; i < 34; i++) {
+                const l = document.createElement('span');
+                l.className = 'Luciernaga';
+                l.style.left = (Math.random() * 100) + '%';
+                l.style.top = (35 + Math.random() * 62) + '%';
+                l.style.setProperty('--t', (5 + Math.random() * 9) + 'px');
+                l.style.setProperty('--d', (6 + Math.random() * 8) + 's');
+                l.style.setProperty('--r', (-Math.random() * 10) + 's');
+                l.style.setProperty('--dx', (Math.random() * 60 - 30) + 'px');
+                l.style.setProperty('--dy', (-20 - Math.random() * 50) + 'px');
+                mundo.insertBefore(l, mundo.firstChild);
+            }
+        }
 
-            <!-- Columna Derecha: Opciones (Reducidas a 3 pilares clave) -->
-            <div class="CheckInDerecha">
+        // 2) Parallax suave + luz que sigue al cursor
+        let tx = 0, ty = 0, cx = 0, cy = 0;
+        window.addEventListener('pointermove', (e) => {
+            tx = (e.clientX / innerWidth - .5) * -26;
+            ty = (e.clientY / innerHeight - .5) * -16;
+            luz.style.setProperty('--mx', e.clientX + 'px');
+            luz.style.setProperty('--my', e.clientY + 'px');
+        });
+        (function loop() {
+            cx += (tx - cx) * .06;
+            cy += (ty - cy) * .06;
+            if (!document.body.classList.contains('Eligiendo')) {
+                mundo.style.setProperty('--px', cx.toFixed(2) + 'px');
+                mundo.style.setProperty('--py', cy.toFixed(2) + 'px');
+            }
+            if (!reducir) requestAnimationFrame(loop);
+        })();
 
-                <!-- Opción 1: Saturado / Caos mental ➔ RESET -->
-                <button class="OpcionCheckIn" id="btnSaturado" data-valor="saturado" style="--color-opcion:#8A6FE8;">
-                    <span class="OpcionContenido">
-                        <span class="IconoOpcion">
-                            <svg viewBox="0 0 60 60" width="30" height="30">
-                                <defs>
-                                    <linearGradient id="gradSaturado" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#C9BBFF"/>
-                                        <stop offset="100%" stop-color="#7A5FE0"/>
-                                    </linearGradient>
-                                </defs>
-                                <path fill="url(#gradSaturado)" d="M39 12C31 9 22 12 18 20c-4 8-1 19 8 24 10 6 23 2 27-8 3-7 1-14-4-19-1 6-6 10-12 9 4-4 4-10 2-14Z"/>
-                            </svg>
-                        </span>
-                        <span class="TextoOpcion">Tengo la cabeza a mil / Estoy saturado</span>
-                    </span>
-                    <span class="FlechaOpcion">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </span>
-                    <span class="OpcionDropShadow"></span>
-                </button>
+        // 3) Al elegir: la cámara se acerca al lugar elegido
+        document.querySelectorAll('.Punto').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const m = mundo.getBoundingClientRect();
+                const b = btn.getBoundingClientRect();
+                const ox = ((b.left + b.width / 2 - m.left) / m.width) * 100;
+                const oy = ((b.top + b.height / 2 - m.top) / m.height) * 100;
+                mundo.style.setProperty('--ox', ox + '%');
+                mundo.style.setProperty('--oy', oy + '%');
+                mundo.style.setProperty('--px', '0px');
+                mundo.style.setProperty('--py', '0px');
+                velo.style.setProperty('--ox', ((b.left + b.width / 2) / innerWidth * 100) + '%');
+                velo.style.setProperty('--oy', ((b.top + b.height / 2) / innerHeight * 100) + '%');
+                btn.classList.add('Elegido');
+                document.body.classList.add('Eligiendo');
+            });
+        });
+    })();
+    </script>
 
-                <!-- Opción 2: Sin energía / Apatía ➔ JOURNAL / UNSTUCK -->
-                <button class="OpcionCheckIn" id="btnSinEnergia" data-valor="sin_energia" style="--color-opcion:#3AA9C7;">
-                    <span class="OpcionContenido">
-                        <span class="IconoOpcion">
-                            <svg viewBox="0 0 60 60" width="30" height="30">
-                                <defs>
-                                    <linearGradient id="gradEmpezar" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#8FE0EC"/>
-                                        <stop offset="100%" stop-color="#3AA9C7"/>
-                                    </linearGradient>
-                                </defs>
-                                <path d="M10 34 C16 20, 24 20, 30 30 C36 40, 44 40, 50 26"
-                                      stroke="url(#gradEmpezar)" stroke-width="8" stroke-linecap="round" fill="none"/>
-                            </svg>
-                        </span>
-                        <span class="TextoOpcion">No tengo energía / Qué pereza</span>
-                    </span>
-                    <span class="FlechaOpcion">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </span>
-                    <span class="OpcionDropShadow"></span>
-                </button>
-
-                <!-- Opción 3: Neutral / Directo a la acción ➔ THINK -->
-                <button class="OpcionCheckIn" id="btnOrganizar" data-valor="organizar" style="--color-opcion:#3BBF9A;">
-                    <span class="OpcionContenido">
-                        <span class="IconoOpcion">
-                            <svg viewBox="0 0 60 60" width="30" height="30">
-                                <defs>
-                                    <radialGradient id="gradAvanzar" cx="35%" cy="30%" r="70%">
-                                        <stop offset="0%" stop-color="#B8F0E2"/>
-                                        <stop offset="100%" stop-color="#3BBF9A"/>
-                                    </radialGradient>
-                                </defs>
-                                <circle cx="30" cy="30" r="17" fill="url(#gradAvanzar)"/>
-                            </svg>
-                        </span>
-                        <span class="TextoOpcion">Estoy bien, quiero organizarme</span>
-                    </span>
-                    <span class="FlechaOpcion">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </span>
-                    <span class="OpcionDropShadow"></span>
-                </button>
-
-            </div>
-
-        </main>
-
-    </div>
-
+    <!-- SCRIPT ORIGINAL (ids conservados: btnSinEnergia, btnSaturado, btnOrganizar) -->
     <script src="js/checkin.js"></script>
+
 </body>
 </html>

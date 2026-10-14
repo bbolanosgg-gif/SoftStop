@@ -1,0 +1,90 @@
+/* ==============================================
+   FONDO ANIMADO SUAVE + elementos de marca compartidos
+   Lo usan contacto.html y admin-dashboard.html.
+   Reemplaza al antiguo checkin.css (que ya no existe).
+   Requiere css/global.css (variables de color y tipografía).
+============================================== */
+
+.CheckInFondoAnimado {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.CheckInFondoAnimado svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.BlobFondo {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.BlobFondoUno {
+  fill: rgba(168, 144, 254, 0.20);
+  animation: blob-flotar-uno 18s ease-in-out infinite;
+}
+
+.BlobFondoDos {
+  fill: rgba(255, 154, 183, 0.18);
+  animation: blob-flotar-dos 22s ease-in-out infinite;
+}
+
+@keyframes blob-flotar-uno {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(3px, 4px) scale(1.08); }
+}
+
+@keyframes blob-flotar-dos {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-4px, -3px) scale(1.1); }
+}
+
+.CheckInVelo {
+  position: absolute;
+  inset: 0;
+  background: rgba(251, 246, 243, 0.35);
+}
+
+/* --- Marca, etiqueta y enlace de salida --- */
+.CheckInMarca {
+  font-family: var(--fuente-marca);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--color-marca);
+}
+
+.CheckInEyebrow {
+  display: inline-block;
+  font-family: var(--fuente-marca);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--logo-morado);
+}
+
+.CheckInSalir {
+  font-family: var(--fuente-marca);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-gris);
+  transition: color 0.3s ease;
+}
+
+.CheckInSalir:hover {
+  color: var(--color-texto);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .BlobFondoUno,
+  .BlobFondoDos { animation: none; }
+}

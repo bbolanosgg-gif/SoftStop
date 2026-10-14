@@ -1,49 +1,51 @@
-/* ==============================================
-   GLOBAL / BASE
-   Capa ambiental que conecta TODAS las secciones
-============================================== */
+/*GLOBAL : Tipografías y colores del diseño*/
 
 :root {
-  --bg-crema: #FBF7FA;
+  /* Tipografías */
+  --fuente-marca: 'Sora', sans-serif;                          /* SOFTSTOP */
+  --fuente-titulo: 'Libre Caslon Text', Georgia, serif;        /* Títulos y mensajes */
+  --fuente-texto: 'Google Sans Code', ui-monospace, monospace; /* Texto complementario */
+  --fuente-display: 'Marcellus SC', Georgia, serif;            /* DESACELERA, PARA TI... */
 
-  /* Tipografía — las mismas que ya cargas en el <head> */
-  --fuente-principal: 'Hanken Grotesk', sans-serif;
-  --fuente-secundaria: 'Nunito', sans-serif;
 
-  /* Colores base */
-  --color-texto: #2E2A35;
-  --color-gris: #8B8691;
-  --colorfooter: #6B6572;
 
-  /* Acentos de marca */
-  --logo-morado: #A890FE;
-  --color-acento: #FF9AB7;
-  --color-orquidea: #DA70D6;
+  /* Colores */
+  --color-tinta: #3f2a4e;
+  --color-texto: #3f2a4e;
+  --color-suave: #7a6585;
+  --colorfooter: #5d4a6b;
+  --color-hero: #500003;      
+  --color-marca: #4b1d3d;    
+  --rosa-palo: #d68a96;
+  --crema-papel: #fbf4ea;
+  --logo-morado: #a890fe;
+  --color-acento: #d68a96;
+  --bg-crema: #f6e6ee;
+
 
   /* Utilidades */
-  --radio-pill: 50px;
-  --sombra-suave: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --radio-pill: 9999px;
+  --sombra-suave: 0 6px 18px rgba(120, 80, 140, 0.18);
 }
 
-/* Reset base + tipografía por defecto de todo el sitio */
 * {
   box-sizing: border-box;
 }
 
-html, body {
+html {
   margin: 0;
   padding: 0;
-  background: var(--bg-crema);
-  /* Evita el scroll horizontal fantasma que provocan elementos
-     decorativos que se extienden un poco más allá del viewport
-     (ej. el fondo ambiental con inset negativo) */
   overflow-x: hidden;
-  max-width: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family: var(--fuente-secundaria);
-  color: var(--color-texto);
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  overflow-x: clip;
+  font-family: var(--fuente-texto);
+  color: var(--color-tinta);
   line-height: 1.5;
 }
 
@@ -55,68 +57,57 @@ a {
   font-family: inherit;
 }
 
-/* ---------------------------------------------
-   Fondo ambiental único, fijo al <body>
-   (antes vivía dentro de .SeccionProposito y por eso
-   se "apagaba" en el carrusel y el footer: al estar
-   anidado en una sección con position:relative,
-   perdía su propio stacking context y quedaba
-   tapado por las secciones siguientes).
-   Ahora es hermano de <header>/<main>, position:fixed
-   respecto al viewport, y cubre TODO el scroll.
---------------------------------------------- */
-.FondoDegradado {
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* ==============================================
+   FONDO GLOBAL Y CAPAS PARALLAX
+============================================== */
+
+.FondoGlobal {
   position: fixed;
-  inset: -100px;
-  z-index: -1;
-  background:
-    repeating-linear-gradient(
-      190deg,
-      rgba(255, 170, 205, 0.18) 0px,
-      rgba(234, 141, 206, 0.15) 60px,
-      rgba(168, 144, 254, 0.15) 120px,
-      rgba(201, 187, 255, 0.15) 180px,
-      rgba(185, 215, 245, 0.18) 240px,
-      rgba(215, 165, 235, 0.15) 300px,
-      rgba(255, 170, 205, 0.18) 360px
-    ),
-    repeating-linear-gradient(
-      -190deg,
-      rgba(185, 215, 245, 0.13) 0px,
-      rgba(201, 187, 255, 0.13) 70px,
-      rgba(234, 141, 206, 0.13) 140px,
-      rgba(255, 170, 205, 0.13) 210px,
-      rgba(215, 165, 235, 0.13) 280px,
-      rgba(185, 215, 245, 0.13) 350px
-    );
-  filter: blur(100px);
-  opacity: 0.5;
-  animation: MoverFondo 25s ease-in-out infinite alternate;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* Esta debe ser tu imagen limpia del cielo atardecer sin muelle ni pájaros */
+  background: url('../img/fondo-cielo-base.webp') center / cover no-repeat;
+  z-index: -2;
   pointer-events: none;
 }
 
-@keyframes MoverFondo {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(30px, -20px) scale(1.05); }
-}
-
-/* ---------------------------------------------
-   Puente visual entre el Carrusel y el Footer.
-   Antes esa zona quedaba plana y blanca: un glow
-   suave la conecta con el resto del ambiente.
---------------------------------------------- */
-.PuenteFooter {
-  position: relative;
+.CapasDecorativas {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 140px;
-  margin-top: -60px;
-  z-index: 1;
+  height: 100%;
+  z-index: -1;
   pointer-events: none;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(200, 180, 245, 0.22) 0%,
-    rgba(250, 220, 232, 0.14) 45%,
-    transparent 75%
-  );
-  filter: blur(30px);
+  overflow: hidden;
+}
+
+/* 
+  Estilos iniciales de los vectores (Se modifican vía Javascript). 
+  Se inician ocultos (opacity: 0) o fuera de la pantalla.
+*/
+.Capa-Muelle {
+  position: absolute;
+  bottom: -20%; /* Inicia un poco oculto por debajo de la pantalla */
+  right: 2%;
+  width: clamp(250px, 35vw, 600px);
+  opacity: 0; 
+  transition: opacity 0.5s ease-out;
+  will-change: transform, opacity;
+}
+
+.Capa-Pajaros {
+  position: absolute;
+  top: 30%;
+  left: 45%;
+  width: clamp(120px, 15vw, 250px);
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  will-change: transform, opacity;
 }

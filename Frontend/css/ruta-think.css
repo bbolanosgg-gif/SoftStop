@@ -1,6 +1,4 @@
-/* ==============================================
-   RUTA THINK — Flujo de 3 pasos (Qué / Para qué / Cómo)
-============================================== */
+/* RUTA THINK — Flujo de 3 pasos (Qué / Para qué / Cómo) */
 
 .CuerpoThink {
     background:
@@ -85,7 +83,6 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- MENSAJES (bienvenida y transiciones): pantalla limpia, sin botón --- */
 .ThinkMensaje {
     min-height: 55vh;
     display: flex;
@@ -112,7 +109,6 @@
     max-width: 520px;
 }
 
-/* --- BOTÓN PRINCIPAL COMPARTIDO (solo para pasos con inputs) --- */
 .BtnThinkContinuar {
     background: var(--logo-morado);
     color: white;
@@ -883,9 +879,7 @@
     .ClaridadFrasePie { display: none; }
 }
 
-/* ==============================================
-   PASO 3 REDISEÑADO: TAREA ENFOCADA
-============================================== */
+/* PASO 3 REDISEÑADO: TAREA ENFOCADA */
 .ThinkPasoComo {
     text-align: left;
     max-width: 560px;

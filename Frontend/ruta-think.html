@@ -8,11 +8,13 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <!-- Las 4 tipografías de global.css (un <link> por fuente: si una falla, las demás cargan) -->
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus+SC&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/ruta-think.css">
 </head>
 
@@ -23,7 +25,10 @@
         <header class="ThinkHeader">
             <span class="ThinkIndicador" id="ThinkIndicador"></span>
             <span class="ThinkMarca">SOFTSTOP</span>
-            <a href="dashboard.html" class="ThinkSalir">← Salir</a>
+            <div class="ThinkAcciones">
+                <button type="button" class="ThinkReiniciar" id="BtnReiniciar">↺ Empezar de nuevo</button>
+                <a href="dashboard.html" class="ThinkSalir">← Salir</a>
+            </div>
         </header>
 
         <main class="ThinkPrincipal">
@@ -108,7 +113,7 @@
                 <div class="ClaridadHeader">
                     <span class="ThinkEyebrow">CLARIDAD MENTAL</span>
                     <h1 class="ThinkPasoTitulo">Hemos organizado tus pendientes por prioridad.</h1>
-                    <p class="ThinkPasoSubtitulo">¿Qué te parece comenzar por aquí?</p>
+                    <p class="ThinkPasoSubtitulo" id="ClaridadSubtitulo">¿Qué te parece comenzar por aquí?</p>
                 </div>
 
                 <div class="ClaridadGrid">
@@ -131,6 +136,8 @@
                     </div>
 
                 </div>
+
+                <button type="button" class="BtnThinkContinuar BtnThinkSecundario BtnTerminarHoy" id="BtnTerminarHoy" hidden>Terminar por hoy y ver mi plan</button>
 
                 <div class="ClaridadFrasePie">
                     <span class="LineaFrasePie"></span>
@@ -211,7 +218,12 @@
 
                 </div>
 
-                <button class="BtnThinkContinuar" id="BtnVolverDashboard">Volver al Dashboard</button>
+                <p class="ThinkFinalNota">Guardamos este momento en tu Journey. Allí puedes contar cómo te sentías y qué te llevas.</p>
+
+                <div class="FinalAcciones">
+                    <button class="BtnThinkContinuar" id="BtnVerJourney">Ver en mi Journey →</button>
+                    <button class="BtnThinkContinuar BtnThinkSecundario" id="BtnVolverDashboard">Volver al Dashboard</button>
+                </div>
             </section>
 
         </main>

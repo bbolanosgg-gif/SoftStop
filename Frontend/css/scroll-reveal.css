@@ -1,50 +1,55 @@
-/* ==============================================
-   SCROLL REVEAL
-   Aparición progresiva de elementos al hacer scroll.
-   Funciona en conjunto con scroll-reveal.js
-   (IntersectionObserver agrega la clase .is-visible)
-============================================== */
+/* SCROLL REVEAL */
 
 [data-reveal] {
   opacity: 0;
-  transition:
-    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: var(--reveal-delay, 0s);
-  will-change: opacity, transform;
+  filter: blur(12px) brightness(0.85); 
+  transition: 
+    opacity 1.2s cubic-bezier(0.1, 0.8, 0.2, 1),
+    transform 1.2s cubic-bezier(0.1, 0.8, 0.2, 1),
+    filter 1.2s cubic-bezier(0.1, 0.8, 0.2, 1);
+    
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
+  transform-origin: center bottom;
 }
 
-/* Variante por defecto: desvanece + sube ligeramente */
 [data-reveal="up"] {
-  transform: translateY(28px);
+  transform: translate3d(0, 40px, 0);
+}
+
+[data-reveal="down"] {
+  transform: translate3d(0, -40px, 0);
 }
 
 [data-reveal="left"] {
-  transform: translateX(-36px);
+  transform: translate3d(-50px, 0, 0);
 }
 
 [data-reveal="right"] {
-  transform: translateX(36px);
+  transform: translate3d(50px, 0, 0);
 }
 
 [data-reveal="zoom"] {
-  transform: scale(0.92);
+
+  transform: translate3d(0, 20px, 0) scale(0.95);
 }
 
 [data-reveal="fade"] {
-  transform: none;
+  transform: translate3d(0, 0, 0) scale(1);
 }
+
 
 [data-reveal].is-visible {
   opacity: 1;
-  transform: translate(0, 0) scale(1);
+  filter: blur(0) brightness(1);
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
-/* Respeta la preferencia del usuario de reducir movimiento */
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] {
-    transition: none;
-    opacity: 1;
-    transform: none;
+    transition: none !important;
+    opacity: 1 !important;
+    filter: blur(0) brightness(1) !important;
+    transform: none !important;
   }
 }

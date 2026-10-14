@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // Estado del formulario
-    let isLoginMode = true; // Empieza asumiendo que el usuario ya tiene cuenta
+    let isLoginMode = true; 
 
     // Elementos del DOM
     const form = document.getElementById('loginForm');
@@ -25,15 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Lógica para alternar entre Iniciar Sesión y Registro
     switchModeBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        isLoginMode = !isLoginMode; // Invertir el estado
+        isLoginMode = !isLoginMode; 
 
-        // Ocultar mensajes de error previos al cambiar de modo
         statusMessage.hidden = true;
 
         if (isLoginMode) {
-            // Configuración para Iniciar Sesión
-            loginTitulo.textContent = "Bienvenido de nuevo";
-            loginSubtitulo.textContent = "Inicia sesión para continuar con tu proceso.";
+            loginTitulo.textContent = "Bienvenido";
+            loginSubtitulo.textContent = "Inicia sesion para continuar";
             submitText.textContent = "Iniciar sesión";
             toggleContextText.textContent = "¿No tienes una cuenta?";
             switchModeBtn.textContent = "Crear cuenta gratis";
@@ -41,9 +39,8 @@ document.addEventListener("DOMContentLoaded", () => {
             nameContainer.hidden = true;
             filaRecordarme.style.display = "flex";
         } else {
-            // Configuración para Registrarse
-            loginTitulo.textContent = "Crea tu espacio";
-            loginSubtitulo.textContent = "Empieza tu proceso con SoftStop.";
+            loginTitulo.textContent = "Crea tu cuenta";
+            loginSubtitulo.textContent = "Únete para continuar";
             submitText.textContent = "Crear cuenta";
             toggleContextText.textContent = "¿Ya tienes una cuenta?";
             switchModeBtn.textContent = "Inicia sesión";
@@ -74,18 +71,16 @@ document.addEventListener("DOMContentLoaded", () => {
         errorElement.hidden = !show;
     };
 
-    // Limpiar errores al escribir
     nameInput.addEventListener('input', () => showError(nameInput, 'nameError', false));
     emailInput.addEventListener('input', () => showError(emailInput, 'emailError', false));
     passwordInput.addEventListener('input', () => showError(passwordInput, 'passwordError', false));
 
-    // Intercepción del envío y Redirección Inteligente
+    // Intercepción del envío
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         let isValid = true;
         statusMessage.hidden = true;
 
-        // Validar Nombre SOLO si está en modo registro
         if (!isLoginMode && nameInput.value.trim() === '') {
             showError(nameInput, 'nameError', true);
             isValid = false;
@@ -102,31 +97,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (!isValid) {
-            statusMessage.className = 'LoginStatusMessage';
             statusMessage.hidden = false;
-            statusMessage.innerHTML = 'Parece que faltan algunos datos. Tómate tu tiempo y revisa los campos señalados antes de continuar.';
+            statusMessage.innerHTML = 'Faltan algunos datos. Revisa los campos señalados.';
             return;
         }
 
-        // Estado de carga empático
-        submitText.innerHTML = `<svg class="LoginSpinner" width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" opacity="0.25"></circle><path fill="currentColor" opacity="0.85" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Preparando tu espacio...`;
+        submitText.innerHTML = `Cargando...`;
         submitBtn.disabled = true;
 
-        // Simular validación de 1.5 segundos y luego REDIRECCIONAR SEGÚN EL ROL
         setTimeout(() => {
             const correoIngresado = emailInput.value.trim().toLowerCase();
 
             if (isLoginMode) {
-                // Validación inteligente de rol basada en el correo
                 if (correoIngresado === "admin@softstop.com") {
-                    // Si es el admin, va directo al panel de gestión interna
                     window.location.href = 'admin-dashboard.html';
                 } else {
-                    // Si es un estudiante normal, va al dashboard de usuario
                     window.location.href = 'dashboard.html';
                 }
             } else {
-                // Si se estaba registrando por primera vez, va al check-in inicial
                 window.location.href = 'checkin.html';
             }
         }, 1500);

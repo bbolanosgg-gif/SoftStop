@@ -1,10 +1,4 @@
-/* ==============================================
-   MENÚ OVERLAY
-   Se abre al hacer clic en el botón MENU.
-   Inspirado en el efecto "blur unless hover" del
-   ejemplo, adaptado a la marca (sin scroll-timeline,
-   compatible con todos los navegadores).
-============================================== */
+/* MENÚ OVERLAY*/
 
 .MenuOverlay {
   position: fixed;
@@ -25,7 +19,6 @@
   transition: opacity 0.45s ease;
 }
 
-/* Fondo con glassmorphism, tono de marca */
 .MenuOverlay-bg {
   position: absolute;
   inset: 0;
@@ -76,8 +69,6 @@
 
 .MenuOverlay-group {
   flex: 1 1 220px;
-  /* Cada columna entra con un pequeño delay para dar
-     sensación de cascada al abrir el menú */
   opacity: 0;
   transform: translateY(18px);
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -109,38 +100,6 @@
   transition: color 0.25s ease, filter 0.25s ease, transform 0.25s ease;
 }
 
-/* El efecto "desenfoca si no lo tocas" solo se activa en
-   dispositivos con mouse (hover real); en táctil se muestra
-   todo nítido, porque no existe un estado de hover confiable */
-@media (hover: hover) and (pointer: fine) {
-  .MenuOverlay-content:hover .MenuOverlay-link:not(:hover) {
-    filter: blur(3px);
-    opacity: 0.55;
-  }
-  .MenuOverlay-link:hover {
-    color: var(--logo-morado);
-    transform: translateX(6px);
-  }
-}
-
-.MenuOverlay-link:active {
-  color: var(--logo-morado);
-}
-
-.MenuOverlay-hint {
-  position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  font-family: var(--fuente-secundaria);
-  font-size: 12px;
-  letter-spacing: 1px;
-  color: var(--colorfooter);
-  opacity: 0.7;
-}
-
-/* Bloquea el scroll del body mientras el menú está abierto */
 body.MenuAbierto {
   overflow-y: hidden;
 }

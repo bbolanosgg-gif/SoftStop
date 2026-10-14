@@ -1,6 +1,4 @@
-/* =========================
-   TABLET (Pantallas medianas)
-========================= */
+/*  TABLET*/
 @media (max-width: 900px) {
     
     /* --- HEADER Y HERO --- */
@@ -29,9 +27,7 @@
 }
 
 
-/* =========================
-   CELULAR (Pantallas pequeñas)
-========================= */
+/* CELULAR */
 @media (max-width: 600px) {
     
     /* --- HEADER MÓVIL --- */
