@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Think | Softstop</title>
+    <title>Algorithm Think | Softstop</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Las 4 tipografías de global.css (un <link> por fuente: si una falla, las demás cargan) -->
+    <!-- Las 4 tipografías de global.css -->
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code&display=swap" rel="stylesheet">
@@ -22,209 +22,546 @@
 
     <div class="PaginaThink">
 
+        <!-- CABECERA GLOBAL -->
         <header class="ThinkHeader">
-            <span class="ThinkIndicador" id="ThinkIndicador"></span>
+            <span class="ThinkIndicador" id="ThinkIndicador">Acceso</span>
             <span class="ThinkMarca">SOFTSTOP</span>
             <div class="ThinkAcciones">
-                <button type="button" class="ThinkReiniciar" id="BtnReiniciar">↺ Empezar de nuevo</button>
+                <button type="button" class="ThinkBtnHeader" id="BtnEditarMatriz" hidden title="Revisar o editar mi Matriz ACT">🧭 Mi Matriz ACT</button>
+                <button type="button" class="ThinkBtnHeader" id="BtnReiniciarTodo" title="Borrar datos locales y simular 1ra vez">↺ Reset Demo</button>
                 <a href="dashboard.html" class="ThinkSalir">← Salir</a>
             </div>
         </header>
 
         <main class="ThinkPrincipal">
 
-            <!-- ================= BIENVENIDA (mensaje que se desvanece solo) ================= -->
-            <section class="ThinkVista ThinkMensaje" id="VistaBienvenida">
-                <span class="ThinkEyebrow">THINK</span>
-                <p class="ThinkFrase">
-                    La procrastinación viene de la falta de claridad de nuestros pendientes.<br>
-                    Escribe a continuación.
-                </p>
+            <!-- =========================================================
+                 BLOQUE 0: ACCESO (PANTALLA 0)
+            ========================================================= -->
+            <section class="ThinkVista" id="Pantalla_0_Acceso">
+                <div class="TarjetaGlass ContenedorEstrecho">
+                    <span class="ThinkEyebrow">ESPACIO DE CALMA Y ENFOQUE</span>
+                    <h1 class="ThinkPasoTitulo MarcaTitulo">Softstop</h1>
+                    <p class="ThinkPasoSubtitulo">Inicia sesión para conectar con tu propósito y organizar tu mente sin saturarte.</p>
+
+                    <form id="FormAcceso" class="FormularioAcceso" novalidate>
+                        <div class="ThinkInputGrupo">
+                            <label class="ThinkLabel" for="InputUsuarioAcceso">Usuario o Correo</label>
+                            <input type="text" id="InputUsuarioAcceso" class="InputEstilizado" placeholder="Ej: estudiante@unal.edu.co" required autocomplete="username">
+                        </div>
+
+                        <div class="ThinkInputGrupo">
+                            <label class="ThinkLabel" for="InputPasswordAcceso">Contraseña</label>
+                            <input type="password" id="InputPasswordAcceso" class="InputEstilizado" placeholder="••••••••" required autocomplete="current-password">
+                        </div>
+
+                        <p class="MensajeError" id="ErrorAcceso" hidden>Por favor completa tu usuario y contraseña para entrar.</p>
+
+                        <button type="submit" class="BtnThinkContinuar AnchoCompleto" id="BtnEntrar">Entrar</button>
+                    </form>
+                </div>
             </section>
 
-            <!-- ================= TRANSICIÓN (reutilizable, se desvanece sola) ================= -->
-            <section class="ThinkVista ThinkMensaje" id="VistaTransicion" hidden>
-                <p class="ThinkFrase" id="TextoTransicion"></p>
-            </section>
+            <!-- =========================================================
+                 BLOQUE 1: MATRIZ ACT (PANTALLAS 1.0 a 1.4)
+            ========================================================= -->
 
-            <!-- ================= PASO 1: ¿QUÉ? ================= -->
-            <section class="ThinkVista ThinkPaso" id="VistaPaso1" hidden>
-                <h1 class="ThinkPasoTitulo">¿Qué?</h1>
-                <p class="ThinkPasoSubtitulo">Claridad de tus pendientes.</p>
+            <!-- PANTALLA 1.0: MODAL DE BIENVENIDA (MATRIZ ACT) -->
+            <div class="ModalOverlay" id="Modal_1_0_Bienvenida" hidden role="dialog" aria-modal="true" aria-labelledby="TituloModalBienvenida">
+                <div class="ModalCaja TarjetaGlass">
+                    <button type="button" class="BtnCerrarModal" id="BtnCerrarModalBienvenida" aria-label="Cerrar (X)">✕</button>
+                    <span class="ThinkEyebrow">ALGORITHM THINK • PARTE 1</span>
+                    <h2 class="ThinkPasoTitulo" id="TituloModalBienvenida">Bienvenido</h2>
+                    <p class="ThinkPasoSubtitulo TextoModal">
+                        Reconectemos con lo que te impulsa y descubramos más de ti. Responde las preguntas a continuación.
+                    </p>
+                    <div class="ModalBotones">
+                        <button type="button" class="BtnThinkSecundario" id="BtnModalCerrarTexto">Cerrar (X)</button>
+                        <button type="button" class="BtnThinkContinuar" id="BtnModalContinuar">Continuar</button>
+                    </div>
+                </div>
+            </div>
 
-                <div class="ThinkInputGrupo">
-                    <label class="ThinkLabel" for="InputMateria">Materias o áreas actuales</label>
+            <!-- CONTENEDOR COMPARTIDO PARA LAS VISTAS 1.1 A 1.4 DE LA MATRIZ ACT -->
+            <section class="ThinkVista SeccionMatrizACT" id="Contenedor_Matriz_ACT" hidden>
+                
+                <!-- Representación visual de los 4 cuadrantes (Progreso visual no saturado) -->
+                <div class="MatrizVisualMini" id="MatrizVisualMini" aria-label="Progreso de la Matriz ACT">
+                    <div class="CuadranteMini" id="MiniQ3" data-cuadrante="3">
+                        <span class="EtiquetaMini">Q3 • Escape</span>
+                        <p class="ResumenMini" id="ResumenMiniQ3">—</p>
+                    </div>
+                    <div class="CuadranteMini" id="MiniQ4" data-cuadrante="4">
+                        <span class="EtiquetaMini">Q4 • Acciones</span>
+                        <p class="ResumenMini" id="ResumenMiniQ4">—</p>
+                    </div>
+                    <div class="CuadranteMini" id="MiniQ2" data-cuadrante="2">
+                        <span class="EtiquetaMini">Q2 • Obstáculos</span>
+                        <p class="ResumenMini" id="ResumenMiniQ2">—</p>
+                    </div>
+                    <div class="CuadranteMini" id="MiniQ1" data-cuadrante="1">
+                        <span class="EtiquetaMini">Q1 • Valores</span>
+                        <p class="ResumenMini" id="ResumenMiniQ1">—</p>
+                    </div>
+                    <!-- Icono central Corazón (Activo en Paso 1.4) -->
+                    <div class="CentroMatrizCorazon" id="IconoCentroCorazon" hidden title="El Yo observador en el centro">
+                        ♥
+                    </div>
+                </div>
+
+                <!-- PANTALLA 1.1: PREGUNTA 1 (VALORES CON CHIPS) -->
+                <div class="SubVistaMatriz TarjetaGlass" id="Pantalla_1_1_Valores" hidden>
+                    <span class="BadgeCuadrante">Cuadrante 1 de 4 • Inferior Derecho</span>
+                    <h2 class="PreguntaMatriz">1. ¿Quién y qué es fundamentalmente importante para ti en tu vida académica y personal?</h2>
+                    <p class="InstruccionUI">Escribe un valor y presiona <strong>Enter</strong> o una <strong>coma (,)</strong> para agregarlo.</p>
+                    <p class="EjemploUI">Ej: Ser una estudiante honesta, comprometida y dispuesta a ayudar...</p>
+
                     <div class="ThinkInputConBoton">
-                        <input type="text" id="InputMateria" placeholder="Ej: Cálculo, Programación...">
-                        <button class="BtnThinkAgregar" id="BtnAgregarMateria">+</button>
+                        <input type="text" id="Input_Valores_P1" placeholder="Escribe un valor y presiona Enter o coma (,)">
+                        <button type="button" class="BtnThinkAgregar" id="BtnAgregarValorManual" title="Agregar valor">+</button>
                     </div>
-                    <div class="ListaChips" id="ListaMaterias"></div>
+
+                    <div class="ListaChips" id="Contenedor_Chips_P1" aria-live="polite"></div>
+                    <p class="MensajeError" id="ErrorPaso1_1" hidden>Agrega al menos un valor importante para ti antes de continuar.</p>
+
+                    <div class="AccionesPieVista">
+                        <button type="button" class="BtnThinkContinuar" id="BtnGuardarP1">Guardar / Continuar</button>
+                    </div>
                 </div>
 
-                                <div class="ThinkInputGrupo">
-                    <label class="ThinkLabel" for="InputPendiente">Pendientes de esta semana</label>
-
-                                        <div class="SelectorMateriaPendiente" id="SelectorMateriaPendiente"></div>
-
-                    <div class="SelectorDiaPendiente" id="SelectorDiaPendiente">
-                        <button type="button" class="BtnDia" data-dia="Lun">L</button>
-                        <button type="button" class="BtnDia" data-dia="Mar">M</button>
-                        <button type="button" class="BtnDia" data-dia="Mié">X</button>
-                        <button type="button" class="BtnDia" data-dia="Jue">J</button>
-                        <button type="button" class="BtnDia" data-dia="Vie">V</button>
-                        <button type="button" class="BtnDia" data-dia="Sáb">S</button>
-                        <button type="button" class="BtnDia" data-dia="Dom">D</button>
+                <!-- PANTALLA 1.2: PREGUNTA 2 (MIEDOS Y OBSTÁCULOS INTERNOS) -->
+                <div class="SubVistaMatriz TarjetaGlass" id="Pantalla_1_2_Miedos" hidden>
+                    <div class="CabeceraConTooltip">
+                        <span class="BadgeCuadrante">Cuadrante 2 de 4 • Inferior Izquierdo</span>
+                        <div class="ContenedorTooltip">
+                            <button type="button" class="BtnPrevisualizar" id="BtnPrevisualizarP1">👁 Previsualizar respuesta anterior</button>
+                            <div class="TooltipFlotante" id="TooltipValoresP1" hidden>
+                                <strong>Tus valores (Paso 1):</strong>
+                                <ul id="ListaTooltipP1"></ul>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="SelectorPrioridadPendiente" id="SelectorPrioridadPendiente">
-                        <button type="button" class="BtnPrioridad" data-prioridad="A">🔥 Alta</button>
-                        <button type="button" class="BtnPrioridad" data-prioridad="M">⚡ Media</button>
-                        <button type="button" class="BtnPrioridad" data-prioridad="B">🌿 Baja</button>
-                    </div>
+                    <h2 class="PreguntaMatriz">2. ¿Qué pensamientos, dudas o sentimientos difíciles surgen en tu interior y actúan como obstáculos que te alejan de esos valores?</h2>
+                    <p class="EjemploUI">Ej: El miedo a fallar</p>
 
-                    <div class="ThinkInputConBoton">
-                        <input type="text" id="InputPendiente" placeholder="Ej: Entregar taller de derivadas">
-                        <button class="BtnThinkAgregar" id="BtnAgregarPendiente">+</button>
+                    <textarea id="Input_Miedos_P2" class="AreaTextoEstilizada" rows="3" placeholder="Escribe aquí los pensamientos o dudas difíciles..."></textarea>
+                    <p class="MensajeError" id="ErrorPaso1_2" hidden>Por favor escribe tus obstáculos internos para continuar.</p>
+
+                    <div class="AccionesPieVista">
+                        <button type="button" class="BtnThinkSecundario" id="BtnVolverA_1_1">← Anterior</button>
+                        <button type="button" class="BtnThinkContinuar" id="BtnGuardarP2">Guardar / Continuar</button>
                     </div>
-                    <ul class="ListaPendientes" id="ListaPendientes"></ul>
                 </div>
 
-                <button class="BtnThinkContinuar" id="BtnPaso1Continuar">Continuar</button>
+                <!-- PANTALLA 1.3: PREGUNTA 3 (CONDUCTAS DE ESCAPE) -->
+                <div class="SubVistaMatriz TarjetaGlass" id="Pantalla_1_3_Conductas" hidden>
+                    <span class="BadgeCuadrante">Cuadrante 3 de 4 • Superior Izquierdo</span>
+                    <h2 class="PreguntaMatriz">3. ¿Qué comportamientos específicos realizas para evitar, adormecer o escapar de esas experiencias internas aversivas?</h2>
+                    <p class="EjemploUI">Ej: Ver series por horas</p>
+
+                    <textarea id="Input_Conductas_P3" class="AreaTextoEstilizada" rows="3" placeholder="Escribe qué sueles hacer para procrastinar o escapar..."></textarea>
+                    <p class="MensajeError" id="ErrorPaso1_3" hidden>Por favor describe estas conductas para continuar.</p>
+
+                    <div class="AccionesPieVista">
+                        <button type="button" class="BtnThinkSecundario" id="BtnVolverA_1_2">← Anterior</button>
+                        <button type="button" class="BtnThinkContinuar" id="BtnGuardarP3">Continuar</button>
+                    </div>
+                </div>
+
+                <!-- PANTALLA 1.4: PREGUNTA 4 (ACCIONES COMPROMETIDAS) -->
+                <div class="SubVistaMatriz TarjetaGlass" id="Pantalla_1_4_Soluciones" hidden>
+                    <span class="BadgeCuadrante">Cuadrante 4 de 4 • Superior Derecho ♥</span>
+                    <h2 class="PreguntaMatriz">4. ¿Qué acciones externas y observables podrías tomar que te acerquen a la persona que deseas ser, incluso si tienes que llevar contigo esos pensamientos y sentimientos difíciles?</h2>
+                    <p class="EjemploUI">Ej: Asistir a todas mis clases</p>
+
+                    <textarea id="Input_Soluciones_P4" class="AreaTextoEstilizada" rows="3" placeholder="Escribe tus acciones comprometidas..."></textarea>
+                    <p class="MensajeError" id="ErrorPaso1_4" hidden>Por favor escribe al menos una acción comprometida.</p>
+
+                    <div class="AccionesPieVista">
+                        <button type="button" class="BtnThinkSecundario" id="BtnVolverA_1_3">← Anterior</button>
+                        <button type="button" class="BtnThinkContinuar" id="BtnTerminarMatriz">Terminar</button>
+                    </div>
+                </div>
+
             </section>
 
-            <!-- ================= PASO 2: ¿PARA QUÉ? ================= -->
-                        <!-- ================= PASO 2: ¿PARA QUÉ? ================= -->
-            <section class="ThinkVista ThinkPaso" id="VistaPaso2" hidden>
-                <h1 class="ThinkPasoTitulo">¿Para qué?</h1>
-                <p class="ThinkPasoSubtitulo">Para cada materia con pendientes, cuéntame para qué la haces.</p>
+            <!-- =========================================================
+                 BLOQUE 2: CLARIDAD MENTAL (SEPARADO EN 3 PANTALLAS: 2.1, 2.2, 2.3)
+            ========================================================= -->
 
-                <div class="ContenedorMateriasProposito" id="ContenedorMateriasProposito"></div>
+            <!-- PANTALLA 2.1: REGISTRO DE MATERIAS -->
+            <section class="ThinkVista" id="Pantalla_2_1_Materias" hidden>
+                <div class="TarjetaGlass">
+                    <span class="ThinkEyebrow">CLARIDAD MENTAL • PASO 1 DE 3</span>
+                    <h1 class="ThinkPasoTitulo">Mis Materias</h1>
+                    <p class="ThinkPasoSubtitulo">Registra tus materias o áreas actuales y asígnales un color identificador.</p>
 
-                <button class="BtnThinkContinuar" id="BtnPaso2Continuar">Continuar</button>
-            </section>
-                       <!-- ================= CLARIDAD MENTAL (nueva) ================= -->
-            <section class="ThinkVista ThinkClaridad" id="VistaClaridad" hidden>
+                    <div class="ThinkInputGrupo">
+                        <label class="ThinkLabel" for="InputNombreMateria">Nombre de la materia</label>
+                        <input type="text" id="InputNombreMateria" class="InputEstilizado" placeholder="Ej: Cálculo, Sociales, Programación...">
+                    </div>
 
-                <div class="ClaridadFondo" aria-hidden="true">
-                    <div class="ClaridadBlobUno"></div>
-                    <div class="ClaridadBlobDos"></div>
+                    <div class="ThinkInputGrupo">
+                        <span class="ThinkLabel">Elige un color para esta materia</span>
+                        <div class="SelectorPaletaColores" id="SelectorColorNuevaMateria">
+                            <button type="button" class="BtnColorPaleta Activo" data-color="#A855F7" style="background:#A855F7;" title="Morado" aria-label="Morado"></button>
+                            <button type="button" class="BtnColorPaleta" data-color="#F97316" style="background:#F97316;" title="Naranja" aria-label="Naranja"></button>
+                            <button type="button" class="BtnColorPaleta" data-color="#EC4899" style="background:#EC4899;" title="Rosa" aria-label="Rosa"></button>
+                            <button type="button" class="BtnColorPaleta" data-color="#14B8A6" style="background:#14B8A6;" title="Turquesa" aria-label="Turquesa"></button>
+                            <button type="button" class="BtnColorPaleta" data-color="#6366F1" style="background:#6366F1;" title="Índigo" aria-label="Índigo"></button>
+                            <button type="button" class="BtnColorPaleta" data-color="#EAB308" style="background:#EAB308;" title="Ámbar" aria-label="Ámbar"></button>
+                        </div>
+                    </div>
+
+                    <button type="button" class="BtnThinkSecundario AnchoCompleto" id="BtnAgregarMateriaAPI">+ Agregar Materia</button>
+
+                    <div class="ListaChips ContenedorChipsMaterias" id="ContenedorChipsMaterias"></div>
+                    <p class="MensajeError" id="ErrorMaterias2_1" hidden>Agrega al menos una materia para poder asociar tus pendientes.</p>
+
+                    <div class="AccionesPieVista">
+                        <button type="button" class="BtnThinkContinuar" id="BtnIrACreadorPendientes">Siguiente: Agregar Pendientes →</button>
+                    </div>
                 </div>
+            </section>
 
+            <!-- PANTALLA 2.2: CREADOR DE PENDIENTES (VALIDACIÓN DE 3 CANDADOS) -->
+            <section class="ThinkVista" id="Pantalla_2_2_CreadorPendientes" hidden>
+                <div class="TarjetaGlass">
+                    <span class="ThinkEyebrow">CLARIDAD MENTAL • PASO 2 DE 3</span>
+                    <h1 class="ThinkPasoTitulo">Configura tu pendiente paso a paso</h1>
+                    <p class="ThinkPasoSubtitulo">Activa los 3 candados para desbloquear el cuadro de texto y guardar tu tarea.</p>
+
+                    <!-- CANDADO 1: COLOR / MATERIA -->
+                    <div class="BloqueCandado" id="BloqueCandado1">
+                        <div class="CabeceraCandado">
+                            <span class="EstadoCandado" id="IconoCandado1">🔒 Candado 1</span>
+                            <span class="ThinkLabel SinMargen">Selecciona la materia (color)</span>
+                        </div>
+                        <div class="GrupoBotonesMaterias" id="GrupoBotonesMateriaCandado"></div>
+                    </div>
+
+                    <!-- CANDADO 2: DÍA DE ENTREGA -->
+                    <div class="BloqueCandado" id="BloqueCandado2">
+                        <div class="CabeceraCandado">
+                            <span class="EstadoCandado" id="IconoCandado2">🔒 Candado 2</span>
+                            <span class="ThinkLabel SinMargen">Día de entrega en la semana</span>
+                        </div>
+                        <div class="SelectorDiaPendiente" id="GrupoBotonesDiaCandado">
+                            <button type="button" class="BtnDia" data-dia="L">L</button>
+                            <button type="button" class="BtnDia" data-dia="M">M</button>
+                            <button type="button" class="BtnDia" data-dia="X">X</button>
+                            <button type="button" class="BtnDia" data-dia="J">J</button>
+                            <button type="button" class="BtnDia" data-dia="V">V</button>
+                            <button type="button" class="BtnDia" data-dia="S">S</button>
+                            <button type="button" class="BtnDia" data-dia="D">D</button>
+                        </div>
+                    </div>
+
+                    <!-- CANDADO 3: PRIORIDAD -->
+                    <div class="BloqueCandado" id="BloqueCandado3">
+                        <div class="CabeceraCandado">
+                            <span class="EstadoCandado" id="IconoCandado3">🔒 Candado 3</span>
+                            <span class="ThinkLabel SinMargen">Prioridad (según dificultad o tiempo requerido)</span>
+                        </div>
+                        <div class="SelectorPrioridadPendiente" id="GrupoBotonesPrioridadCandado">
+                            <button type="button" class="BtnPrioridad" data-prioridad="Alta">🔥 Alta</button>
+                            <button type="button" class="BtnPrioridad" data-prioridad="Media">⚡ Media</button>
+                            <button type="button" class="BtnPrioridad" data-prioridad="Baja">🌿 Baja</button>
+                        </div>
+                    </div>
+
+                    <!-- INPUT PROTEGIDO POR LOS 3 CANDADOS -->
+                    <div class="ThinkInputGrupo">
+                        <label class="ThinkLabel" for="Input_Nombre_Pendiente" id="LabelInputPendiente">
+                            🔒 Completa los 3 pasos superiores para escribir el nombre del pendiente
+                        </label>
+                        <div class="ThinkInputConBoton ContenedorInputBloqueable" id="ContenedorInputPendiente">
+                            <input type="text" id="Input_Nombre_Pendiente" placeholder="Ej: Taller 1" disabled>
+                            <button type="button" class="BtnThinkAgregar" id="Boton_Agregar_Pendiente_POST" disabled title="Agregar pendiente">+</button>
+                        </div>
+                    </div>
+
+                    <p class="FeedbackExito" id="FeedbackPendienteGuardado" hidden>✓ Pendiente guardado en tu lista.</p>
+
+                    <div class="AccionesPieVista">
+                        <button type="button" class="BtnThinkSecundario" id="BtnVolverAMaterias">← Mis Materias</button>
+                        <button type="button" class="BtnThinkContinuar" id="BtnVerListaPendientes">Ver mi lista de pendientes (<span id="ContadorPendientesBtn">0</span>) →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANTALLA 2.3: LISTA DE PENDIENTES ACTUALES -->
+            <section class="ThinkVista" id="Pantalla_2_3_ListaPendientes" hidden>
+                <div class="TarjetaGlass">
+                    <span class="ThinkEyebrow">CLARIDAD MENTAL • PASO 3 DE 3</span>
+                    <h1 class="ThinkPasoTitulo">Tus pendientes de la semana</h1>
+                    <p class="ThinkPasoSubtitulo">Revisa lo que tienes anotado. Tenerlo fuera de tu mente reduce la ansiedad.</p>
+
+                    <ul class="ListaPendientes" id="ListaBarrasPendientes"></ul>
+                    <p class="MensajeVacio" id="MensajeSinPendientes" hidden>Aún no tienes pendientes registrados. Agrega al menos uno para continuar.</p>
+
+                    <div class="AccionesPieVista">
+                        <button type="button" class="BtnThinkSecundario" id="BtnAgregarOtroPendiente">+ Agregar otro pendiente</button>
+                        <button type="button" class="BtnThinkContinuar" id="BtnContinuarADecision">Continuar →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 BLOQUE 3: DECISIÓN Y RECOMENDACIÓN (PANTALLAS 3.1 y 3.2)
+            ========================================================= -->
+
+            <!-- PANTALLA 3.1: ELECCIÓN DE RUTA -->
+            <section class="ThinkVista" id="Pantalla_3_1_EleccionRuta" hidden>
+                <div class="TarjetaGlass">
+                    <span class="ThinkEyebrow">MOMENTO DE DECISIÓN</span>
+                    <h1 class="ThinkPasoTitulo">¿Cómo prefieres empezar hoy?</h1>
+                    <p class="ThinkPasoSubtitulo">Elige si deseas una sugerencia basada en tus entregas o si prefieres decidir por tu cuenta.</p>
+
+                    <div class="GridOpcionesRuta">
+                        <button type="button" class="TarjetaRutaOpcion" id="BtnRutaAlgoritmo">
+                            <span class="IconoRuta">✨</span>
+                            <strong class="TituloRuta">Ir a recomiéndame qué estudiar</strong>
+                            <span class="DescRuta">El algoritmo muestra a qué prestarle más atención primero según fecha y prioridad.</span>
+                        </button>
+
+                        <button type="button" class="TarjetaRutaOpcion" id="BtnRutaLibreACT">
+                            <span class="IconoRuta">🧭</span>
+                            <strong class="TituloRuta">Ir a Plan de Acción ACT</strong>
+                            <span class="DescRuta">Para elegir libremente por dónde comenzar tu sesión de hoy.</span>
+                        </button>
+                    </div>
+
+                    <div class="AccionesPieVista">
+                        <button type="button" class="BtnThinkSecundario" id="BtnVolverALista2_3">← Volver a mi lista</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANTALLA 3.2: RECOMENDACIÓN DEL ALGORITMO (RUTA A) -->
+            <section class="ThinkVista ThinkClaridad" id="Pantalla_3_2_Recomendacion" hidden>
                 <div class="ClaridadHeader">
-                    <span class="ThinkEyebrow">CLARIDAD MENTAL</span>
-                    <h1 class="ThinkPasoTitulo">Hemos organizado tus pendientes por prioridad.</h1>
-                    <p class="ThinkPasoSubtitulo" id="ClaridadSubtitulo">¿Qué te parece comenzar por aquí?</p>
+                    <span class="ThinkEyebrow">RECOMENDACIÓN ALGORÍTMICA</span>
+                    <h1 class="ThinkPasoTitulo">Claridad Mental: Hemos organizado tus pendientes por prioridad.</h1>
+                    <p class="ThinkPasoSubtitulo">Selecciona "Iniciar" en la tarjeta con la que quieras comprometerte ahora.</p>
                 </div>
 
                 <div class="ClaridadGrid">
+                    <!-- Tarjeta Principal Destacada -->
+                    <div class="TarjetaFoco" id="TarjetaFocoRecomendada"></div>
 
-                    <div class="TarjetaFoco" id="TarjetaFoco"></div>
-
+                    <!-- Carrusel de todas las tarjetas ordenadas -->
                     <div class="CarruselPendientes">
                         <div class="CarruselHeaderRow">
-                            <p class="CarruselTitulo">Tus próximos pendientes</p>
+                            <p class="CarruselTitulo">Orden sugerido por cercanía y prioridad</p>
                             <span class="CarruselLinea"></span>
-                            <span class="CarruselVerTodos">Ver todos →</span>
                         </div>
 
                         <div class="PistaPendientesWrap">
-                            <div class="PistaPendientes" id="PistaPendientes"></div>
-                            <button class="BtnCarruselSiguiente" id="BtnCarruselSiguiente" aria-label="Ver más pendientes">→</button>
+                            <div class="PistaPendientes" id="CarruselTarjetasOrdenadas"></div>
+                            <button type="button" class="BtnCarruselSiguiente" id="BtnCarruselScrollDer" aria-label="Desplazar carrusel">→</button>
                         </div>
-
-                        <div class="PuntosCarrusel" id="PuntosCarrusel"></div>
                     </div>
-
                 </div>
 
-                <button type="button" class="BtnThinkContinuar BtnThinkSecundario BtnTerminarHoy" id="BtnTerminarHoy" hidden>Terminar por hoy y ver mi plan</button>
-
-                <div class="ClaridadFrasePie">
-                    <span class="LineaFrasePie"></span>
-                    <span class="TextoFrasePie">UN DÍA<br>A LA VEZ,<br>TAMBIÉN ES<br>AVANZAR.</span>
+                <div class="AccionesPieVista">
+                    <button type="button" class="BtnThinkSecundario" id="BtnVolverAEleccion3_1">← Volver</button>
                 </div>
             </section>
 
-                        <!-- ================= PASO 3: ¿CÓMO? (tarea enfocada) ================= -->
-            <section class="ThinkVista ThinkPaso ThinkPasoComo" id="VistaPaso3" hidden>
+            <!-- =========================================================
+                 BLOQUE 4: PLAN DE ACCIÓN ACT (1 PANTALLA POR PREGUNTA: 4.1 A 4.5)
+            ========================================================= -->
 
-                <span class="FocoMateriaChip" id="ComoMateriaChip"></span>
-                <h1 class="ComoTitulo" id="ComoTitulo"></h1>
+            <!-- PANTALLA 4.1: PLAN ACT — PREGUNTA 1 (VALOR CENTRAL) -->
+            <section class="ThinkVista" id="Pantalla_4_1_ValorCentral" hidden>
+                <div class="TarjetaGlass ContenedorEstrecho">
+                    <span class="ThinkEyebrow">PLAN DE ACCIÓN ACT • PASO 1 DE 5</span>
+                    <h2 class="PreguntaMatriz">Antes de continuar nuestra sesión de estudio, hagámoslo con un propósito. Define un valor central para esta sesión.</h2>
 
-                <p class="ThinkPasoSubtituloComo">¿Cómo lo vas a lograr?</p>
-                <p class="ThinkPasoSubtituloComoChico">Divide esta tarea en partes manejables.</p>
-
-                <div class="ThinkInputConBoton ThinkInputComo">
-                    <input type="text" id="InputMicroPaso" placeholder="Añade un paso pequeño...">
-                    <button class="BtnThinkAgregar" id="BtnAgregarMicroPaso">+</button>
-                </div>
-
-                <button class="BtnDesglosarIA" id="BtnDesglosarIA">✨ Desglosar con IA</button>
-
-                <ul class="ListaMicroPasosCheck" id="ListaMicroPasos"></ul>
-
-                <button class="BtnThinkContinuar BtnComoContinuar" id="BtnComoContinuar">Continuar</button>
-
-                <!-- Válvula de escape colapsable -->
-                <div class="UnstuckColapsable">
-                    <button class="BtnUnstuck" id="BtnUnstuck">
-                        <span class="IconoUnstuck">🛟</span> Estoy atascado
-                    </button>
-
-                    <div class="UnstuckPanel" id="UnstuckPanel" hidden>
-                        <p class="ThinkPregunta">¿Cuál es el paso más pequeño que puedes dar ahora mismo?</p>
-                        <form class="ThinkFormRespuesta" id="ThinkFormRespuesta">
-                            <input
-                                type="text"
-                                class="ThinkRespuesta"
-                                id="ThinkRespuesta"
-                                placeholder="Escribe ese primer paso..."
-                                autocomplete="off"
-                            >
-                            <button type="submit" class="BtnThinkEnviar" aria-label="Enviar">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                        </form>
+                    <div class="ThinkInputGrupo">
+                        <label class="ThinkLabel" for="DropdownValoresACT">Selecciona uno de tus valores o crea uno nuevo</label>
+                        <select id="DropdownValoresACT" class="SelectEstilizado"></select>
                     </div>
+
+                    <!-- Aparece solo si elige "+ Agregar nuevo valor" -->
+                    <div class="ThinkInputGrupo" id="ContenedorNuevoValorACT" hidden>
+                        <label class="ThinkLabel" for="InputNuevoValorACT">Escribe tu nuevo valor personal o académico</label>
+                        <input type="text" id="InputNuevoValorACT" class="InputEstilizado" placeholder="Ej: Cultivar mi disciplina con amabilidad">
+                    </div>
+
+                    <p class="MensajeError" id="ErrorPaso4_1" hidden>Por favor selecciona o escribe un valor válido.</p>
+
+                    <div class="AccionesPieVista">
+                        <button type="button" class="BtnThinkSecundario" id="BtnVolverDesde4_1">← Volver</button>
+                        <button type="button" class="BtnThinkContinuar" id="BtnContinuarA_4_2">Continuar →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANTALLA 4.2: PLAN ACT — PREGUNTA 2 (MATERIA / OBJETIVO A CORTO PLAZO) -->
+            <section class="ThinkVista" id="Pantalla_4_2_MateriaObjetivo" hidden>
+                <div class="TarjetaGlass ContenedorEstrecho">
+                    <span class="ThinkEyebrow">PLAN DE ACCIÓN ACT • PASO 2 DE 5</span>
+                    <h2 class="PreguntaMatriz">Elige por qué materia o área quieres comenzar.</h2>
+
+                    <div class="ThinkInputGrupo">
+                        <label class="ThinkLabel" for="SelectorMateriasPlanACT">Materia de enfoque para esta sesión</label>
+                        <select id="SelectorMateriasPlanACT" class="SelectEstilizado"></select>
+                    </div>
+
+                    <div class="GrupoTarjetasMateriaSeleccion" id="BotonesMateriasPlanACT"></div>
+
+                    <p class="MensajeError" id="ErrorPaso4_2" hidden>Selecciona una materia para continuar.</p>
+
+                    <div class="AccionesPieVista">
+                        <button type="button" class="BtnThinkSecundario" id="BtnVolverA_4_1">← Anterior</button>
+                        <button type="button" class="BtnThinkContinuar" id="BtnContinuarA_4_3">Continuar →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANTALLA 4.3: PLAN ACT — PREGUNTA 3 (ACCIÓN FÍSICA Y TIEMPO) -->
+            <section class="ThinkVista" id="Pantalla_4_3_AccionTiempo" hidden>
+                <div class="TarjetaGlass ContenedorEstrecho">
+                    <span class="ThinkEyebrow">PLAN DE ACCIÓN ACT • PASO 3 DE 5</span>
+                    <h2 class="PreguntaMatriz">Define una acción física inmediata y temporalmente limitada.</h2>
+                    <p class="EjemploUI">Ej: Prender mi PC, abrir Classroom y estudiar el tema 1 por 25 min a las 9 PM</p>
+
+                    <div class="ThinkInputGrupo">
+                        <label class="ThinkLabel" for="InputTiempoMinutosACT">Tiempo de la sesión (minutos)</label>
+                        <div class="FilaSelectorTiempo">
+                            <input type="number" id="InputTiempoMinutosACT" class="InputEstilizado InputNumeroTiempo" value="25" min="1" max="180">
+                            <div class="ChipsTiempoRapido">
+                                <button type="button" class="BtnChipTiempo" data-min="15">15 min</button>
+                                <button type="button" class="BtnChipTiempo Activo" data-min="25">25 min</button>
+                                <button type="button" class="BtnChipTiempo" data-min="45">45 min</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ThinkInputGrupo">
+                        <label class="ThinkLabel" for="InputAccionFisicaACT">Acción física específica y observable</label>
+                        <input type="text" id="InputAccionFisicaACT" class="InputEstilizado" placeholder="Ej: Abrir el PDF de la lectura y resumir las primeras 2 páginas">
+                    </div>
+
+                    <p class="MensajeError" id="ErrorPaso4_3" hidden>Define tu acción física y un tiempo válido (mínimo 1 minuto).</p>
+
+                    <div class="AccionesPieVista">
+                        <button type="button" class="BtnThinkSecundario" id="BtnVolverA_4_2">← Anterior</button>
+                        <button type="button" class="BtnThinkContinuar" id="BtnContinuarA_4_4">Guardar / Continuar →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANTALLA 4.4: PLAN ACT — PREGUNTA 4 (PASAJERO COGNITIVO) -->
+            <section class="ThinkVista" id="Pantalla_4_4_Pasajero" hidden>
+                <div class="TarjetaGlass ContenedorEstrecho">
+                    <span class="ThinkEyebrow">PLAN DE ACCIÓN ACT • PASO 4 DE 5</span>
+                    <h2 class="PreguntaMatriz">Nombra y anticipa al pasajero cognitivo que inevitablemente aparecerá.</h2>
+                    <p class="EjemploUI">Ej: Mi mente generará un pensamiento de que es muy difícil este tema y no podré.</p>
+
+                    <div class="ThinkInputGrupo">
+                        <label class="ThinkLabel" for="InputPasajeroACT">Pensamiento, duda o emoción incómoda que anticipas</label>
+                        <textarea id="InputPasajeroACT" class="AreaTextoEstilizada" rows="3" placeholder="Ej: Pensaré que es demasiado largo y sentiré ganas de revisar el celular..."></textarea>
+                    </div>
+
+                    <p class="MensajeError" id="ErrorPaso4_4" hidden>Nombra a tu pasajero cognitivo para quitarle el factor sorpresa.</p>
+
+                    <div class="AccionesPieVista">
+                        <button type="button" class="BtnThinkSecundario" id="BtnVolverA_4_3">← Anterior</button>
+                        <button type="button" class="BtnThinkContinuar" id="BtnContinuarA_4_5">Continuar →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANTALLA 4.5: PLAN ACT — PREGUNTA 5 (DECLARACIÓN DE ACEPTACIÓN) -->
+            <section class="ThinkVista" id="Pantalla_4_5_Compromiso" hidden>
+                <div class="TarjetaGlass ContenedorEstrecho">
+                    <span class="ThinkEyebrow">PLAN DE ACCIÓN ACT • PASO 5 DE 5</span>
+                    <h2 class="PreguntaMatriz">Sella el compromiso con una declaración de aceptación.</h2>
+                    
+                    <div class="CajaPlantillaSugerida">
+                        <span class="EtiquetaPlantilla">💡 Plantilla sugerida (puedes editarla abajo):</span>
+                        <p id="TextoPlantillaSugerida"></p>
+                    </div>
+
+                    <div class="ThinkInputGrupo">
+                        <label class="ThinkLabel" for="InputCompromisoACT">Tu declaración de aceptación</label>
+                        <textarea id="InputCompromisoACT" class="AreaTextoEstilizada" rows="4"></textarea>
+                    </div>
+
+                    <p class="MensajeError" id="ErrorPaso4_5" hidden>Escribe o confirma tu declaración de compromiso para iniciar.</p>
+
+                    <div class="AccionesPieVista">
+                        <button type="button" class="BtnThinkSecundario" id="BtnVolverA_4_4">← Anterior</button>
+                        <button type="button" class="BtnThinkContinuar" id="BtnIniciarSesionConcentracion">Iniciar Sesión de Concentración ▶</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 BLOQUE 5: EJECUCIÓN Y CIERRE (PANTALLAS 5.1 Y 5.2)
+            ========================================================= -->
+
+            <!-- PANTALLA 5.1: ESPACIO DE CONCENTRACIÓN (DASHBOARD DEL RELOJ) -->
+            <section class="ThinkVista VistaDashboardReloj" id="Pantalla_5_1_EspacioConcentracion" hidden>
+                
+                <div class="LayoutConcentracion">
+                    
+                    <!-- Burbuja Superior Izquierda: Mi compromiso -->
+                    <article class="BurbujaAncla AnclaSupIzq TarjetaGlass">
+                        <span class="EtiquetaAncla">🤝 Mi compromiso</span>
+                        <p class="ContenidoAncla" id="AnclaTextoCompromiso"></p>
+                    </article>
+
+                    <!-- Burbuja Superior Derecha: Mi valor -->
+                    <article class="BurbujaAncla AnclaSupDer TarjetaGlass">
+                        <span class="EtiquetaAncla">🌟 Mi valor</span>
+                        <p class="ContenidoAncla DestacadoValor" id="AnclaTextoValor"></p>
+                    </article>
+
+                    <!-- Reloj / Temporizador Central -->
+                    <div class="ContenedorRelojCentral TarjetaGlass">
+                        <span class="ThinkEyebrow">ENFOQUE CON PROPÓSITO</span>
+                        <div class="DisplayReloj" id="RelojCentralTexto" aria-live="polite">25:00</div>
+                        <div class="ControlesReloj">
+                            <button type="button" class="BtnThinkContinuar" id="BtnPausarReanudarReloj">Pausar</button>
+                            <button type="button" class="BtnThinkSecundario" id="BtnCompletarAntesReloj" title="Finalizar sesión ahora">✓ Terminar sesión</button>
+                        </div>
+                    </div>
+
+                    <!-- Burbuja Media Derecha: Pasajero -->
+                    <article class="BurbujaAncla AnclaMedDer TarjetaGlass">
+                        <span class="EtiquetaAncla">🎒 Pasajero cognitivo</span>
+                        <p class="ContenidoAncla" id="AnclaTextoPasajero"></p>
+                    </article>
+
+                    <!-- Banner Inferior Central: Materia + Acción Física -->
+                    <footer class="BannerObjetivoUnificado TarjetaGlass">
+                        <span class="EtiquetaAncla">🎯 Acción física actual</span>
+                        <p class="TextoBannerUnificado" id="BannerObjetivoTexto"></p>
+                    </footer>
+
                 </div>
 
             </section>
 
-            <!-- ================= FINAL: RESUMEN COMPLETO ================= -->
-            <section class="ThinkVista ThinkFinal" id="VistaFinal" hidden>
-                <span class="ThinkEyebrow">LISTO</span>
-                <h1 class="ThinkPasoTitulo">Tu plan de hoy</h1>
-
-                <div class="ResumenGrid">
-
-                    <div class="ResumenBloque">
-                        <h3 class="ResumenTitulo">¿Qué?</h3>
-                        <div class="ListaChips" id="ResumenMaterias"></div>
-                        <ul class="ListaPendientes" id="ResumenPendientes"></ul>
+            <!-- PANTALLA 5.2: MODAL DE FELICITACIÓN (CIERRE DE SESIÓN) -->
+            <div class="ModalOverlay" id="Modal_5_2_Felicitacion" hidden role="dialog" aria-modal="true" aria-labelledby="TituloFelicitacion">
+                <div class="ModalCaja TarjetaGlass">
+                    <span class="IconoCelebracion">✨</span>
+                    <span class="ThinkEyebrow">SESIÓN FINALIZADA</span>
+                    <h2 class="ThinkPasoTitulo" id="TituloFelicitacion">¡Sesión completada!</h2>
+                    <p class="ThinkPasoSubtitulo TextoModal">
+                        ¡Sesión completada! Avanzaste hacia tus valores junto con tus pasajeros cognitivos.
+                    </p>
+                    <div class="ModalBotones">
+                        <button type="button" class="BtnThinkContinuar AnchoCompleto" id="BtnVolverAMisPendientes">Finalizar / Volver a mis pendientes</button>
                     </div>
-
-                    <div class="ResumenBloque">
-                        <h3 class="ResumenTitulo">¿Para qué?</h3>
-                        <div class="ContenedorRazones" id="ResumenRazones"></div>
-                    </div>
-
-                    <div class="ResumenBloque">
-                        <h3 class="ResumenTitulo">¿Cómo?</h3>
-                        <ol class="ListaMicroPasos" id="ResumenMicroPasos"></ol>
-                        <p class="ThinkResumenPrimerPaso">Tu primer paso: <span id="ResumenPrimerPaso"></span></p>
-                    </div>
-
                 </div>
-
-                <p class="ThinkFinalNota">Guardamos este momento en tu Journey. Allí puedes contar cómo te sentías y qué te llevas.</p>
-
-                <div class="FinalAcciones">
-                    <button class="BtnThinkContinuar" id="BtnVerJourney">Ver en mi Journey →</button>
-                    <button class="BtnThinkContinuar BtnThinkSecundario" id="BtnVolverDashboard">Volver al Dashboard</button>
-                </div>
-            </section>
+            </div>
 
         </main>
 
