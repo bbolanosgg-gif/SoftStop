@@ -1,0 +1,289 @@
+/* ==============================================
+   CONTACTO (Softstop)
+   Diseño coherente con LoginPage:
+   Glassmorphism, paleta de colores y variables globales.
+============================================== */
+
+@import url("./variables.css");
+
+/* Adaptación del contenedor principal para contacto */
+.PaginaContacto {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+}
+
+/* Tarjeta principal con el mismo efecto glassmorphism que Login */
+.ContactoCard {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 48px;
+    width: 100%;
+    max-width: 960px;
+    padding: 48px 44px;
+
+    /* Mismo vidrio y profundidad que .LoginIzquierda */
+    background: rgba(255, 255, 255, 0.38);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 28px;
+    box-shadow: 0 20px 50px rgba(120, 80, 140, 0.18);
+}
+
+/* ===== COLUMNA IZQUIERDA: INFORMACIÓN Y CONFIANZA ===== */
+.ContactoColumnaInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 28px;
+}
+
+.ContactoEyebrow {
+    display: inline-block;
+    font-family: var(--fuente-marca);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--color-rosado-boton, #D68F9A);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.ContactoTitulo {
+    font-family: var(--fuente-display);
+    font-size: clamp(28px, 3.2vw, 38px);
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--color-texto-oscuro, #4A2B3D);
+    margin-bottom: 16px;
+}
+
+.ContactoDescripcion {
+    font-family: var(--fuente-texto);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-texto-claro, #8B7A84);
+}
+
+/* Badges de Beneficios / Confianza */
+.ContactoBeneficios {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.ContactoBeneficioItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: rgba(255, 255, 255, 0.45);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 16px;
+    padding: 14px 18px;
+    box-shadow: 0 4px 15px rgba(120, 80, 140, 0.05);
+}
+
+.ContactoBeneficioIcono {
+    font-size: 20px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.ContactoBeneficioTexto h4 {
+    font-family: var(--fuente-marca);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-texto-oscuro, #4A2B3D);
+    margin: 0 0 4px;
+}
+
+.ContactoBeneficioTexto p {
+    font-family: var(--fuente-texto);
+    font-size: 12px;
+    color: var(--color-texto-claro, #8B7A84);
+    line-height: 1.45;
+    margin: 0;
+}
+
+/* Sección de Contacto Directo */
+.ContactoDirecto {
+    padding-top: 20px;
+    border-top: 1px dashed rgba(139, 122, 132, 0.25);
+}
+
+.ContactoDirectoTitulo {
+    font-family: var(--fuente-texto);
+    font-size: 11px;
+    color: var(--color-texto-claro, #8B7A84);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.ContactoDirectoLinks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.ContactoDirectoChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--fuente-texto);
+    font-size: 12px;
+    color: var(--color-texto-oscuro, #4A2B3D);
+    background: rgba(255, 255, 255, 0.55);
+    padding: 8px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    transition: all 0.25s ease;
+}
+
+.ContactoDirectoChip:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(120, 80, 140, 0.12);
+}
+
+/* ===== COLUMNA DERECHA: FORMULARIO ===== */
+.ContactoColumnaForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ContactoFormTitulo {
+    font-family: var(--fuente-display);
+    font-size: clamp(22px, 2.5vw, 26px);
+    font-weight: 400;
+    color: var(--color-texto-oscuro, #4A2B3D);
+    margin-bottom: 6px;
+}
+
+.ContactoFormSubtitulo {
+    font-family: var(--fuente-texto);
+    font-size: 12px;
+    color: var(--color-texto-claro, #8B7A84);
+    margin-bottom: 24px;
+}
+
+/* Estilo para el <select> en el input wrap */
+.LoginInputWrap select {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: var(--fuente-texto);
+    font-size: 13px;
+    color: var(--color-texto-oscuro, #4A2B3D);
+    width: 100%;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.LoginInputWrap select option {
+    background: #FFFFFF;
+    color: #4A2B3D;
+}
+
+.SelectFlecha {
+    color: #BDB5BB;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo para el área de texto <textarea> */
+.LoginTextareaWrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+    padding: 14px 18px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    transition: box-shadow 0.25s ease;
+}
+
+.LoginTextareaWrap:focus-within {
+    box-shadow: 0 0 0 2px rgba(214, 143, 154, 0.3);
+}
+
+.LoginCampo.error .LoginTextareaWrap {
+    border: 1px solid #E86A6A;
+}
+
+.LoginTextareaWrap textarea {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: var(--fuente-texto);
+    font-size: 13px;
+    color: var(--color-texto-oscuro, #4A2B3D);
+    width: 100%;
+    min-height: 95px;
+    resize: vertical;
+    outline: none;
+    line-height: 1.5;
+}
+
+.LoginTextareaWrap textarea::placeholder {
+    color: #CAC4C8;
+}
+
+/* Mensaje de estado cuando es exitoso */
+.LoginStatusMessage.exito {
+    background: rgba(78, 168, 133, 0.12);
+    color: #246B4E;
+    border: 1px solid rgba(78, 168, 133, 0.4);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 860px) {
+    .ContactoCard {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 36px 28px;
+        max-width: 540px;
+    }
+
+    .ContactoColumnaInfo {
+        text-align: center;
+    }
+
+    .ContactoBeneficios {
+        text-align: left;
+    }
+
+    .ContactoDirectoLinks {
+        justify-content: center;
+    }
+
+    .ContactoColumnaForm {
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+    .PaginaContacto {
+        padding: 72px 14px 24px;
+    }
+
+    .ContactoCard {
+        padding: 26px 18px;
+        border-radius: 22px;
+    }
+
+    .ContactoTitulo {
+        font-size: 26px;
+    }
+}

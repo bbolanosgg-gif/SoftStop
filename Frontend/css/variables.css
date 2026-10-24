@@ -1,0 +1,42 @@
+/* ==============================================
+   VARIABLES (Design tokens de Softstop)
+   Fuente única del tema: tipografías, colores, radios y sombras.
+   Se importa desde global.css; styles.css también lo importa
+   para que el index tenga el tema declarado de forma explícita.
+============================================== */
+
+:root {
+  /* Tipografías base de Softstop */
+  --fuente-marca: 'Sora', sans-serif;                          /* SOFTSTOP */
+  --fuente-titulo: 'Libre Caslon Text', Georgia, serif;        /* Títulos y mensajes */
+  --fuente-texto: 'Google Sans Code', ui-monospace, monospace; /* Texto complementario */
+  --fuente-display: 'Marcellus SC', Georgia, serif;            /* DESACELERA, PARA TI... */
+
+  /* Aliases semánticos para compatibilidad de componentes */
+  --fuente-principal: var(--fuente-marca);
+  --fuente-secundaria: var(--fuente-texto);
+
+  /* Colores */
+  --color-tinta: #3f2a4e;
+  --color-texto: #3f2a4e;
+  --color-suave: #7a6585;
+  --color-gris: #7a6585;
+  --colorfooter: #5d4a6b;
+  --color-hero: #500003;
+  --color-marca: #4b1d3d;
+  --rosa-palo: #d68a96;
+  --crema-papel: #fbf4ea;
+  --logo-morado: #a890fe;
+  --logo-morado-oscuro: #8b6ef6;
+  --color-acento: #d68a96;
+  --bg-crema: #f6e6ee;
+  --color-error: #e86a6a;
+  --color-exito: #4ea885;
+
+  /* Utilidades y radios */
+  --radio-pill: 9999px;
+  --radio-mediano: 18px;
+  --radio-grande: 26px;
+  --sombra-suave: 0 8px 24px rgba(120, 80, 140, 0.14);
+  --sombra-fuerte: 0 14px 34px rgba(120, 80, 140, 0.22);
+}

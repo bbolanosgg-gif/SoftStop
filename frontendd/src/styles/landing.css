@@ -1,0 +1,842 @@
+/* ==============================================
+   LANDING PAGE (Softstop)
+   Estilos modulares y optimizados para el diseño
+   y transiciones de la Landing Page en React.
+============================================== */
+
+@import url("./variables.css");
+
+/* ==============================================
+   1. HEADER LANDING
+============================================== */
+.LandingEncabezado {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 38px 7%;
+  z-index: 100;
+}
+
+.LandingMarca {
+  font-family: var(--fuente-marca);
+  font-weight: 500;
+  font-size: clamp(12px, 1.05vw, 16px);
+  letter-spacing: 0.6em;
+  color: var(--color-marca);
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+}
+
+.LandingMarca.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.LandingEncabezadoAcciones {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2vw, 28px);
+}
+
+.LandingNavEnlace {
+  font-family: var(--fuente-texto);
+  font-size: clamp(11px, 0.9vw, 13px);
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  color: var(--color-marca);
+  transition: color 0.25s ease, transform 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.LandingNavEnlace:hover {
+  color: var(--rosa-palo);
+  transform: translateY(-1px);
+}
+
+.LandingBotonEntrar {
+  font-family: var(--fuente-texto);
+  font-size: clamp(11px, 0.9vw, 13px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  color: var(--color-marca);
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  padding: 6px 16px;
+  border-radius: var(--radio-pill);
+  transition: all 0.25s ease;
+}
+
+.LandingBotonEntrar:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--rosa-palo);
+  box-shadow: var(--sombra-suave);
+  transform: translateY(-1px);
+}
+
+.LandingLogoContenedor {
+  display: flex;
+  align-items: center;
+}
+
+.LandingLogoImg {
+  width: clamp(26px, 2.4vw, 38px);
+  height: clamp(26px, 2.4vw, 38px);
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: var(--sombra-suave);
+  transition: transform 0.3s ease;
+}
+
+.LandingLogoImg:hover {
+  transform: scale(1.08);
+}
+
+@media (max-width: 640px) {
+  .LandingEncabezado {
+    padding: 24px 6%;
+  }
+  .LandingMarca {
+    letter-spacing: 0.4em;
+  }
+}
+
+/* ==============================================
+   2. HERO SECTION
+============================================== */
+.Hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-start;
+  padding: 26.7vh 8% 0 10.5%;
+  padding-top: 26.7svh;
+  overflow: visible;
+  z-index: 10;
+}
+
+.HeroTexto {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.HeroTitulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 300;
+  font-size: clamp(24px, 4.2vw, 52px);
+  line-height: 1.22;
+  color: var(--color-hero);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 1.5s ease-out 0.8s, transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
+}
+
+.HeroTitulo.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.HeroAqui {
+  display: block;
+  text-align: right;
+  color: #fff9f5;
+  font-weight: 400;
+  text-shadow: 0 2px 10px rgba(120, 80, 140, 0.2);
+}
+
+/* Título de fondo DESACELERA */
+.HeroDesacelera {
+  position: absolute;
+  left: 28.5%;
+  bottom: 9svh;
+  z-index: 1;
+  white-space: nowrap;
+  font-family: var(--fuente-display);
+  font-size: clamp(48px, 8.2vw, 130px);
+  line-height: 0.3;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.45);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 2.2s ease-in-out 1.5s, transform 2.2s ease-out 1.5s;
+}
+
+.HeroDesacelera.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Transición suave hacia la siguiente sección */
+.Hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 140px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 240, 235, 0.35));
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Rama animada */
+.Hero-Rama {
+  position: absolute;
+  bottom: -60px;
+  left: -20px;
+  width: clamp(240px, 30vw, 420px);
+  height: auto;
+  z-index: 25;
+  pointer-events: none;
+  transform-origin: bottom left;
+  animation: mecer-viento 9s ease-in-out infinite;
+}
+
+@keyframes mecer-viento {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(4.2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Contenedores del Castillo y su Sombra en el horizonte */
+.Contenedor-Castillo {
+  position: absolute;
+  right: 0;
+  bottom: 34%; /* Línea del horizonte */
+  width: clamp(280px, 35vw, 600px);
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.Contenedor-Sombra {
+  position: absolute;
+  right: 0;
+  top: 63%;
+  width: clamp(280px, 35vw, 600px);
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.Hero-Castillo {
+  width: 100%;
+  height: auto;
+  display: block;
+  transform: translateY(100%);
+  opacity: 0.9;
+  transition: transform 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s, opacity 2.6s ease-out 0.1s;
+}
+
+.Hero-Castillo.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.Hero-Sombra {
+  width: 100%;
+  height: auto;
+  display: block;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s, opacity 2.6s ease-out 0.1s;
+}
+
+.Hero-Sombra.visible {
+  transform: translateY(0);
+  opacity: 0.55;
+}
+
+@media (max-width: 600px) {
+  .Hero {
+    padding: 22svh 7% 0 7%;
+  }
+  .HeroDesacelera {
+    left: 7%;
+    bottom: 6svh;
+  }
+}
+
+/* ==============================================
+   3. CAPAS PARALLAX
+============================================== */
+.CapasDecorativas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.Capa-Muelle {
+  position: absolute;
+  bottom: -20%;
+  right: 2%;
+  width: clamp(250px, 35vw, 600px);
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+  will-change: transform, opacity;
+}
+
+.Capa-Pajaros {
+  position: absolute;
+  top: 30%;
+  left: 45%;
+  width: clamp(120px, 15vw, 250px);
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+  will-change: transform, opacity;
+}
+
+/* ==============================================
+   4. MENSAJES SECTION
+============================================== */
+.Mensajes {
+  position: relative;
+  background-color: transparent !important;
+  --n: 6;
+  --tramo: 42; /* Optimizado de 60 a 42 para eliminar scroll excesivo */
+  height: calc(100vh + var(--n) * var(--tramo) * 1vh);
+  height: calc(100svh + var(--n) * var(--tramo) * 1svh);
+}
+
+.MensajesStage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: transparent;
+}
+
+.MensajesKicker {
+  position: absolute;
+  top: 11%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 90%;
+  text-align: center;
+  font-family: var(--fuente-texto);
+  font-size: clamp(10px, 0.9vw, 13px);
+  letter-spacing: 0.35em;
+  line-height: 1.8;
+  text-transform: uppercase;
+  color: #6d5a7d;
+}
+
+.MensajesEscena {
+  position: absolute;
+  left: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(65%, 880px);
+  display: grid;
+}
+
+.Mensaje {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(14px);
+  filter: blur(4px);
+  pointer-events: none;
+  transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+}
+
+.Mensaje.activo {
+  opacity: 1;
+  transform: translateY(0);
+  filter: none;
+  transition-delay: 0.15s;
+}
+
+.Mensaje .linea {
+  display: block;
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+  font-size: clamp(26px, 4vw, 62px);
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--color-tinta);
+}
+
+.Mensaje .acento {
+  display: block;
+  margin-top: 0.35em;
+  font-family: var(--fuente-display);
+  font-size: clamp(24px, 3.8vw, 58px);
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 18px rgba(150, 100, 160, 0.3);
+}
+
+.Mensaje .fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: clamp(12px, 1.6vw, 26px);
+  margin-top: 0.25em;
+}
+
+.Mensaje .fila .linea,
+.Mensaje .fila .acento {
+  display: inline;
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .MensajesEscena {
+    left: 7%;
+    top: 36%;
+    width: 86%;
+  }
+  .Mensaje .linea {
+    white-space: normal;
+  }
+}
+
+/* ==============================================
+   5. ESPACIOS STACK SECTION
+============================================== */
+.Espacios {
+  position: relative;
+  padding: 130px 5% 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: #f3c6b2 url('../assets/img/espacios.webp') center / cover no-repeat;
+  overflow: hidden;
+}
+
+/* MÁSCARAS DE DIFUMINADO SUAVE: Eliminan el corte brusco superior e inferior */
+.Espacios::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, rgba(246, 230, 238, 0.95), transparent);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.Espacios::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to top, rgba(246, 230, 238, 0.95), transparent);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.EspaciosTitulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+  font-size: clamp(30px, 3.6vw, 52px);
+  line-height: 1.2;
+  color: var(--color-tinta);
+  position: relative;
+  z-index: 6;
+}
+
+/* Contenedor del mazo de cartas */
+.wrap_stack {
+  position: relative;
+  width: min(980px, 94vw);
+  height: calc(var(--h-card) + 80px);
+  margin: 60px auto 0;
+  --w-card: 300px;
+  --h-card: 450px;
+  --rotate-card: 12deg;
+  --insetX-card: 6%;
+  --t-card: 34px;
+  z-index: 6;
+}
+
+.stack-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--w-card);
+  height: var(--h-card);
+  border-radius: 14px 18px 14px 20px;
+  background: var(--crema-papel);
+  box-shadow: 0 24px 50px rgba(110, 70, 120, 0.28);
+  cursor: pointer;
+  transition:
+    top 0.8s cubic-bezier(0.75, 0, 0, 1.01),
+    left 0.8s cubic-bezier(0.75, 0, 0, 1.01),
+    transform 0.8s cubic-bezier(0.75, 0, 0, 1.01),
+    opacity 0.6s ease,
+    box-shadow 0.8s ease;
+  will-change: top, left, transform, opacity;
+}
+
+.stack-card[data-slot="front"] {
+  z-index: 3;
+  top: 0;
+  left: calc(50% - (var(--w-card) / 2));
+  transform: rotate(0deg) scale(1);
+  opacity: 1;
+  cursor: default;
+  box-shadow: 0 32px 64px rgba(110, 70, 120, 0.34);
+}
+
+.stack-card[data-slot="left"] {
+  z-index: 2;
+  top: var(--t-card);
+  left: var(--insetX-card);
+  transform: rotate(calc(var(--rotate-card) * -1)) scale(0.92);
+  opacity: 1;
+}
+
+.stack-card[data-slot="right"] {
+  z-index: 2;
+  top: var(--t-card);
+  left: calc(100% - var(--w-card) - var(--insetX-card));
+  transform: rotate(var(--rotate-card)) scale(0.92);
+  opacity: 1;
+}
+
+.stack-card[data-slot="hidden"] {
+  z-index: 0;
+  top: var(--t-card);
+  left: calc(50% - (var(--w-card) / 2));
+  transform: rotate(0deg) scale(0.8);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stack-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  background: linear-gradient(170deg, #fcf6ec, #f5eadb);
+  padding: 0 22px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stack-media {
+  position: relative;
+  z-index: 1;
+  width: calc(100% + 44px);
+  height: 150px;
+  margin: 0 -22px;
+  background: var(--tono);
+  overflow: hidden;
+}
+
+.stack-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.stack-media::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 40%;
+  background: linear-gradient(transparent, rgba(252, 246, 236, 0.9));
+  pointer-events: none;
+}
+
+.stack-icon {
+  position: relative;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  border-radius: 50%;
+  background: #fffaf2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-tinta);
+  box-shadow: 0 6px 14px rgba(110, 70, 120, 0.18);
+}
+
+.stack-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.stack-title {
+  position: relative;
+  z-index: 1;
+  margin-top: 12px;
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+  font-size: 28px;
+  color: var(--color-tinta);
+}
+
+.stack-kicker {
+  position: relative;
+  z-index: 1;
+  margin-top: 4px;
+  font-family: var(--fuente-texto);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--color-suave);
+}
+
+.stack-text {
+  position: relative;
+  z-index: 1;
+  margin-top: 14px;
+  font-family: var(--fuente-texto);
+  font-size: 12px;
+  line-height: 1.6;
+  color: #5c4a68;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+.stack-btn {
+  position: relative;
+  z-index: 1;
+  margin-top: 14px;
+  border-radius: var(--radio-pill);
+  padding: 9px 22px;
+  font-family: var(--fuente-texto);
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  color: #fff;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--rosa-palo);
+  box-shadow: 0 8px 18px rgba(214, 138, 150, 0.35);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.stack-btn::after {
+  content: "→";
+}
+
+.stack-btn:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+.stack-card[data-slot="left"] .stack-btn,
+.stack-card[data-slot="right"] .stack-btn {
+  opacity: 0.6;
+}
+
+/* Ramas de cerezo ornamentales */
+.stack-rama {
+  position: absolute;
+  z-index: 4;
+  width: 150px;
+  height: auto;
+  right: -44px;
+  bottom: -50px;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 10px rgba(110, 70, 120, 0.18));
+}
+
+.stack-rama--izq {
+  right: auto;
+  left: -30px;
+  bottom: auto;
+  top: 96px;
+  width: 128px;
+  transform: scaleX(-1);
+}
+
+/* Paginación por puntos */
+.stack-dots {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 24px;
+  position: relative;
+  z-index: 6;
+}
+
+.stack-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.stack-dot[aria-current="true"] {
+  background: var(--rosa-palo);
+  transform: scale(1.4);
+}
+
+@media (max-width: 768px) {
+  .Espacios { padding: 100px 4% 110px; }
+  .wrap_stack {
+    --w-card: min(74vw, 280px);
+    --h-card: 430px;
+    --insetX-card: -4%;
+    margin-top: 40px;
+  }
+}
+
+/* ==============================================
+   6. FOOTER LANDING
+============================================== */
+.LandingFooter {
+  position: relative;
+  min-height: 90vh;
+  padding: 120px 8% 40px;
+  display: flex;
+  justify-content: flex-end;
+  background: transparent;
+  overflow: hidden;
+}
+
+.FooterRoca {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 95%;
+  width: auto;
+  max-width: 55%;
+  object-fit: contain;
+  object-position: left bottom;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.95;
+}
+
+.FooterContenido {
+  position: relative;
+  z-index: 2;
+  width: min(500px, 52%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.FooterMarca {
+  font-family: var(--fuente-marca);
+  font-weight: 500;
+  font-size: clamp(20px, 2vw, 28px);
+  letter-spacing: 0.6em;
+  margin-right: -0.6em;
+  color: var(--color-tinta);
+}
+
+.FooterColumnas {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+}
+
+.FooterColumna h4 {
+  font-family: var(--fuente-marca);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  color: var(--color-tinta);
+  margin-bottom: 16px;
+}
+
+.FooterColumna a {
+  display: block;
+  font-family: var(--fuente-texto);
+  font-size: 12.5px;
+  color: var(--colorfooter);
+  text-decoration: none;
+  margin-bottom: 11px;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.FooterColumna a:hover {
+  color: var(--color-tinta);
+  transform: translateX(3px);
+}
+
+.FooterInfo {
+  text-align: center;
+}
+
+.FooterInfo a:hover {
+  transform: none;
+}
+
+.FooterRedes {
+  display: flex;
+  gap: 32px;
+  margin-top: 4px;
+}
+
+.FooterRedes a {
+  color: var(--color-tinta);
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.FooterRedes a:hover {
+  color: var(--rosa-palo);
+  transform: translateY(-2px);
+}
+
+.FooterBase {
+  font-family: var(--fuente-texto);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--colorfooter);
+  opacity: 0.8;
+  margin-top: -10px;
+}
+
+@media (max-width: 900px) {
+  .LandingFooter {
+    min-height: 0;
+    justify-content: center;
+    padding: 90px 7% 320px;
+  }
+
+  .FooterRoca {
+    height: 320px;
+    max-width: none;
+    left: -4%;
+  }
+
+  .FooterContenido {
+    width: 100%;
+  }
+}

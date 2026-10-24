@@ -1,0 +1,23 @@
+### 1. Mensaje válido
+POST http://localhost:3000/contacto
+Content-Type: application/json
+
+{ "nombre": "Ana", "email": "ANA@correo.com", "asunto": "duda", "mensaje": "Hola, quisiera saber más sobre SoftStop." }
+
+### 2. Asunto inventado
+POST http://localhost:3000/contacto
+Content-Type: application/json
+
+{ "nombre": "Ana", "email": "ana@correo.com", "asunto": "hackeo", "mensaje": "Hola, quisiera saber más sobre SoftStop." }
+
+### 3. Mensaje muy corto
+POST http://localhost:3000/contacto
+Content-Type: application/json
+
+{ "nombre": "Ana", "email": "ana@correo.com", "asunto": "otro", "mensaje": "hola" }
+
+### 4. Intento de colar "leido"
+POST http://localhost:3000/contacto
+Content-Type: application/json
+
+{ "nombre": "Ana", "email": "ana@correo.com", "asunto": "otro", "mensaje": "Probando que no se cuele el campo.", "leido": true }

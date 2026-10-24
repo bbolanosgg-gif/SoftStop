@@ -1,40 +1,7 @@
 /* GLOBAL : Tipografías y colores del diseño */
 
-:root {
-  /* Tipografías base de Softstop */
-  --fuente-marca: 'Sora', sans-serif;                          /* SOFTSTOP */
-  --fuente-titulo: 'Libre Caslon Text', Georgia, serif;        /* Títulos y mensajes */
-  --fuente-texto: 'Google Sans Code', ui-monospace, monospace; /* Texto complementario */
-  --fuente-display: 'Marcellus SC', Georgia, serif;            /* DESACELERA, PARA TI... */
-
-  /* Aliases semánticos para compatibilidad de componentes */
-  --fuente-principal: var(--fuente-marca);
-  --fuente-secundaria: var(--fuente-texto);
-
-  /* Colores */
-  --color-tinta: #3f2a4e;
-  --color-texto: #3f2a4e;
-  --color-suave: #7a6585;
-  --color-gris: #7a6585;
-  --colorfooter: #5d4a6b;
-  --color-hero: #500003;      
-  --color-marca: #4b1d3d;    
-  --rosa-palo: #d68a96;
-  --crema-papel: #fbf4ea;
-  --logo-morado: #a890fe;
-  --logo-morado-oscuro: #8b6ef6;
-  --color-acento: #d68a96;
-  --bg-crema: #f6e6ee;
-  --color-error: #e86a6a;
-  --color-exito: #4ea885;
-
-  /* Utilidades y radios */
-  --radio-pill: 9999px;
-  --radio-mediano: 18px;
-  --radio-grande: 26px;
-  --sombra-suave: 0 8px 24px rgba(120, 80, 140, 0.14);
-  --sombra-fuerte: 0 14px 34px rgba(120, 80, 140, 0.22);
-}
+/* El tema (design tokens) vive en variables.css: una sola fuente de verdad */
+@import url("variables.css");
 
 * {
   box-sizing: border-box;
@@ -79,7 +46,7 @@ a {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: url('../img/fondo-cielo-base.webp') center / cover no-repeat;
+  background: url('../assets/img/degradado.png') center / cover no-repeat;
   z-index: -2;
   pointer-events: none;
 }
@@ -100,7 +67,7 @@ a {
   bottom: -20%;
   right: 2%;
   width: clamp(250px, 35vw, 600px);
-  opacity: 0; 
+  opacity: 0;
   transition: opacity 0.5s ease-out;
   will-change: transform, opacity;
 }

@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     passwordInput.addEventListener('input', () => showError(passwordInput, 'passwordError', false));
 
     // Intercepción del envío
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         let isValid = true;
         statusMessage.hidden = true;
@@ -105,11 +105,29 @@ document.addEventListener("DOMContentLoaded", () => {
         submitText.innerHTML = `Cargando...`;
         submitBtn.disabled = true;
 
-        setTimeout(() => {
-            const correoIngresado = emailInput.value.trim().toLowerCase();
+                const ruta = isLoginMode ? '/auth/login' : '/auth/registro';
+        const datos = isLoginMode
+            ? { email: emailInput.value.trim(), password: passwordInput.value }
+            : { nombre: nameInput.value.trim(), email: emailInput.value.trim(), password: passwordInput.value };
+
+        try {
+            const respuesta = await fetch('http://localhost:3000' + ruta, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
+            });
+            const resultado = await respuesta.json();
+
+            if (!respuesta.ok) {
+                statusMessage.hidden = false;
+                statusMessage.textContent = resultado.error;
+                submitText.textContent = isLoginMode ? 'Iniciar sesión' : 'Crear cuenta';
+                submitBtn.disabled = false;
+                return;
+            }
 
             if (isLoginMode) {
-                if (correoIngresado === "admin@softstop.com") {
+                if (resultado.email === 'admin@softstop.com') {
                     window.location.href = 'admin-dashboard.html';
                 } else {
                     window.location.href = 'dashboard.html';
@@ -117,6 +135,11 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 window.location.href = 'checkin.html';
             }
-        }, 1500);
+        } catch (error) {
+            statusMessage.hidden = false;
+            statusMessage.textContent = 'No se pudo conectar con el servidor. ¿Está encendido?';
+            submitText.textContent = isLoginMode ? 'Iniciar sesión' : 'Crear cuenta';
+            submitBtn.disabled = false;
+        }
     });
 });
