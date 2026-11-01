@@ -1,16 +1,39 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const mensajeSchema = new mongoose.Schema(
-    {
-        nombre:  { type: String, required: true, trim: true, maxlength: 100 },
-        email:   { type: String, required: true, trim: true, lowercase: true, maxlength: 150 },
-        // enum: solo se aceptan estas tres opciones (son las del <select> del formulario)
-        asunto:  { type: String, required: true, enum: ['duda', 'sugerencia', 'otro'] },
-        mensaje: { type: String, required: true, trim: true, maxlength: 2000 },
-        // Para que el admin pueda marcar mensajes como leídos más adelante
-        leido:   { type: Boolean, default: false }
+// Esquema para guardar las solicitudes del formulario de contacto
+const mensajeSchema = new Schema(
+  {
+    nombre: {
+      type: String,
+      required: [true, 'El nombre es obligatorio'],
+      trim: true
     },
-    { timestamps: true } // createdAt = cuándo llegó el mensaje
+    email: {
+      type: String,
+      required: [true, 'El correo electrónico es obligatorio'],
+      trim: true,
+      lowercase: true
+    },
+    asunto: {
+      type: String,
+      required: [true, 'El asunto es obligatorio'],
+      enum: ['duda', 'sugerencia', 'otro']
+    },
+    mensaje: {
+      type: String,
+      required: [true, 'El contenido del mensaje es obligatorio'],
+      trim: true,
+      maxlength: 1000
+    },
+    leido: {
+      type: Boolean,
+      default: false // Permite al administrador marcar si ya revisó el mensaje
+    }
+  },
+  {
+    timestamps: true,
+    versionKey: false
+  }
 );
 
-module.exports = mongoose.model('Mensaje', mensajeSchema);
+module.exports = model('Mensaje', mensajeSchema);
