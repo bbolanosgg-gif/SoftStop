@@ -46,7 +46,7 @@ a {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: url('../assets/img/degradado.png') center / cover no-repeat;
+  background: url('../img/valle.png') center / cover no-repeat;
   z-index: -2;
   pointer-events: none;
 }

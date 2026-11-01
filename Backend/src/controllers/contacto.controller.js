@@ -6,7 +6,12 @@ async function crearMensaje(req, res, next) {
     const { nombre, email, asunto, mensaje } = req.body;
 
     // Validación básica con condicional if como se vio en clase
-    if (!nombre || !email || !asunto || !mensaje) {
+    if (
+  !nombre?.trim() ||
+  !email?.trim() ||
+  !asunto?.trim() ||
+  !mensaje?.trim()
+) {
       return res.status(400).json({
         error: "Todos los campos (nombre, email, asunto y mensaje) son obligatorios."
       });

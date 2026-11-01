@@ -9,7 +9,13 @@
 body {
   font-family: var(--fuente-texto);
   color: var(--color-tinta);
-  background: linear-gradient(135deg, #FDF6F4 0%, #F6E6EE 50%, #F1F4F6 100%);
+  background-image:
+    linear-gradient(rgba(255, 248, 245, 0.45), rgba(255, 248, 245, 0.45)),
+    url('/valle.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   line-height: 1.6;
   min-height: 100vh;
 }
