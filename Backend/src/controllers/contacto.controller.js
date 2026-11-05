@@ -43,7 +43,54 @@ async function obtenerMensajes(req, res, next) {
   }
 }
 
+// 3. NUEVO: Marcar un mensaje como leído o como no leído
+// PUT /api/contacto/:id/leido
+async function marcarMensajeLeido(req, res, next) {
+  try {
+    const { leido } = req.body;
+
+    // "leido" debe ser true o false (un booleano)
+    if (typeof leido !== 'boolean') {
+      return res.status(400).json({
+        error: "El campo 'leido' debe ser true o false."
+      });
+    }
+
+    const mensajeActualizado = await Mensaje.findByIdAndUpdate(
+      req.params.id,
+      { leido },
+      { new: true, runValidators: true }
+    );
+
+    if (!mensajeActualizado) {
+      return res.status(404).json({ error: "Mensaje no encontrado" });
+    }
+
+    res.status(200).json(mensajeActualizado);
+  } catch (error) {
+    next(error);
+  }
+}
+
+// 4. NUEVO: Eliminar un mensaje por su ID
+// DELETE /api/contacto/:id
+async function eliminarMensaje(req, res, next) {
+  try {
+    const mensajeEliminado = await Mensaje.findByIdAndDelete(req.params.id);
+
+    if (!mensajeEliminado) {
+      return res.status(404).json({ error: "Mensaje no encontrado" });
+    }
+
+    res.status(200).json({ mensaje: "Mensaje eliminado correctamente" });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   crearMensaje,
-  obtenerMensajes
+  obtenerMensajes,
+  marcarMensajeLeido, // NUEVO
+  eliminarMensaje     // NUEVO
 };

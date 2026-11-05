@@ -1,7 +1,12 @@
 import { useState } from 'react';
+import '../styles/contacto.css';
+
+// Importamos la ilustración del castillo desde tu carpeta de imágenes
+import castilloImg from '../assets/img/castillo-footer.png';
 
 // Formulario de contacto controlado que guarda las solicitudes en MongoDB
 export default function ContactoSection({ apiUrl }) {
+  // --- TODA TU LÓGICA DE ESTADOS Y BACKEND QUEDA 100% INTACTA ---
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [asunto, setAsunto] = useState('duda');
@@ -52,74 +57,110 @@ export default function ContactoSection({ apiUrl }) {
     }
   }
 
+  // --- NUEVA ESTRUCTURA VISUAL (JSX) ---
   return (
-    <section className="contenedor" id="contacto">
-      <div className="grid-2">
-        <div>
-          <span className="eyebrow">Contacto Real</span>
-          <h2 className="titulo-seccion">Estamos aquí para escucharte</h2>
-          <p className="subtitulo-seccion">
-            Si tienes dudas sobre SoftStop, sugerencias para nuevas herramientas de calma o comentarios académicos, escríbenos. Tu mensaje quedará registrado en nuestra base de datos.
+    <section className="contacto-section" id="contacto">
+      <div className="contacto-contenedor">
+        
+        {/* COLUMNA IZQUIERDA: Textos + Ilustración del Castillo */}
+        <div className="contacto-info">
+          <h2 className="contacto-titulo">Contacto</h2>
+          
+          <p className="contacto-subtitulo">
+            ¿Tienes alguna pregunta? <br />
+            Escríbenos, estamos aquí para <br />
+            ayudarte
           </p>
-          <div className="tarjeta-glass">
-            <p><strong>💬 Respuesta cercana:</strong> Revisamos cada sugerencia desde nuestro panel de administración.</p>
-            <p><strong>🔒 Privacidad:</strong> Tus datos se emplean únicamente para dar seguimiento a tu solicitud.</p>
-          </div>
+
+          <img 
+            src={castilloImg} 
+            alt="Castillo de SoftStop" 
+            className="contacto-castillo" 
+          />
         </div>
 
-        <div className="tarjeta-glass">
-          <h3>Envíanos un mensaje</h3>
+        {/* COLUMNA DERECHA: Tarjeta con el formulario */}
+        <div className="contacto-tarjeta">
           <form className="formulario" onSubmit={manejarEnvioContacto}>
-            <div className="campo-form">
-              <label>Nombre completo *</label>
+            
+            {/* Campo 1: Nombre */}
+            <div className="input-pill">
+              <span className="input-icono" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </span>
               <input
                 type="text"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
                 placeholder="Tu nombre"
+                aria-label="Tu nombre"
               />
             </div>
 
-            <div className="campo-form">
-              <label>Correo electrónico *</label>
+            {/* Campo 2: Correo electrónico */}
+            <div className="input-pill">
+              <span className="input-icono" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+              </span>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="tu@correo.edu.co"
+                placeholder="Tu correo electrónico"
+                aria-label="Tu correo electrónico"
               />
             </div>
 
-            <div className="campo-form">
-              <label>Asunto *</label>
-              <select value={asunto} onChange={(e) => setAsunto(e.target.value)}>
-                <option value="duda">Duda o soporte</option>
-                <option value="sugerencia">Sugerencia para SoftStop</option>
-                <option value="otro">Otro motivo</option>
+            {/* Campo 3: Asunto (Conserva los valores de tu BD) */}
+            <div className="input-pill">
+              <span className="input-icono" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                </svg>
+              </span>
+              <select 
+                value={asunto} 
+                onChange={(e) => setAsunto(e.target.value)}
+                aria-label="Asunto"
+              >
+                <option value="duda">Asunto: Duda o soporte</option>
+                <option value="sugerencia">Asunto: Sugerencia para SoftStop</option>
+                <option value="otro">Asunto: Otro motivo</option>
               </select>
             </div>
 
-            <div className="campo-form">
-              <label>Mensaje *</label>
+            {/* Campo 4: Mensaje */}
+            <div className="textarea-box">
               <textarea
-                rows="4"
+                rows="5"
                 value={mensaje}
                 onChange={(e) => setMensaje(e.target.value)}
                 placeholder="Cuéntanos en qué podemos ayudarte hoy..."
+                aria-label="Mensaje"
               />
             </div>
 
+            {/* Mensajes de respuesta del Backend */}
             {respuestaTexto && (
               <p className={esError ? 'alerta-error' : 'alerta-exito'}>
                 {respuestaTexto}
               </p>
             )}
 
-            <button type="submit" className="btn-morado">
-              Enviar mensaje →
+            {/* Botón de envío */}
+            <button type="submit" className="btn-enviar-contacto">
+              Enviar mensaje
             </button>
+
           </form>
         </div>
+
       </div>
     </section>
   );

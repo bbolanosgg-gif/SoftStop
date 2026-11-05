@@ -15,13 +15,21 @@ const usuarioSchema = new Schema(
       lowercase: true,
       trim: true
     },
-    password: {
+    passwordHash: {
       type: String,
       required: [true, 'La contraseña es obligatoria']
     },
     rol: {
       type: String,
-      default: 'admin'
+      enum: ['admin', 'cliente'], // solo se aceptan estos dos valores
+      default: 'cliente'
+    },
+    // El administrador puede activar o desactivar cuentas.
+    // En vez de borrar al usuario, solo cambiamos este estado.
+    estado: {
+      type: String,
+      enum: ['activo', 'inactivo'],
+      default: 'activo'
     }
   },
   {

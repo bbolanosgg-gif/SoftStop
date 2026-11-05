@@ -1,0 +1,256 @@
+/* Contenedor principal con la imagen fondo-espacios.png */
+.espacios-section {
+  position: relative;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 2rem;
+  overflow: hidden;
+}
+
+/* Grid de 2 columnas: Mazo a la izquierda, texto a la derecha */
+.espacios-contenedor {
+  max-width: 1200px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.espacios-columna-mazo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.espacios-titulo {
+  font-family: 'Georgia', serif;
+  font-weight: 400;
+  font-size: clamp(2.2rem, 3.8vw, 3.3rem);
+  line-height: 1.15;
+  color: #3f2739;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+/* --- SISTEMA DEL MAZO DE CARTAS (STACK) --- */
+.wrap_stack {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  height: 380px;
+  --w-card: 245px;
+  --h-card: 345px;
+  --rotate-card: 12deg;
+  --insetX-card: 4%;
+  --t-card: 26px;
+}
+
+.stack-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--w-card);
+  height: var(--h-card);
+  background-color: transparent; /* Quitamos el cuadro blanco de atrás */
+  box-shadow: none; /* Quitamos la sombra cuadrada */
+  cursor: pointer;
+  transition:
+    top 0.9s cubic-bezier(0.75, 0, 0, 1.01),
+    left 0.9s cubic-bezier(0.75, 0, 0, 1.01),
+    transform 0.9s cubic-bezier(0.75, 0, 0, 1.01),
+    opacity 0.7s ease,
+    filter 0.9s ease;
+  will-change: top, left, transform, opacity;
+  /* Esta sombra sigue la silueta irregular de tu imagen PNG de pergamino */
+  filter: drop-shadow(0 18px 28px rgba(74, 44, 64, 0.25));
+}
+
+/* Estado 1: Carta central al frente */
+.stack-card[data-slot="front"] {
+  z-index: 3;
+  top: 0;
+  left: calc(50% - (var(--w-card) / 2));
+  transform: rotate(0deg) scale(1);
+  opacity: 1;
+  cursor: default;
+  box-shadow: none;
+  box-shadow: 0 28px 55px rgba(74, 44, 64, 0.3);
+}
+
+/* Estado 2: Carta asomada a la izquierda */
+.stack-card[data-slot="left"] {
+  z-index: 2;
+  top: var(--t-card);
+  left: var(--insetX-card);
+  transform: rotate(calc(var(--rotate-card) * -1)) scale(0.91);
+  opacity: 0.95;
+}
+
+/* Estado 3: Carta asomada a la derecha */
+.stack-card[data-slot="right"] {
+  z-index: 2;
+  top: var(--t-card);
+  left: calc(100% - var(--w-card) - var(--insetX-card));
+  transform: rotate(var(--rotate-card)) scale(0.91);
+  opacity: 0.95;
+}
+
+/* Estado 4: Cartas ocultas esperando turno */
+.stack-card[data-slot="hidden"] {
+  z-index: 0;
+  top: var(--t-card);
+  left: calc(50% - (var(--w-card) / 2));
+  transform: rotate(0deg) scale(0.8);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Interior de la tarjeta (Pergamino) */
+.stack-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 34px 26px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: transparent;
+}
+
+.pergamino-fondo {
+  position: absolute;
+  /* Como tu PNG tiene espacio vacío arriba y a la izquierda, 
+     lo jalamos con valores negativos para centrar el dibujo real: */
+  top: -6%;
+  left: -6%;
+  width: 112%;
+  height: 112%;
+  object-fit: fill;
+  z-index: 0; /* Se queda atrás del texto */
+  pointer-events: none;
+}
+
+.stack-icono-top,
+.stack-title,
+.stack-kicker,
+.stack-text,
+.stack-btn {
+  position: relative;
+  z-index: 1;
+}
+
+.stack-icono-top {
+  align-self: flex-start;
+  font-size: 1.35rem;
+  margin-bottom: 6px;
+}
+
+.stack-title {
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+  font-size: 1.55rem;
+  color: #3b2535;
+  margin: 4px 0 2px;
+}
+
+.stack-kicker {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #7d6376;
+  margin: 0 0 14px;
+}
+
+.stack-text {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #4f3b49;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.stack-btn {
+  margin-top: 14px;
+  border: none;
+  border-radius: 999px;
+  padding: 9px 20px;
+  font-size: 0.78rem;
+  color: #fff;
+  background: #d48791; /* Tono rosado suave del botón */
+  box-shadow: 0 6px 14px rgba(212, 135, 145, 0.35);
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.stack-btn::after {
+  content: " →";
+}
+
+.stack-btn:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+/* Puntitos de navegación */
+.stack-dots {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.stack-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.stack-dot[aria-current="true"] {
+  background: #c9687b;
+  transform: scale(1.35);
+}
+
+/* --- COLUMNA DERECHA: TEXTO DESCRIPTIVO --- */
+.espacios-columna-texto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.espacios-descripcion {
+  font-family: 'Georgia', serif;
+  font-size: clamp(1.15rem, 1.7vw, 1.45rem);
+  line-height: 1.85;
+  color: #362030;
+  text-align: center;
+  max-width: 460px;
+  letter-spacing: 0.4px;
+  margin: 0;
+}
+
+/* Adaptación para pantallas pequeñas (Responsive) */
+@media (max-width: 920px) {
+  .espacios-contenedor {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .wrap_stack {
+    --w-card: 220px;
+    --h-card: 330px;
+    --insetX-card: 0%;
+  }
+}

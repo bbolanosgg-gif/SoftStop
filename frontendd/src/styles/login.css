@@ -58,6 +58,8 @@
     font-weight: 700;
     text-decoration: none;
     color: var(--color-texto-oscuro);
+    font-family: 'Google Sans Code', monospace;
+    cursor: pointer;
 
     /* Mismo vidrio que la tarjeta, pero más ligero */
     background: rgba(255, 255, 255, 0.35);

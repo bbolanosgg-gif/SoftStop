@@ -1,18 +1,17 @@
 const { Router } = require('express');
-
 const {
   crearMensaje,
-  obtenerMensajes
+  obtenerMensajes,
+  marcarMensajeLeido, // NUEVO
+  eliminarMensaje     // NUEVO
 } = require('../controllers/contacto.controller.js');
-
-const verificarToken = require('../middlewares/auth.middleware.js');
 
 const router = Router();
 
-// Ruta pública: cualquier visitante puede enviar un mensaje.
-router.post('/', crearMensaje);
-
-// Ruta privada: solamente un administrador autenticado puede consultar.
-router.get('/', verificarToken, obtenerMensajes);
+// Endpoints para el formulario de contacto (/api/contacto)
+router.get("/", obtenerMensajes);                // GET    /api/contacto
+router.post("/", crearMensaje);                  // POST   /api/contacto
+router.put("/:id/leido", marcarMensajeLeido);    // PUT    /api/contacto/:id/leido   (NUEVO)
+router.delete("/:id", eliminarMensaje);          // DELETE /api/contacto/:id         (NUEVO)
 
 module.exports = router;

@@ -8,6 +8,15 @@ const herramientaSchema = new Schema(
       required: [true, 'El nombre de la herramienta es obligatorio'],
       trim: true
     },
+    // NUEVO: frase corta que se muestra bajo el título en las cartas de la landing.
+    // Ejemplo: "REFLEXIÓN PROFUNDA". No es obligatoria para que las herramientas
+    // que ya existen en la base de datos sigan siendo válidas.
+    lema: {
+      type: String,
+      trim: true,
+      maxlength: [40, 'El lema no puede tener más de 40 caracteres'],
+      default: ''
+    },
     descripcion: {
       type: String,
       required: [true, 'La descripción es obligatoria'],

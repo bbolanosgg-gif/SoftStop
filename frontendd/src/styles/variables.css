@@ -1,22 +1,23 @@
-/* Variables globales con la paleta de colores y tipografías de SoftStop */
+/* Variables globales: se definen una vez y se reutilizan con var(--nombre) */
 :root {
-  --fuente-marca: 'Sora', sans-serif;
-  --fuente-titulo: 'Libre Caslon Text', Georgia, serif;
-  --fuente-texto: 'Google Sans Code', monospace;
-  --fuente-display: 'Marcellus SC', serif;
+  /* Tipografías */
+  --fuente-marca: 'Sree Krushnadevaraya', serif;          /* logo SOFTSTOP */
+  --fuente-titulo: 'Libertinus Serif Display', Georgia, serif; /* títulos */
+  --fuente-texto: 'Libre Caslon Text', Georgia, serif;    /* párrafos, nav, botones */
 
+  /* Colores */
   --color-tinta: #3f2a4e;
   --color-suave: #7a6585;
-  --color-marca: #4b1d3d;
-  --rosa-palo: #d68a96;
-  --crema-papel: #fbf4ea;
-  --logo-morado: #a890fe;
-  --logo-morado-oscuro: #8b6ef6;
-  --bg-crema: #f6e6ee;
-  --color-error: #e86a6a;
-  --color-exito: #4ea885;
+  --color-marca: #4b1d3d;       /* títulos y textos principales */
+  --color-resalte: #c0707f;     /* palabra resaltada ("rápido") */
+  --color-boton: #b85c72;       /* botón principal */
+  --crema-papel: #fbf4ea;       /* fondo del header y tarjetas */
 
+  /* Formas y sombras */
   --radio-pill: 9999px;
   --radio-tarjeta: 22px;
   --sombra-suave: 0 8px 24px rgba(120, 80, 140, 0.12);
+
+  /* Medidas */
+  --alto-header: 84px;
 }

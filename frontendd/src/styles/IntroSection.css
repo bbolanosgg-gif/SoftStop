@@ -1,0 +1,105 @@
+.intro-section {
+  position: relative;
+  background-color: #fbf9f5; /* Tono crema suave del fondo */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Evita que las flores generen scroll horizontal */
+  padding: 4rem 2rem;
+}
+
+/* Posicionamiento de las flores en las esquinas */
+.intro-decoracion {
+  position: absolute;
+  pointer-events: none; /* Permite hacer clic a través de la imagen */
+  z-index: 1;
+}
+
+.flores-izq {
+  bottom: 0;
+  left: 0;
+  width: clamp(220px, 28vw, 620px); /* Se adapta según el tamaño de pantalla */
+}
+
+.flores-der {
+  top: 0;
+  right: 0;
+  width: clamp(300px, 35vw, 650px);
+}
+
+/* Layout de las dos columnas centrales */
+.intro-contenedor {
+  position: relative;
+  z-index: 2; /* Queda por encima de las flores */
+  max-width: 1100px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+/* Estilos del título izquierdo */
+.intro-titulo {
+  font-family: 'Georgia', serif; /* O la fuente serif que estés usando en tu Hero */
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  color: #4a2c40; /* Morado oscuro */
+  line-height: 1.2;
+  margin-left: 15%; /* Da espacio para que no choque con las flores de abajo */
+}
+
+.texto-resaltado {
+  color: #c9687b; /* Tono rosa/coral de "hacer una pausa." */
+}
+
+/* Contenedor del cartel derecho */
+.intro-columna-cartel {
+  display: flex;
+  justify-content: center;
+}
+
+.cartel-wrapper {
+  position: relative;
+  max-width: 460px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cartel-imagen-fondo {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Texto centrado exactamente encima de la imagen del cartel */
+.cartel-texto {
+  position: absolute;
+  top: 54%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 78%;
+  text-align: center;
+  font-family: 'Georgia', serif;
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  line-height: 1.75;
+  color: #55354a;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* Adaptación para celulares y tablets (Responsive) */
+@media (max-width: 768px) {
+  .intro-contenedor {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .intro-titulo {
+    margin-left: 0;
+  }
+}

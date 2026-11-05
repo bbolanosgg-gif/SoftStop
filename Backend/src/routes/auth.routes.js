@@ -1,9 +1,9 @@
 const { Router } = require('express');
-const { loginAdmin } = require('../controllers/auth.controller.js');
+const { iniciarSesion, registrarUsuario } = require('../controllers/auth.controller.js');
 
 const router = Router();
 
-// Endpoint para iniciar sesión (/api/auth/login)
-router.post("/login", loginAdmin);
+router.post("/login", iniciarSesion);       // /api/auth/login
+router.post("/registro", registrarUsuario); // /api/auth/registro
 
 module.exports = router;

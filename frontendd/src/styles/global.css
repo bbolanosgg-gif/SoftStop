@@ -1,0 +1,34 @@
+/* Reset: quita márgenes por defecto del navegador y hace que el padding no agrande las cajas */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--fuente-texto);
+  color: var(--color-tinta);
+  background: var(--crema-papel);
+}
+
+/* Los botones no heredan la fuente solos, hay que indicarlo */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Botón base reutilizable en todas las pantallas */
+.btn {
+  padding: 14px 40px;
+  border: none;
+  border-radius: var(--radio-pill);
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-suave);
+}
+.btn-principal { background: var(--color-boton); color: var(--crema-papel); }
+.btn-secundario { background: #fffdf3; color: var(--color-marca); }

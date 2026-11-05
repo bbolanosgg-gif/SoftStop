@@ -1,0 +1,96 @@
+/* ===== CONTENEDOR DEL HEADER ===== */
+.header {
+  position: sticky;                /* se queda pegado arriba mientras haces scroll */
+  top: 0;
+  z-index: 100;                    /* siempre por encima del resto del contenido */
+  height: var(--alto-header);      /* altura definida en variables.css */
+  display: flex;
+  align-items: center;             /* centra verticalmente logo y nav */
+  justify-content: space-between;  /* logo a la izquierda, nav a la derecha */
+  padding: 0 60px;
+  background: var(--crema-papel);
+  border-bottom: 1px solid rgba(75, 29, 61, 0.1);
+}
+
+/* ===== MARCA: LOGO + NOMBRE ===== */
+.header-marca {
+  display: flex;
+  align-items: center;
+  gap: 40px;                       /* espacio entre el ícono y el texto */
+  background: none;                /* quitamos el estilo por defecto del botón */
+  border: none;
+}
+
+.header-logo {
+  height: 40px;
+  width: auto;                     /* mantiene la proporción de la imagen */
+}
+
+.header-nombre {
+  font-family: var(--fuente-marca);
+  font-size: 22px;
+  letter-spacing: 0.45em;          /* separación entre letras, como en el diseño */
+  color: var(--color-marca);
+}
+
+/* ===== NAVEGACIÓN ===== */
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 48px;                       /* separación entre enlaces */
+}
+
+.header-enlace {
+  background: none;
+  border: none;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--color-marca);
+  transition: color 0.2s;          /* el cambio de color es suave, no brusco */
+}
+
+/* .activo se pega a la clase base: <button class="header-enlace activo"> */
+.header-enlace:hover,
+.header-enlace.activo {
+  color: var(--color-resalte);
+}
+
+/* Botón con borde, estilo "pill" (Iniciar Sesión / Salir) */
+.header-boton {
+  padding: 8px 20px;
+  background: transparent;
+  border: 1px solid var(--color-suave);
+  border-radius: var(--radio-pill);  /* bordes totalmente redondeados */
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--color-marca);
+  transition: background 0.2s;
+}
+
+.header-boton:hover {
+  background: rgba(75, 29, 61, 0.06);
+}
+
+/* ===== TABLET Y MÓVIL ===== */
+@media (max-width: 900px) {
+  .header {
+    padding: 0 24px;
+  }
+  .header-nombre {
+    font-size: 16px;
+    letter-spacing: 0.3em;
+  }
+  .header-marca {
+    gap: 16px;
+  }
+  .header-nav {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  /* En móvil ocultamos los enlaces de scroll y dejamos solo el botón de sesión */
+  .header-enlace {
+    display: none;
+  }
+}

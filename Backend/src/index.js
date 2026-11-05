@@ -8,6 +8,7 @@ const herramientasRoutes = require('./routes/herramientas.routes.js');
 const contactoRoutes = require('./routes/contacto.routes.js');
 const authRoutes = require('./routes/auth.routes.js');
 const iaRoutes = require('./routes/ia.routes.js');
+const usuariosRoutes = require('./routes/usuarios.routes.js'); // NUEVO
 
 // Importamos el middleware de errores
 const manejarErrores = require('./middlewares/manejarErrores.js');
@@ -30,8 +31,9 @@ app.use('/api/herramientas', herramientasRoutes);
 app.use('/api/contacto', contactoRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/ia', iaRoutes);
+app.use('/api/usuarios', usuariosRoutes); 
 
-// Middleware para manejo de errores (siempre va al final de las rutas)
+// Middleware para manejo de errores
 app.use(manejarErrores);
 
 const PORT = process.env.PORT || 3000;

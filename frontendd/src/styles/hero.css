@@ -1,0 +1,98 @@
+
+/* =========================================
+   HERO PRINCIPAL DE SOFTSTOP
+========================================= */
+
+.hero {
+  width: 100%;
+  min-height: calc(100vh - var(--alto-header));
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-image: url('../assets/img/fondo-hero.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
+}
+
+/* Contenido central */
+
+.hero-contenido {
+  width: 100%;
+  max-width: 640px;
+
+  padding: 0 24px;
+  text-align: center;
+}
+
+/* Título principal */
+
+.hero-titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  line-height: 1.05;
+
+  color: var(--color-marca);
+}
+
+/* Palabra resaltada */
+
+.hero-resalte {
+  color: var(--color-resalte);
+}
+
+/* Subtítulo */
+
+.hero-subtitulo {
+  margin: 28px 0 36px;
+
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+
+  color: var(--color-marca);
+}
+
+/* Botones */
+
+.hero-botones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+/* Adaptación para celulares */
+
+@media (max-width: 600px) {
+
+  .hero {
+    min-height: calc(100svh - var(--alto-header));
+    background-position: center;
+  }
+
+  .hero-contenido {
+    padding: 0 20px;
+  }
+
+  .hero-titulo {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+
+  .hero-subtitulo {
+    font-size: 1rem;
+    margin: 22px 0 30px;
+  }
+
+  .hero-botones {
+    gap: 14px;
+  }
+
+}

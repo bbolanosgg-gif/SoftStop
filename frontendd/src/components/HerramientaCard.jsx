@@ -1,9 +1,34 @@
-// Tarjeta individual para mostrar una herramienta del catálogo de SoftStop
-export default function HerramientaCard({ herramienta, esAdmin, onEliminar }) {
+// Tarjeta individual para mostrar una herramienta del catálogo de SoftStop.
+// Se usa en dos lugares:
+//   - En la landing pública (esAdmin = false): solo muestra la información.
+//   - En el Panel Admin (esAdmin = true): además muestra los botones de gestión.
+//
+// Props (los datos y funciones que le llegan desde la página que la usa):
+//   herramienta       -> el objeto con los datos (viene de MongoDB)
+//   esAdmin           -> true si estamos en el Panel Admin
+//   onEditar          -> función que se ejecuta al presionar "Editar"
+//   onAlternarVisible -> función que se ejecuta al presionar el botón de ocultar/mostrar
+//   onEliminar        -> función que se ejecuta al presionar "Eliminar"
+export default function HerramientaCard({
+  herramienta,
+  esAdmin,
+  onEditar,
+  onAlternarVisible,
+  onEliminar
+}) {
   const esDisponible = herramienta.estadoDisponibilidad === 'Disponible en catálogo';
 
+  // Una herramienta está visible salvo que "activa" sea false.
+  // Usamos "!== false" para que las herramientas viejas, que quizá no
+  // tengan el campo "activa", también cuenten como visibles.
+  const estaVisible = herramienta.activa !== false;
+
   return (
-    <article className="tarjeta-glass">
+    <article
+      className="tarjeta-glass"
+      // En el panel, una herramienta oculta se ve más tenue para distinguirla
+      style={{ opacity: esAdmin && !estaVisible ? 0.55 : 1 }}
+    >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span className="tarjeta-icono">{herramienta.icono || '✨'}</span>
         <span className={esDisponible ? 'badge-estado badge-disponible' : 'badge-estado badge-proximamente'}>
@@ -20,16 +45,37 @@ export default function HerramientaCard({ herramienta, esAdmin, onEliminar }) {
         <strong>Beneficio: </strong>{herramienta.beneficio}
       </p>
 
-      {/* Si estamos en el Panel Admin, mostramos el botón para eliminar */}
+      {/* Los botones de gestión solo se dibujan en el Panel Admin */}
       {esAdmin && (
-        <button
-          type="button"
-          className="btn-acento"
-          style={{ marginTop: '12px', alignSelf: 'flex-start', background: 'var(--color-error)' }}
-          onClick={() => onEliminar(herramienta._id)}
-        >
-          Eliminar del catálogo
-        </button>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
+          {/* Ojo: mostrar/ocultar. El texto cambia según el estado actual */}
+          <button
+            type="button"
+            className="AdminBoton"
+            onClick={() => onAlternarVisible(herramienta)}
+          >
+            {estaVisible ? '🙈 Ocultar' : '👁️ Mostrar'}
+          </button>
+
+          {/* Lápiz: le pasamos la herramienta completa para llenar el formulario */}
+          <button
+            type="button"
+            className="AdminBoton"
+            onClick={() => onEditar(herramienta)}
+          >
+            ✏️ Editar
+          </button>
+
+          {/* Papelera: solo necesita el ID para saber cuál borrar */}
+          <button
+            type="button"
+            className="btn-acento"
+            style={{ background: 'var(--color-error)' }}
+            onClick={() => onEliminar(herramienta._id)}
+          >
+            🗑️ Eliminar
+          </button>
+        </div>
       )}
     </article>
   );

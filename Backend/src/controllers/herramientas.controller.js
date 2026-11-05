@@ -27,13 +27,19 @@ async function crearHerramienta(req, res, next) {
   }
 }
 
-// 3. Actualizar una herramienta existente por su ID
+// 3. Actualizar una herramienta existente por su ID.
+// Sirve para dos cosas del Panel Admin:
+//   - Editar los datos (nombre, descripción, etc.) con el formulario
+//   - Mostrar u ocultar la herramienta (enviando solo { activa: true/false })
 async function actualizarHerramienta(req, res, next) {
   try {
     const herramientaActualizada = await Herramienta.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true } // Devuelve el documento ya actualizado
+      {
+        new: true,          // Devuelve el documento ya actualizado
+        runValidators: true // Aplica las reglas del esquema (required, enum, maxlength...)
+      }
     );
 
     if (!herramientaActualizada) {
@@ -42,7 +48,7 @@ async function actualizarHerramienta(req, res, next) {
 
     res.status(200).json(herramientaActualizada);
   } catch (error) {
-    next(error);
+    next(error); // Si falla una validación, manejarErrores responde con un 400
   }
 }
 
