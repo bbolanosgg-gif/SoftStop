@@ -39,8 +39,16 @@ app.use(manejarErrores);
 const PORT = process.env.PORT || 3000;
 
 // Primero conectamos a MongoDB y luego encendemos el servidor
-conectarBD().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Servidor de SoftStop corriendo en http://localhost:${PORT}`);
+conectarBD()
+  .then(() => {
+    // Iniciamos Express después de conectar la base de datos.
+    // 0.0.0.0 permite recibir conexiones desde Render.
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Servidor de SoftStop activo en el puerto ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    // Si MongoDB falla, mostramos el error y detenemos el servidor.
+    console.error('Error al iniciar SoftStop:', error.message);
+    process.exit(1);
   });
-});
