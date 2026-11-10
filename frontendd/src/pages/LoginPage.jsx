@@ -67,7 +67,7 @@ export default function LoginPage({ apiUrl, alIniciarSesion, cambiarPagina }) {
       }
 
       // Enviamos los datos del usuario autenticado al componente padre (App.jsx)
-      alIniciarSesion(datos.usuario);
+      alIniciarSesion(datos.usuario, datos.token);
     } catch (error) {
       setErrorLogin('No se pudo conectar con el servidor Backend.');
     }

@@ -17,7 +17,7 @@ import '../styles/admin.css'; // estilos propios del panel
 // Esta página es el "director": pide los datos al backend, guarda las
 // funciones que modifican la información y se las pasa a los componentes
 // hijos, que solo se encargan de dibujar.
-export default function AdminPage({ apiUrl, herramientas, recargarHerramientas }) {
+export default function AdminPage({ apiUrl, token, herramientas, recargarHerramientas }) {
   // =====================================================
   // 1. ESTADOS (la "memoria" del componente)
   // =====================================================
@@ -43,6 +43,16 @@ export default function AdminPage({ apiUrl, herramientas, recargarHerramientas }
   //   un ID -> el formulario está en modo EDITAR esa herramienta
   const [idEditando, setIdEditando] = useState(null);
 
+  // Cabeceras para peticiones del administrador.
+  // Authorization lleva el JWT que Express comprueba con verificarToken.
+  // JSON solo se declara cuando enviamos datos en el cuerpo de la petición.
+  function encabezadosAdmin(conJson = false) {
+    return {
+      Authorization: `Bearer ${token}`,
+      ...(conJson ? { 'Content-Type': 'application/json' } : {})
+    };
+  }
+
   // =====================================================
   // 2. READ: cargar datos desde el backend
   // =====================================================
@@ -50,10 +60,14 @@ export default function AdminPage({ apiUrl, herramientas, recargarHerramientas }
   // Trae los mensajes de contacto desde MongoDB
   async function cargarMensajes() {
     try {
-      const respuesta = await fetch(`${apiUrl}/api/contacto`);
+      const respuesta = await fetch(`${apiUrl}/api/contacto`, {
+        headers: encabezadosAdmin()
+      });
       const datos = await respuesta.json();
       if (respuesta.ok) {
         setMensajes(datos);
+      } else {
+        console.warn('No se pudieron cargar los mensajes:', datos.error);
       }
     } catch (error) {
       console.log('Error cargando mensajes:', error);
@@ -63,10 +77,14 @@ export default function AdminPage({ apiUrl, herramientas, recargarHerramientas }
   // Trae los usuarios (clientes) desde MongoDB
   async function cargarUsuarios() {
     try {
-      const respuesta = await fetch(`${apiUrl}/api/usuarios`);
+      const respuesta = await fetch(`${apiUrl}/api/usuarios`, {
+        headers: encabezadosAdmin()
+      });
       const datos = await respuesta.json();
       if (respuesta.ok) {
         setUsuarios(datos);
+      } else {
+        console.warn('No se pudieron cargar los usuarios:', datos.error);
       }
     } catch (error) {
       console.log('Error cargando usuarios:', error);
@@ -116,7 +134,7 @@ export default function AdminPage({ apiUrl, herramientas, recargarHerramientas }
     try {
       const respuesta = await fetch(url, {
         method: metodo,
-        headers: { 'Content-Type': 'application/json' },
+        headers: encabezadosAdmin(true),
         body: JSON.stringify({
           nombre,
           lema, // NUEVO: ahora también se envía el lema
@@ -161,7 +179,7 @@ export default function AdminPage({ apiUrl, herramientas, recargarHerramientas }
     try {
       const respuesta = await fetch(`${apiUrl}/api/herramientas/${herramienta._id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: encabezadosAdmin(true),
         body: JSON.stringify({ activa: !estaVisible }) // invierte el valor actual
       });
 
@@ -181,7 +199,8 @@ export default function AdminPage({ apiUrl, herramientas, recargarHerramientas }
 
     try {
       const respuesta = await fetch(`${apiUrl}/api/herramientas/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: encabezadosAdmin()
       });
       if (respuesta.ok) {
         // Si se estaba editando justo la herramienta borrada, limpiamos el formulario
@@ -207,7 +226,7 @@ export default function AdminPage({ apiUrl, herramientas, recargarHerramientas }
     try {
       const respuesta = await fetch(`${apiUrl}/api/usuarios/${usuario._id}/estado`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: encabezadosAdmin(true),
         body: JSON.stringify({ estado: nuevoEstado })
       });
 
@@ -228,7 +247,7 @@ export default function AdminPage({ apiUrl, herramientas, recargarHerramientas }
     try {
       const respuesta = await fetch(`${apiUrl}/api/contacto/${mensaje._id}/leido`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: encabezadosAdmin(true),
         body: JSON.stringify({ leido: !mensaje.leido }) // invierte el valor actual
       });
 
@@ -247,7 +266,8 @@ export default function AdminPage({ apiUrl, herramientas, recargarHerramientas }
 
     try {
       const respuesta = await fetch(`${apiUrl}/api/contacto/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: encabezadosAdmin()
       });
 
       if (respuesta.ok) {

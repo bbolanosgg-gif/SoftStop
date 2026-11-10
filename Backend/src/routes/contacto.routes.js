@@ -1,17 +1,26 @@
+
 const { Router } = require('express');
+
 const {
   crearMensaje,
   obtenerMensajes,
-  marcarMensajeLeido, // NUEVO
-  eliminarMensaje     // NUEVO
+  marcarMensajeLeido,
+  eliminarMensaje
 } = require('../controllers/contacto.controller.js');
+
+// Middleware para comprobar el JWT y el rol administrador.
+const verificarToken = require('../middlewares/auth.middleware.js');
 
 const router = Router();
 
-// Endpoints para el formulario de contacto (/api/contacto)
-router.get("/", obtenerMensajes);                // GET    /api/contacto
-router.post("/", crearMensaje);                  // POST   /api/contacto
-router.put("/:id/leido", marcarMensajeLeido);    // PUT    /api/contacto/:id/leido   (NUEVO)
-router.delete("/:id", eliminarMensaje);          // DELETE /api/contacto/:id         (NUEVO)
+// PÚBLICA: permite enviar mensajes desde Contacto.
+router.post("/", crearMensaje);
+
+// PRIVADAS: solamente para administradores.
+router.get("/", verificarToken, obtenerMensajes);
+
+router.put("/:id/leido", verificarToken, marcarMensajeLeido);
+
+router.delete("/:id", verificarToken, eliminarMensaje);
 
 module.exports = router;

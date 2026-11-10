@@ -1,4 +1,6 @@
+
 const { Router } = require('express');
+
 const {
   obtenerHerramientas,
   crearHerramienta,
@@ -6,12 +8,19 @@ const {
   eliminarHerramienta
 } = require('../controllers/herramientas.controller.js');
 
+// Middleware que verifica si el usuario es administrador.
+const verificarToken = require('../middlewares/auth.middleware.js');
+
 const router = Router();
 
-// Endpoints para el catálogo de herramientas (/api/herramientas)
+// PÚBLICA: cualquier visitante puede consultar el catálogo.
 router.get("/", obtenerHerramientas);
-router.post("/", crearHerramienta);
-router.put("/:id", actualizarHerramienta);
-router.delete("/:id", eliminarHerramienta);
+
+// PRIVADAS: requieren un token válido de administrador.
+router.post("/", verificarToken, crearHerramienta);
+
+router.put("/:id", verificarToken, actualizarHerramienta);
+
+router.delete("/:id", verificarToken, eliminarHerramienta);
 
 module.exports = router;

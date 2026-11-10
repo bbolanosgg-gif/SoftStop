@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const Usuario = require('../models/Usuario.js');
+const jwt = require('jsonwebtoken');
 
 // Arma el objeto que SÍ se puede enviar al frontend.
 // Así nunca se filtra el passwordHash por accidente y no repetimos código.
@@ -46,10 +47,24 @@ async function iniciarSesion(req, res, next) {
       });
     }
 
+    // Creamos un token para identificar al usuario.
+    // Guardamos su ID y su rol dentro del token.
+    const token = jwt.sign(
+      {
+        id: usuario._id,
+        rol: usuario.rol
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '2h' }
+    );
+
+    // Respondemos al frontend con los datos y el token.
     res.status(200).json({
       mensaje: "Inicio de sesión exitoso",
-      usuario: datosPublicos(usuario)
+      usuario: datosPublicos(usuario),
+      token: token
     });
+
   } catch (error) {
     next(error); // lo atrapa el middleware manejarErrores
   }

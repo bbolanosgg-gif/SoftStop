@@ -11,30 +11,22 @@ import AdminPage from './pages/AdminPage';
 
 
 // Dirección del servidor Backend de Node.js / Express
-const API_URL = 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export default function App() {
-  // Persistencia básica de sesión usando localStorage
-  const [usuarioAdmin, setUsuarioAdmin] = useState(() => {
-    try {
-      const guardado = localStorage.getItem('softstop_usuario');
-      return guardado ? JSON.parse(guardado) : null;
-    } catch {
-      return null;
-    }
-  });
+  // 1. SESIÓN EN MEMORIA (useState)
+  // Al iniciar la aplicación todavía no hay un usuario autenticado.
+  // No restauramos el usuario desde localStorage: un rol guardado allí
+  // no demuestra que la persona tenga una sesión válida.
+  const [usuarioAdmin, setUsuarioAdmin] = useState(null);
 
-  // Si el usuario guardado es administrador, lo mantenemos en el panel al refrescar
-  const [paginaActual, setPaginaActual] = useState(() => {
-    try {
-      const guardado = localStorage.getItem('softstop_usuario');
-      if (guardado) {
-        const u = JSON.parse(guardado);
-        if (u?.rol === 'admin') return 'admin';
-      }
-    } catch {}
-    return 'inicio';
-  });
+  // El backend entrega este JWT al iniciar sesión correctamente.
+  // Lo conservamos solo en memoria, sin localStorage ni sessionStorage.
+  // Por eso, al recargar la página se pierde y hay que iniciar sesión otra vez.
+  const [token, setToken] = useState(null);
+
+  // Al abrir o recargar SoftStop mostramos primero la página principal.
+  const [paginaActual, setPaginaActual] = useState('inicio');
 
   const [herramientas, setHerramientas] = useState([]);
   const [cargando, setCargando] = useState(true);
@@ -78,31 +70,31 @@ export default function App() {
     });
   }
 
-  // Login exitoso: guardamos en localStorage y redirigimos según rol
-  function manejarLoginExitoso(usuario) {
+  // 2. INICIO DE SESIÓN
+  // LoginPage recibe del backend el usuario y el JWT, y nos los pasa aquí.
+  function manejarLoginExitoso(usuario, tokenRecibido) {
+    // Guardamos los datos del usuario y su token en el estado de React.
     setUsuarioAdmin(usuario);
-    try {
-      localStorage.setItem('softstop_usuario', JSON.stringify(usuario));
-    } catch (e) {
-      console.warn('No se pudo guardar la sesión en el navegador');
-    }
+    setToken(tokenRecibido);
+
+    // Si es admin, mostramos el panel; si es cliente, la página principal.
     setPaginaActual(usuario.rol === 'admin' ? 'admin' : 'inicio');
   }
 
-  // Cerrar sesión: eliminamos de localStorage y volvemos al inicio
+  // 3. CERRAR SESIÓN
+  // Limpiamos la sesión de la memoria y volvemos al inicio.
   function manejarCerrarSesion() {
     setUsuarioAdmin(null);
-    try {
-      localStorage.removeItem('softstop_usuario');
-    } catch (e) {
-      console.warn('No se pudo limpiar la sesión');
-    }
+    setToken(null);
     setPaginaActual('inicio');
   }
 
-  // ¿La persona con sesión es administradora? (revisamos el rol, no solo que haya sesión)
-  // El "?." evita un error cuando no hay sesión (usuarioAdmin es null)
-  const esAdmin = usuarioAdmin?.rol === 'admin';
+  // 4. CONTROL VISUAL DEL PANEL
+  // Mostramos el panel si el usuario tiene rol admin y hay un token en memoria.
+  // Esto NO reemplaza la seguridad real: Express debe comprobar cada petición
+  // privada mediante el middleware verificarToken.
+  // El "?." evita un error cuando usuarioAdmin es null.
+  const esAdmin = usuarioAdmin?.rol === 'admin' && Boolean(token);
 
   // Estamos dentro del panel (con permiso)
   const esPanelAdmin = paginaActual === 'admin' && esAdmin;
@@ -166,7 +158,8 @@ export default function App() {
           esAdmin ? (
             <AdminPage
               apiUrl={API_URL}
-              herramientas={herramientas} // el admin SÍ recibe todas, también las ocultas
+              token={token}
+              herramientas={herramientas}
               recargarHerramientas={obtenerCatalogo}
             />
           ) : (
