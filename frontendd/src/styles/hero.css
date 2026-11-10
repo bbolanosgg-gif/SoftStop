@@ -5,27 +5,28 @@
 
 .hero {
   width: 100%;
-  min-height: calc(100vh - var(--alto-header));
+  min-height: 100vh; /* Ocupa toda la altura de la pantalla */
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background-image: url('../assets/img/fondo-hero.jpg');
+  background-image: url('../assets/img/fondo-hero.png');
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
 
   position: relative;
+  box-sizing: border-box;
 }
 
 /* Contenido central */
 
 .hero-contenido {
   width: 100%;
-  max-width: 640px;
+  max-width: 620px;
 
-  padding: 0 24px;
+  padding: 0 20px;
   text-align: center;
 }
 
@@ -65,7 +66,7 @@
   justify-content: center;
   align-items: center;
 
-  gap: 24px;
+  gap: 18px;
   flex-wrap: wrap;
 }
 

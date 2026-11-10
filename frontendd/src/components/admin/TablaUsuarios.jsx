@@ -1,3 +1,5 @@
+import Boton from '../Boton/Boton';
+
 // Tabla con los usuarios registrados en SoftStop.
 // Muestra nombre, correo, estado y fecha de registro, y un botón
 // para activar o desactivar cada cuenta.
@@ -51,13 +53,13 @@ export default function TablaUsuarios({ usuarios, onCambiarEstado }) {
               </td>
               <td>{formatearFecha(usuario.createdAt)}</td>
               <td>
-                <button
-                  type="button"
-                  className="AdminBoton"
+                <Boton
+                  variante="contorno"
+                  tamano="sm"
                   onClick={() => onCambiarEstado(usuario)}
                 >
                   {estaActivo ? 'Desactivar' : 'Activar'}
-                </button>
+                </Boton>
               </td>
             </tr>
           );

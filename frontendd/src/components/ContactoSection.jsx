@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Boton from './Boton/Boton';
 import '../styles/contacto.css';
 
 // Importamos la ilustración del castillo desde tu carpeta de imágenes
@@ -61,28 +62,28 @@ export default function ContactoSection({ apiUrl }) {
   return (
     <section className="contacto-section" id="contacto">
       <div className="contacto-contenedor">
-        
+
         {/* COLUMNA IZQUIERDA: Textos + Ilustración del Castillo */}
         <div className="contacto-info">
           <h2 className="contacto-titulo">Contacto</h2>
-          
+
           <p className="contacto-subtitulo">
             ¿Tienes alguna pregunta? <br />
             Escríbenos, estamos aquí para <br />
             ayudarte
           </p>
 
-          <img 
-            src={castilloImg} 
-            alt="Castillo de SoftStop" 
-            className="contacto-castillo" 
+          <img
+            src={castilloImg}
+            alt="Castillo de SoftStop"
+            className="contacto-castillo"
           />
         </div>
 
         {/* COLUMNA DERECHA: Tarjeta con el formulario */}
         <div className="contacto-tarjeta">
           <form className="formulario" onSubmit={manejarEnvioContacto}>
-            
+
             {/* Campo 1: Nombre */}
             <div className="input-pill">
               <span className="input-icono" aria-hidden="true">
@@ -124,8 +125,8 @@ export default function ContactoSection({ apiUrl }) {
                   <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
                 </svg>
               </span>
-              <select 
-                value={asunto} 
+              <select
+                value={asunto}
                 onChange={(e) => setAsunto(e.target.value)}
                 aria-label="Asunto"
               >
@@ -154,9 +155,9 @@ export default function ContactoSection({ apiUrl }) {
             )}
 
             {/* Botón de envío */}
-            <button type="submit" className="btn-enviar-contacto">
+            <Boton type="submit" variante="primario" tamano="lg" anchoCompleto>
               Enviar mensaje
-            </button>
+            </Boton>
 
           </form>
         </div>

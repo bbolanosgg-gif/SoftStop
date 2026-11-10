@@ -1,16 +1,18 @@
+import Boton from './Boton/Boton';
+
 // Barra superior exclusiva del panel admin: solo lo que la administradora necesita.
 export default function BarraAdmin({ nombre, alVerSitio, alSalir }) {
   return (
     <header className="AdminBarra">
-      <span className="AdminMarca">SOFTSTOP</span>
+      <span className="AdminMarca">SoftStop</span>
 
       <div className="AdminBarraAcciones">
-        <button type="button" className="AdminBoton" onClick={alVerSitio}>
+        <Boton variante="secundario" tamano="sm" onClick={alVerSitio}>
           Ver sitio
-        </button>
-        <button type="button" className="AdminBoton AdminBotonPrimario" onClick={alSalir}>
-          Salir
-        </button>
+        </Boton>
+        <Boton variante="primario" tamano="sm" onClick={alSalir}>
+          Cerrar sesión
+        </Boton>
       </div>
     </header>
   );

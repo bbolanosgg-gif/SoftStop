@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import CampoFormulario from '../components/CampoFormulario';
+import Boton from '../components/Boton/Boton';
 import '../styles/login.css'; // Vite mete este CSS en la página automáticamente
 import { iconoCorreo, iconoCandado } from '../components/iconos';
 import BotonVolver from '../components/BotonVolver';
 
-
-
-// Página de Login para acceder al Panel de Administración
+// Página de Login para acceder al Panel de Administración o sesión de estudiante
 export default function LoginPage({ apiUrl, alIniciarSesion, cambiarPagina }) {
   // Estados: la "memoria" del componente. Cuando cambian, React vuelve a dibujar la página.
   const [email, setEmail] = useState('');
@@ -53,7 +52,7 @@ export default function LoginPage({ apiUrl, alIniciarSesion, cambiarPagina }) {
     }
 
     try {
-      // Petición POST al backend (la ruta que definiste en auth.routes.js)
+      // Petición POST al backend
       const respuesta = await fetch(`${apiUrl}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -125,13 +124,18 @@ export default function LoginPage({ apiUrl, alIniciarSesion, cambiarPagina }) {
                   Recordarme
                 </label>
 
-                {/* href="#" por ahora: aún no existe la página de recuperación */}
-                <a href="#" className="LoginOlvidaste">¿Olvidaste tu contraseña?</a>
+                <button
+                  type="button"
+                  className="LoginOlvidaste"
+                  onClick={() => setErrorLogin('Para recuperar tu clave, por favor déjanos un mensaje en la sección de Contacto.')}
+                >
+                  ¿Olvidaste tu contraseña?
+                </button>
               </div>
 
-              <button type="submit" className="LoginBotonSubmit">
+              <Boton type="submit" variante="primario" tamano="lg" anchoCompleto>
                 Iniciar sesión
-              </button>
+              </Boton>
             </form>
 
             <p className="LoginToggleTexto">

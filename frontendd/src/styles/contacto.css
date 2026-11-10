@@ -1,6 +1,10 @@
-/* Contenedor general de la sección Contacto */
+/* =====================================================
+   SECCIÓN CONTACTO
+   Colores, fuentes y radios vienen de variables.css
+   ===================================================== */
+
 .contacto-section {
-  background-color: #fbf8f3; /* Fondo crema cálido */
+  background-color: var(--crema-papel);
   min-height: 95vh;
   display: flex;
   align-items: center;
@@ -27,18 +31,18 @@
 }
 
 .contacto-titulo {
-  font-family: 'Libertinus Serif Display', 'Libre Caslon Text', Georgia, serif;
+  font-family: var(--fuente-titulo);
   font-size: clamp(3.2rem, 5.5vw, 4.8rem);
   font-weight: 400;
-  color: #4b2b42; /* Tono ciruela oscuro */
+  color: var(--color-marca);
   margin: 0 0 1.2rem 0;
   line-height: 1.05;
 }
 
 .contacto-subtitulo {
-  font-family: 'Libre Caslon Text', Georgia, serif;
+  font-family: var(--fuente-texto);
   font-size: clamp(1.1rem, 1.6vw, 1.4rem);
-  color: #5d3d54;
+  color: var(--color-marca);
   line-height: 1.55;
   letter-spacing: 0.04em;
   margin: 0 0 2rem 0;
@@ -55,9 +59,9 @@
 
 /* --- COLUMNA DERECHA: TARJETA DEL FORMULARIO --- */
 .contacto-tarjeta {
-  background-color: #fdfbf8;
-  border: 1px solid #8a7b85; /* Borde delgado y sutil del recuadro */
-  border-radius: 26px;
+  background-color: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(var(--color-boton-rgb), 0.35);
+  border-radius: var(--radio-grande);
   padding: 3rem 2.6rem;
   max-width: 450px;
   width: 100%;
@@ -75,24 +79,24 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background-color: #fbf9f6;
-  border: 1px solid #ded8d2;
-  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(var(--color-boton-rgb), 0.25);
+  border-radius: var(--radio-pill);
   padding: 11px 20px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color var(--transicion), box-shadow var(--transicion);
 }
 
 .input-pill:focus-within,
 .textarea-box:focus-within {
-  border-color: #c98891;
-  box-shadow: 0 0 0 3px rgba(201, 136, 145, 0.15);
+  border-color: var(--color-boton);
+  box-shadow: 0 0 0 3px rgba(var(--color-boton-rgb), 0.15);
 }
 
 .input-icono {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #6d5566;
+  color: var(--color-suave);
   flex-shrink: 0;
 }
 
@@ -101,64 +105,40 @@
   height: 19px;
 }
 
+/* Los <input>, <select> y <textarea> no heredan la fuente: se la damos aquí */
 .input-pill input,
-.input-pill select {
+.input-pill select,
+.textarea-box textarea {
   border: none;
   background: transparent;
   width: 100%;
-  font-family: 'Libre Caslon Text', Georgia, serif;
+  font-family: var(--fuente-texto);
   font-size: 0.9rem;
-  color: #4b2b42;
+  color: var(--color-marca);
   outline: none;
 }
 
 .input-pill input::placeholder,
 .textarea-box textarea::placeholder {
-  color: #a395a0;
+  color: var(--color-suave);
+  opacity: 0.7;
 }
 
 /* Caja grande para el mensaje (Textarea) */
 .textarea-box {
-  background-color: #fbf9f6;
-  border: 1px solid #ded8d2;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(var(--color-boton-rgb), 0.25);
   border-radius: 20px;
   padding: 16px 20px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color var(--transicion), box-shadow var(--transicion);
 }
 
 .textarea-box textarea {
-  border: none;
-  background: transparent;
-  width: 100%;
   resize: none;
-  font-family: 'Libre Caslon Text', Georgia, serif;
-  font-size: 0.9rem;
-  color: #4b2b42;
-  outline: none;
   line-height: 1.5;
 }
 
-/* Botón rosado de enviar */
-.btn-enviar-contacto {
-  margin-top: 0.4rem;
-  background-color: #cf8a91; /* Rosa viejo de tu diseño */
-  color: #ffffff;
-  border: none;
-  border-radius: 999px;
-  padding: 14px 24px;
-  font-family: 'Libre Caslon Text', Georgia, serif;
-  font-size: 0.92rem;
-  letter-spacing: 0.03em;
-  cursor: pointer;
-  transition: filter 0.2s ease, transform 0.2s ease;
-}
-
-.btn-enviar-contacto:hover {
-  filter: brightness(1.05);
-  transform: translateY(-1px);
-}
-
-/* Alertas de respuesta del Backend (Conxito / Error) */
+/* Alertas de respuesta del Backend (éxito / error) */
 .alerta-exito,
 .alerta-error {
   padding: 12px 16px;
@@ -170,16 +150,19 @@
 }
 
 .alerta-exito {
-  background: rgba(78, 168, 133, 0.15);
-  color: #2e7d5b;
+  background: rgba(var(--color-exito-rgb), 0.15);
+  color: var(--color-exito);
 }
 
 .alerta-error {
-  background: rgba(232, 106, 106, 0.15);
-  color: #c94a4a;
+  background: rgba(var(--color-error-rgb), 0.15);
+  color: var(--color-error);
 }
 
-/* Adaptación para celulares y tablets */
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
 @media (max-width: 860px) {
   .contacto-contenedor {
     grid-template-columns: 1fr;

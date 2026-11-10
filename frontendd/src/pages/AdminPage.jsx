@@ -5,6 +5,11 @@ import TarjetaResumen from '../components/admin/TarjetaResumen';
 import TablaUsuarios from '../components/admin/TablaUsuarios';
 import TablaMensajes from '../components/admin/TablaMensajes';
 import HerramientaCard from '../components/HerramientaCard';
+import Boton from '../components/Boton/Boton';
+
+import iconoUsuarios from '../assets/img/iconoUsuarios.png';
+import iconoHerramientas from '../assets/img/iconoHerramientas.png';
+import iconoMensajes from '../assets/img/iconoMensajes.png';
 
 import '../styles/admin.css'; // estilos propios del panel
 
@@ -268,17 +273,17 @@ export default function AdminPage({ apiUrl, herramientas, recargarHerramientas }
         {/* Tres tarjetas de resumen: los números salen del largo de cada lista */}
         <div className="AdminResumenFila">
           <TarjetaResumen
-            icono="👥"
+            imagen={iconoUsuarios}
             numero={usuarios.length}
             etiqueta="Usuarios registrados"
           />
           <TarjetaResumen
-            icono="🧰"
+            imagen={iconoHerramientas}
             numero={herramientas.length}
             etiqueta="Herramientas en catálogo"
           />
           <TarjetaResumen
-            icono="✉️"
+            imagen={iconoMensajes}
             numero={mensajes.length}
             etiqueta="Mensajes recibidos"
           />
@@ -361,19 +366,15 @@ export default function AdminPage({ apiUrl, herramientas, recargarHerramientas }
               {aviso && <p className="AdminAviso">{aviso}</p>}
 
               <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                <button type="submit" className="AdminBotonGuardar">
+                <Boton type="submit" variante="primario">
                   {idEditando ? 'Guardar cambios' : '+ Guardar en el catálogo'}
-                </button>
+                </Boton>
 
                 {/* El botón Cancelar solo aparece en modo EDITAR */}
                 {idEditando && (
-                  <button
-                    type="button"
-                    className="AdminBoton"
-                    onClick={limpiarFormulario}
-                  >
+                  <Boton variante="contorno" onClick={limpiarFormulario}>
                     Cancelar edición
-                  </button>
+                  </Boton>
                 )}
               </div>
             </form>

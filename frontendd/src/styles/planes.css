@@ -1,0 +1,279 @@
+/* =====================================================
+   PÁGINA DE PLANES Y PRECIOS — SOFTSTOP
+   Reutiliza la estética, fondo ilustrado y glassmorphism del Login
+   ===================================================== */
+
+/* Contenedor principal con fondo ilustrado fijo de SoftStop */
+.planes-pantalla {
+  min-height: 100vh;
+  margin: 0;
+  font-family: var(--fuente-texto);
+  color: var(--color-marca);
+
+  background-color: var(--crema-papel);
+  background-image: url('../assets/img/FondoLogin.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px 80px;
+  box-sizing: border-box;
+}
+
+/* Encabezado centrado de la sección */
+.planes-encabezado {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 36px;
+  padding: 0 16px;
+}
+
+.planes-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 400;
+  color: var(--color-marca);
+  margin-bottom: 12px;
+  line-height: 1.15;
+}
+
+.planes-subtitulo {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--color-suave);
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+/* Cuadrícula / Flexbox que centra ambas tarjetas horizontalmente */
+.planes-grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 30px;
+  width: 100%;
+  max-width: 840px;
+}
+
+/* =====================================================
+   TARJETA INDIVIDUAL (Efecto Glassmorphism del Login)
+   ===================================================== */
+
+.tarjeta-plan {
+  flex: 1;
+  min-width: 290px;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  padding: 34px 30px;
+  border-radius: 26px;
+  box-sizing: border-box;
+  position: relative;
+  transition: transform var(--transicion), box-shadow var(--transicion);
+}
+
+.tarjeta-plan:hover {
+  transform: translateY(-4px);
+}
+
+/* ---------- Variante Free: tonos crema y rosa suaves ---------- */
+.tarjeta-plan--free {
+  background: rgba(255, 250, 246, 0.65);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1.5px solid rgba(243, 217, 230, 0.85);
+  box-shadow: 0 16px 40px rgba(120, 80, 140, 0.12);
+}
+
+.tarjeta-plan--free:hover {
+  box-shadow: 0 20px 48px rgba(192, 112, 127, 0.22);
+}
+
+.tarjeta-plan--free .tarjeta-plan__etiqueta {
+  background: rgba(243, 217, 230, 0.85);
+  color: #723d6f;
+  border: 1px solid rgba(192, 112, 127, 0.25);
+}
+
+.tarjeta-plan--free .tarjeta-plan__icono-check {
+  color: #c0707f;
+  background: rgba(243, 217, 230, 0.55);
+}
+
+/* ---------- Variante Plus: tonos lavanda y borde morado sutil ---------- */
+.tarjeta-plan--plus {
+  background: rgba(246, 240, 252, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1.5px solid rgba(114, 61, 111, 0.45);
+  box-shadow: 0 18px 45px rgba(114, 61, 111, 0.16);
+}
+
+.tarjeta-plan--plus:hover {
+  box-shadow: 0 22px 50px rgba(114, 61, 111, 0.25);
+  border-color: rgba(114, 61, 111, 0.65);
+}
+
+.tarjeta-plan--plus .tarjeta-plan__etiqueta {
+  background: rgba(217, 200, 240, 0.9);
+  color: #5c2d59;
+  border: 1px solid rgba(114, 61, 111, 0.35);
+}
+
+.tarjeta-plan--plus .tarjeta-plan__icono-check {
+  color: var(--color-boton);
+  background: rgba(217, 200, 240, 0.65);
+}
+
+/* =====================================================
+   DETALLES INTERNOS DE LA TARJETA
+   ===================================================== */
+
+/* Cabecera y títulos */
+.tarjeta-plan__cabecera {
+  margin-bottom: 18px;
+}
+
+.tarjeta-plan__titulo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.tarjeta-plan__nombre {
+  font-family: var(--fuente-titulo);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--color-marca);
+  margin: 0;
+}
+
+.tarjeta-plan__etiqueta {
+  font-family: var(--fuente-texto);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: var(--radio-pill);
+}
+
+.tarjeta-plan__descripcion {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--color-suave);
+  margin: 0;
+  min-height: 42px;
+}
+
+/* Precios */
+.tarjeta-plan__precios {
+  margin-bottom: 18px;
+}
+
+.tarjeta-plan__precio-principal {
+  font-family: var(--fuente-titulo);
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--color-marca);
+  line-height: 1.1;
+}
+
+.tarjeta-plan__precio-secundario {
+  font-size: 12.5px;
+  color: var(--color-suave);
+  margin: 6px 0 0 0;
+}
+
+/* Divisor sutil */
+.tarjeta-plan__divisor {
+  height: 1px;
+  background: rgba(114, 61, 111, 0.12);
+  margin-bottom: 20px;
+}
+
+/* Lista de beneficios */
+.tarjeta-plan__cuerpo {
+  flex: 1; /* Empuja el botón hacia la base de la tarjeta */
+  margin-bottom: 26px;
+}
+
+.tarjeta-plan__beneficios-titulo {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-marca);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 12px 0;
+}
+
+.tarjeta-plan__beneficios {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.tarjeta-plan__beneficio-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--color-tinta);
+}
+
+.tarjeta-plan__icono-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Pie con el botón de acción */
+.tarjeta-plan__pie {
+  margin-top: auto;
+}
+
+/* =====================================================
+   DISEÑO RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 768px) {
+  .planes-pantalla {
+    padding: 70px 18px 50px;
+    justify-content: flex-start;
+  }
+
+  .planes-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .tarjeta-plan {
+    max-width: 100%;
+    width: 100%;
+    padding: 28px 22px;
+  }
+
+  .tarjeta-plan__descripcion {
+    min-height: auto;
+  }
+}

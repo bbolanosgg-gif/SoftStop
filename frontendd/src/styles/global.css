@@ -5,6 +5,13 @@
   padding: 0;
 }
 
+/* Desplazamiento suave y compensación del Header fijo:
+   al saltar a una sección (#quienes-somos, #espacios, #contacto),
+   el navegador deja 70px arriba para que el Header no tape el contenido */
+html {
+  scroll-padding-top: var(--alto-header);
+}
+
 body {
   font-family: var(--fuente-texto);
   color: var(--color-tinta);
@@ -17,18 +24,5 @@ button {
   cursor: pointer;
 }
 
-/* Botón base reutilizable en todas las pantallas */
-.btn {
-  padding: 14px 40px;
-  border: none;
-  border-radius: var(--radio-pill);
-  font-size: 1.05rem;
-  letter-spacing: 0.08em;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--sombra-suave);
-}
-.btn-principal { background: var(--color-boton); color: var(--crema-papel); }
-.btn-secundario { background: #fffdf3; color: var(--color-marca); }
+/* Los botones con relleno (Empezar, Guardar, Eliminar...) ya no se definen aquí:
+   son el componente Boton, con sus estilos en components/Boton/Boton.css */

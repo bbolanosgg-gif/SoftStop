@@ -137,11 +137,13 @@
   pointer-events: none;
 }
 
+/* Todo lo que va sobre el pergamino necesita position + z-index
+   para dibujarse ENCIMA de la imagen de fondo */
 .stack-icono-top,
 .stack-title,
 .stack-kicker,
 .stack-text,
-.stack-btn {
+.stack-accion {
   position: relative;
   z-index: 1;
 }
@@ -178,26 +180,10 @@
   margin: 0;
 }
 
-.stack-btn {
+/* Contenedor del botón "Entrar a...": solo lo posiciona sobre el pergamino.
+   El aspecto del botón lo da el componente Boton. */
+.stack-accion {
   margin-top: 14px;
-  border: none;
-  border-radius: 999px;
-  padding: 9px 20px;
-  font-size: 0.78rem;
-  color: #fff;
-  background: #d48791; /* Tono rosado suave del botón */
-  box-shadow: 0 6px 14px rgba(212, 135, 145, 0.35);
-  cursor: pointer;
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.stack-btn::after {
-  content: " →";
-}
-
-.stack-btn:hover {
-  filter: brightness(1.06);
-  transform: translateY(-1px);
 }
 
 /* Puntitos de navegación */

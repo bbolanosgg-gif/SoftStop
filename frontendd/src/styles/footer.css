@@ -34,9 +34,8 @@
 }
 
 .footer-marca-texto {
-  font-family: 'Libertinus Serif Display', 'Libre Caslon Text', Georgia, serif;
+  font-family: var(--fuente-marca);
   font-size: 1.25rem;
-  letter-spacing: 0.48em; /* Separa las letras como S O F T S T O P */
   color: #4b2b42;
   font-weight: 600;
   margin-right: -0.48em; /* Compensa el espacio de la última letra para centrar bien */

@@ -9,6 +9,9 @@
 //   onEditar          -> función que se ejecuta al presionar "Editar"
 //   onAlternarVisible -> función que se ejecuta al presionar el botón de ocultar/mostrar
 //   onEliminar        -> función que se ejecuta al presionar "Eliminar"
+
+import Boton from './Boton/Boton';
+
 export default function HerramientaCard({
   herramienta,
   esAdmin,
@@ -49,32 +52,34 @@ export default function HerramientaCard({
       {esAdmin && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
           {/* Ojo: mostrar/ocultar. El texto cambia según el estado actual */}
-          <button
-            type="button"
-            className="AdminBoton"
+          <Boton
+            variante="contorno"
+            tamano="sm"
+            icono={estaVisible ? '🙈' : '👁️'}
             onClick={() => onAlternarVisible(herramienta)}
           >
-            {estaVisible ? '🙈 Ocultar' : '👁️ Mostrar'}
-          </button>
+            {estaVisible ? 'Ocultar' : 'Mostrar'}
+          </Boton>
 
           {/* Lápiz: le pasamos la herramienta completa para llenar el formulario */}
-          <button
-            type="button"
-            className="AdminBoton"
+          <Boton
+            variante="contorno"
+            tamano="sm"
+            icono="✏️"
             onClick={() => onEditar(herramienta)}
           >
-            ✏️ Editar
-          </button>
+            Editar
+          </Boton>
 
           {/* Papelera: solo necesita el ID para saber cuál borrar */}
-          <button
-            type="button"
-            className="btn-acento"
-            style={{ background: 'var(--color-error)' }}
+          <Boton
+            variante="peligro"
+            tamano="sm"
+            icono="🗑️"
             onClick={() => onEliminar(herramienta._id)}
           >
-            🗑️ Eliminar
-          </button>
+            Eliminar
+          </Boton>
         </div>
       )}
     </article>

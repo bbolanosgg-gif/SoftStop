@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import CampoFormulario from '../components/CampoFormulario';
+import Boton from '../components/Boton/Boton';
 import { iconoCorreo, iconoCandado, iconoUsuario } from '../components/iconos';
 import '../styles/login.css'; // reutilizamos el mismo CSS del login
 import BotonVolver from '../components/BotonVolver';
@@ -140,9 +141,9 @@ export default function RegistroPage({ apiUrl, cambiarPagina }) {
                 icono={iconoCandado}
               />
 
-              <button type="submit" className="LoginBotonSubmit">
+              <Boton type="submit" variante="primario" tamano="lg" anchoCompleto>
                 Crear cuenta
-              </button>
+              </Boton>
             </form>
 
             <p className="LoginToggleTexto">

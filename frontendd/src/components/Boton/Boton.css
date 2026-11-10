@@ -1,0 +1,168 @@
+/* =====================================================
+   BOTÓN REUTILIZABLE
+   Variantes: primario, secundario, contorno, peligro
+   Tamaños: sm, md, lg
+   Estética Morado Ciruela y Lavanda (según referencia visual)
+   ===================================================== */
+
+/* ---------- Base (lo que comparten todos) ---------- */
+.Boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    font-family: var(--fuente-texto);   /* los <button> no heredan la fuente */
+    font-weight: 700;
+    white-space: nowrap;
+
+    border: 1.5px solid transparent;
+    border-radius: var(--radio-pill);
+    cursor: pointer;
+
+    transition:
+        transform var(--transicion),
+        box-shadow var(--transicion),
+        background var(--transicion),
+        border-color var(--transicion),
+        color var(--transicion);
+}
+
+/* Efecto: sube y proyecta sombra del color de cada variante */
+.Boton:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(var(--boton-rgb), 0.35);
+}
+
+/* Al presionar: se hunde */
+.Boton:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: 0 2px 6px rgba(var(--boton-rgb), 0.3);
+    transition-duration: 0.1s;
+}
+
+/* Para quien navega con teclado / Foco con halo suave */
+.Boton:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--color-boton-ring, rgba(224, 168, 238, 0.55));
+}
+
+.Boton:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.Boton__icono {
+    display: inline-flex;
+}
+
+/* ---------- Variantes ---------- */
+
+/* Primario: fondo morado ciruela, texto claro y variaciones según estado */
+.Boton--primario {
+    --boton-rgb: var(--color-boton-rgb);
+    background: var(--color-boton);
+    color: #FFFFFF;
+    border-color: transparent;
+    box-shadow: 0 6px 16px rgba(var(--color-boton-rgb), 0.28);
+}
+.Boton--primario:hover:not(:disabled) {
+    background: var(--color-boton-hover);
+    box-shadow: 0 10px 22px rgba(var(--color-boton-rgb), 0.38);
+}
+.Boton--primario:active:not(:disabled) {
+    background: var(--color-boton-active, #5c2d59);
+    box-shadow: 0 2px 6px rgba(var(--color-boton-rgb), 0.25);
+}
+.Boton--primario:focus-visible {
+    background: var(--color-boton);
+    box-shadow: 0 0 0 4px var(--color-boton-ring, rgba(224, 168, 238, 0.55)), 0 6px 18px rgba(var(--color-boton-rgb), 0.3);
+}
+.Boton--primario:disabled {
+    background: var(--color-boton-disabled, #c4b0c7);
+    color: rgba(255, 255, 255, 0.85);
+    border-color: transparent;
+}
+
+/* BOTÓN SECUNDARIO */
+.Boton--secundario {
+    --boton-rgb: var(--color-boton-rgb);
+
+    background: rgba(238, 207, 242, 0.55);
+    color: #633765;
+    border: 1px solid rgba(114, 61, 111, 0.55);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    box-shadow: 0 4px 14px rgba(114, 61, 111, 0.12);
+}
+
+/* Al pasar el mouse */
+.Boton--secundario:hover:not(:disabled) {
+    background: rgba(228, 186, 235, 0.78);
+    color: #542B55;
+    border-color: #723D6F;
+
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(114, 61, 111, 0.22);
+}
+
+/* Al presionar */
+.Boton--secundario:active:not(:disabled) {
+    background: rgba(214, 169, 224, 0.85);
+    color: #542B55;
+    border-color: #723D6F;
+
+    transform: translateY(1px);
+    box-shadow: 0 2px 6px rgba(114, 61, 111, 0.15);
+}
+.Boton--secundario:focus-visible {
+    background: #FFFAFD;
+    box-shadow: 0 0 0 4px var(--color-boton-ring, rgba(224, 168, 238, 0.55));
+}
+.Boton--secundario:disabled {
+    background: transparent;
+    color: #b8a8bc;
+    border-color: #d4c5d8;
+}
+
+/* Contorno: fondo transparente con borde y texto ciruela, hover lavanda */
+.Boton--contorno {
+    --boton-rgb: var(--color-boton-rgb);
+    background: transparent;
+    color: var(--color-boton);
+    border-color: var(--color-boton);
+}
+.Boton--contorno:hover:not(:disabled) {
+    background: var(--color-boton-lavanda, #f4ebf6);
+    color: var(--color-boton);
+}
+.Boton--contorno:active:not(:disabled) {
+    background: var(--color-boton-lavanda-active, #ebd8f0);
+    color: var(--color-boton-active, #5c2d59);
+    border-color: var(--color-boton-active, #5c2d59);
+}
+
+/* Peligro: vino oscuro */
+.Boton--peligro {
+    --boton-rgb: var(--color-peligro-rgb);
+    background: var(--color-peligro);
+    color: #FFFFFF;
+    border-color: transparent;
+}
+.Boton--peligro:hover:not(:disabled) {
+    background: var(--color-peligro-hover);
+}
+
+/* ---------- Tamaños ---------- */
+.Boton--sm { padding: 8px 16px;  font-size: 12px; }
+.Boton--md { padding: 11px 26px; font-size: 14px; }
+.Boton--lg { padding: 14px 40px; font-size: 16px; letter-spacing: 0.5px; }
+
+/* ---------- Ancho completo ---------- */
+.Boton--completo {
+    width: 100%;
+}

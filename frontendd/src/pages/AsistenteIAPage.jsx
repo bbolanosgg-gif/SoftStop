@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import Boton from '../components/Boton/Boton';
+import BotonVolver from '../components/BotonVolver';
+import '../styles/asistente.css';
 
-// Página del Recomendador de Bienestar con IA (Requisito 05 del PDF)
+// Página del Recomendador de Bienestar con IA (Requisito 05 del curso)
 export default function AsistenteIAPage({ apiUrl, cambiarPagina }) {
   const [estadoAnimo, setEstadoAnimo] = useState('saturado');
   const [tareaPendiente, setTareaPendiente] = useState('');
@@ -33,29 +36,43 @@ export default function AsistenteIAPage({ apiUrl, cambiarPagina }) {
   }
 
   return (
-    <section className="contenedor">
-      <span className="eyebrow">IA Aplicada al Bienestar</span>
-      <h1 className="titulo-seccion">Recomendador Inteligente SoftStop</h1>
-      <p className="subtitulo-seccion">
-        Cuéntanos cómo te sientes en este momento y qué actividad tienes pendiente. Nuestro asistente analizará tu caso y te recomendará la herramienta ideal de nuestro catálogo junto con un micro-paso inmediato.
-      </p>
+    <section className="asistente-pagina">
+      {/* Botón para volver rápidamente a la landing */}
+      <div className="asistente-volver-wrap">
+        <BotonVolver alClick={() => cambiarPagina('inicio')} />
+      </div>
 
-      <div className="grid-2">
-        <div className="tarjeta-glass">
-          <h3>¿Qué te detiene hoy?</h3>
-          <form className="formulario" onSubmit={consultarRecomendador}>
-            <div className="campo-form">
-              <label>1. Elige el estado que más te identifique</label>
-              <select value={estadoAnimo} onChange={(e) => setEstadoAnimo(e.target.value)}>
+      <header className="asistente-encabezado">
+        <span className="asistente-eyebrow">IA Aplicada al Bienestar</span>
+        <h1 className="asistente-titulo">Recomendador Inteligente SoftStop</h1>
+        <p className="asistente-descripcion">
+          Cuéntanos cómo te sientes en este momento y qué actividad tienes pendiente. Nuestro asistente analizará tu caso y te recomendará la herramienta ideal de nuestro catálogo junto con un micro-paso inmediato.
+        </p>
+      </header>
+
+      <div className="asistente-grid">
+        {/* Columna Izquierda: Formulario de entrada */}
+        <div className="asistente-tarjeta">
+          <h2 className="asistente-tarjeta-titulo">¿Qué te detiene hoy?</h2>
+
+          <form className="asistente-form" onSubmit={consultarRecomendador}>
+            <div className="asistente-campo">
+              <label htmlFor="ia-estado-animo">1. Elige el estado que más te identifique</label>
+              <select
+                id="ia-estado-animo"
+                value={estadoAnimo}
+                onChange={(e) => setEstadoAnimo(e.target.value)}
+              >
                 <option value="saturado">Me siento saturado / Con mucho ruido mental</option>
                 <option value="sin_energia">No tengo energía / Me cuesta empezar</option>
                 <option value="organizar">Estoy bien, solo quiero organizar mis pendientes</option>
               </select>
             </div>
 
-            <div className="campo-form">
-              <label>2. ¿Qué tarea o materia tienes en mente? (Opcional)</label>
+            <div className="asistente-campo">
+              <label htmlFor="ia-tarea-pendiente">2. ¿Qué tarea o materia tienes en mente? (Opcional)</label>
               <input
+                id="ia-tarea-pendiente"
                 type="text"
                 value={tareaPendiente}
                 onChange={(e) => setTareaPendiente(e.target.value)}
@@ -63,35 +80,52 @@ export default function AsistenteIAPage({ apiUrl, cambiarPagina }) {
               />
             </div>
 
-            <button type="submit" className="btn-morado">
+            <Boton
+              type="submit"
+              variante="primario"
+              tamano="lg"
+              anchoCompleto
+              disabled={cargandoIA}
+            >
               {cargandoIA ? 'Generando recomendación...' : 'Obtener recomendación →'}
-            </button>
+            </Boton>
           </form>
         </div>
 
-        {/* Resultado generado por el Backend */}
-        <div className="tarjeta-glass">
-          <span className="eyebrow">Respuesta del Asistente</span>
+        {/* Columna Derecha: Resultado generado por la IA */}
+        <div className="asistente-tarjeta">
+          <span className="asistente-eyebrow">Respuesta del Asistente</span>
+
           {!recomendacion ? (
-            <p style={{ color: 'var(--color-suave)', fontSize: '14px' }}>
-              Completa los datos a la izquierda y presiona el botón para recibir tu ruta personalizada de hoy.
-            </p>
+            <div className="asistente-resultado-vacio">
+              <span className="asistente-icono-espera" aria-hidden="true">🌱</span>
+              <p>
+                Completa los datos a la izquierda y presiona el botón para recibir tu ruta personalizada de hoy.
+              </p>
+            </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <h3>Herramienta sugerida: {recomendacion.herramientaSugerida}</h3>
-              <p style={{ fontSize: '14px' }}>{recomendacion.consejoPractica}</p>
-              <div style={{ padding: '14px', background: 'rgba(168, 144, 254, 0.15)', borderRadius: '14px' }}>
-                <strong>🌱 Tu micro-paso de ahora:</strong>
-                <p style={{ fontSize: '13.5px', marginTop: '4px' }}>{recomendacion.microPaso}</p>
+            <div className="asistente-resultado-contenido">
+              <span className="asistente-herramienta-badge">
+                ✨ {recomendacion.herramientaSugerida}
+              </span>
+
+              <p className="asistente-consejo">{recomendacion.consejoPractica}</p>
+
+              <div className="asistente-micropaso">
+                <strong className="asistente-micropaso-titulo">🌱 Tu micro-paso de ahora:</strong>
+                <p className="asistente-micropaso-texto">{recomendacion.microPaso}</p>
               </div>
-              <button
-                type="button"
-                className="btn-acento"
-                style={{ alignSelf: 'flex-start', marginTop: '6px' }}
-                onClick={() => cambiarPagina('inicio')}
-              >
-                Ver en el catálogo
-              </button>
+
+              <div style={{ marginTop: 'auto', paddingTop: '16px' }}>
+                <Boton
+                  type="button"
+                  variante="secundario"
+                  tamano="md"
+                  onClick={() => cambiarPagina('inicio')}
+                >
+                  Ver en el catálogo
+                </Boton>
+              </div>
             </div>
           )}
         </div>

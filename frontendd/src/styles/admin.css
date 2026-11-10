@@ -1,51 +1,47 @@
-/* Panel Admin de SoftStop.
-   Usa las variables de la marca (variables.css): --fuente-marca, --fuente-titulo,
-   --fuente-texto, --color-marca, --color-boton, etc. */
-
-/* Ancho del menú lateral. Va en :root porque lo usan DOS elementos distintos:
-   el menú (.AdminBarra) y la página (.AdminPagina), que no son padre e hijo. */
-:root {
-    --ancho-menu: 210px;
-}
+/* =====================================================
+   PANEL ADMINISTRATIVO DE SOFTSTOP
+   Todos los colores, radios, sombras y medidas
+   vienen de variables.css.
+   Los botones son el componente Boton (components/Boton/Boton.css)
+   ===================================================== */
 
 /* =====================================================
    PÁGINA Y FONDO
    ===================================================== */
+
 .AdminPagina {
-    --admin-texto: var(--color-marca, #4b1d3d);
-    --admin-texto-suave: var(--color-suave, #7a6585);
-    --admin-rosado: var(--color-boton, #b85c72);
-    --admin-vidrio: rgba(255, 250, 246, 0.85); /* fondo de las tarjetas */
-
     min-height: 100vh;
-    margin-left: var(--ancho-menu); /* deja espacio para el menú lateral */
+    margin-left: var(--ancho-menu);
     font-family: var(--fuente-texto);
-    color: var(--admin-texto);
+    color: var(--color-marca);
 
-    /* Varias capas de fondo: la primera (imagen) se pinta encima de la última.
-       Si la imagen no existe todavía, se ve el degradado de respaldo. */
     background:
         url('../assets/img/fondo-admin.png') center / cover no-repeat fixed,
-        linear-gradient(135deg, #f3d9e6, #d9c8f0 50%, #f7e3c4);
+        linear-gradient(135deg, var(--fondo-rosa), var(--fondo-lila) 50%, var(--fondo-durazno));
 }
 
 /* =====================================================
-   MENÚ LATERAL (componente BarraAdmin)
+   MENÚ LATERAL
    ===================================================== */
+
 .AdminBarra {
-    position: fixed; /* se queda quieto aunque se haga scroll */
+    position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
     width: var(--ancho-menu);
     box-sizing: border-box;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 28px;
+
     padding: 32px 18px 0;
-    background: rgba(251, 244, 234, 0.96);
-    border-right: 1px solid rgba(184, 92, 114, 0.15);
+
+    background: rgba(var(--crema-papel-rgb), 0.96);
+    border-right: 1px solid rgba(var(--color-boton-rgb), 0.15);
+
     z-index: 10;
 }
 
@@ -53,20 +49,21 @@
     font-family: var(--fuente-marca);
     font-size: 28px;
     text-align: center;
-    color: var(--admin-texto);
+    color: var(--color-marca);
 }
 
-/* El ícono del logo se pone encima del nombre, como imagen de fondo */
 .AdminMarca::before {
     content: '';
     display: block;
-    width: 72px;
-    height: 72px;
+    width: 65px;
+    height: 65px;
     margin: 0 auto 8px;
+
     background: url('../assets/img/logo.png') center / contain no-repeat;
 }
 
-/* El castillito, pegado al fondo del menú */
+/* Decoración inferior del menú */
+
 .AdminBarra::after {
     content: '';
     position: absolute;
@@ -74,8 +71,10 @@
     right: 0;
     bottom: 0;
     height: 150px;
+
     background: url('../assets/img/castillo.png') center bottom / contain no-repeat;
-    pointer-events: none; /* no estorba al hacer clic */
+
+    pointer-events: none;
 }
 
 .AdminBarraAcciones {
@@ -86,56 +85,9 @@
 }
 
 /* =====================================================
-   BOTONES
-   ===================================================== */
-.AdminBoton {
-    font-family: var(--fuente-texto);
-    font-size: 12px;
-    font-weight: 700;
-    padding: 9px 18px;
-    border-radius: var(--radio-pill, 9999px);
-    border: 1px solid var(--admin-rosado);
-    background: rgba(255, 255, 255, 0.6);
-    color: var(--admin-texto);
-    cursor: pointer;
-    transition: background 0.25s ease;
-}
-
-.AdminBoton:hover {
-    background: rgba(184, 92, 114, 0.15);
-}
-
-.AdminBotonPrimario {
-    background: var(--admin-rosado);
-    color: white;
-}
-
-.AdminBotonPrimario:hover {
-    background: #a64d63;
-}
-
-.AdminBotonGuardar {
-    align-self: flex-start;
-    padding: 12px 28px;
-    border: none;
-    border-radius: var(--radio-pill, 9999px);
-    background: var(--admin-rosado);
-    color: white;
-    font-family: var(--fuente-texto);
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 6px 14px rgba(184, 92, 114, 0.35);
-    transition: opacity 0.25s ease;
-}
-
-.AdminBotonGuardar:hover {
-    opacity: 0.9;
-}
-
-/* =====================================================
    CONTENIDO
    ===================================================== */
+
 .AdminContenedor {
     max-width: 1100px;
     margin: 0 auto;
@@ -146,7 +98,7 @@
     font-size: 11px;
     letter-spacing: 4px;
     text-transform: uppercase;
-    color: var(--admin-texto-suave);
+    color: var(--color-suave);
 }
 
 .AdminTitulo {
@@ -156,11 +108,9 @@
     margin: 6px 0 8px;
 }
 
-/* Frase pequeña debajo del título */
 .AdminDescripcion {
     margin: 0 0 28px;
     font-size: 15px;
-    color: var(--admin-texto);
 }
 
 .AdminSubtitulo {
@@ -170,9 +120,14 @@
     margin: 44px 0 18px;
 }
 
+/* Distribución de contenido */
+
 .AdminGrid2 {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+
+    /* Formulario más estrecho y mensajes más amplios */
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+
     gap: 24px;
     align-items: start;
 }
@@ -184,16 +139,26 @@
 }
 
 /* =====================================================
-   TARJETAS DE VIDRIO
+   EFECTO "VIDRIO" (base compartida por todas las tarjetas)
    ===================================================== */
+
+.AdminTarjeta,
+.AdminResumen,
+.AdminPagina .tarjeta-glass {
+    background: var(--vidrio);
+    backdrop-filter: var(--vidrio-desenfoque);
+    border: var(--vidrio-borde);
+}
+
+/* =====================================================
+   TARJETA GENERAL
+   ===================================================== */
+
 .AdminTarjeta {
-    padding: 28px;
-    background: var(--admin-vidrio);
-    backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    border-radius: 26px;
-    box-shadow: 0 16px 40px rgba(120, 80, 140, 0.15);
-    overflow-x: auto; /* si una tabla no cabe, se desplaza dentro de la tarjeta */
+    padding: 24px;
+    border-radius: var(--radio-grande);
+    box-shadow: var(--sombra-grande);
+    overflow-x: auto;
 }
 
 .AdminTarjetaTitulo {
@@ -203,7 +168,10 @@
     margin: 0 0 20px;
 }
 
-/* --- Tarjetas de resumen (componente TarjetaResumen) --- */
+/* =====================================================
+   TARJETAS DE RESUMEN
+   ===================================================== */
+
 .AdminResumenFila {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -214,42 +182,74 @@
 .AdminResumen {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
+
     padding: 20px 24px;
-    background: var(--admin-vidrio);
-    backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    border-radius: 26px;
-    box-shadow: 0 12px 32px rgba(120, 80, 140, 0.15);
+
+    border-radius: var(--radio-grande);
+    box-shadow: var(--sombra-media);
 }
 
-.AdminResumenIcono {
+/* Círculo con icono para las targetas de herramientas) */
+
+.AdminPagina .tarjeta-icono {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 54px;
-    height: 54px;
+
     border-radius: 50%;
-    background: rgba(184, 92, 114, 0.15);
-    font-size: 24px;
+    background: rgba(var(--color-boton-rgb), 0.15);
+}
+
+.AdminResumenImagen {
+  width: 80px;
+  height: 80px;
+
+  /* Muestra la imagen completa sin deformarla */
+  object-fit: contain;
+
+  /* Evita que Flexbox reduzca su tamaño */
+  flex-shrink: 0;
+}
+
+.AdminResumenContenido {
+  display: flex;
+  flex-direction: column;
+
+  /* Centra los elementos horizontalmente */
+  align-items: center;
+
+  /* Centra los elementos verticalmente */
+  justify-content: center;
+
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+
+  text-align: center;
+}
+
+.AdminResumenEtiqueta {
+    margin: 0;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--color-suave);
 }
 
 .AdminResumenNumero {
     margin: 0;
+
     font-family: var(--fuente-titulo);
     font-size: 34px;
-    line-height: 1;
-}
+    font-weight: 400;
 
-.AdminResumenEtiqueta {
-    margin: 4px 0 0;
-    font-size: 12px;
-    color: var(--admin-texto-suave);
+    line-height: 1.1;
 }
 
 /* =====================================================
    FORMULARIO
    ===================================================== */
+
 .AdminForm {
     display: flex;
     flex-direction: column;
@@ -263,25 +263,29 @@
     margin-bottom: 8px;
 }
 
-/* Input, textarea y select comparten el mismo aspecto (ya con la fuente de la marca) */
 .AdminCampo input,
 .AdminCampo textarea,
 .AdminCampo select {
     width: 100%;
     box-sizing: border-box;
+
     padding: 12px 16px;
-    border: 1px solid rgba(184, 92, 114, 0.2);
-    border-radius: 18px;
+
+    border: 1px solid rgba(var(--color-boton-rgb), 0.2);
+    border-radius: var(--radio-medio);
+
     background: rgba(255, 255, 255, 0.85);
+
     font-family: var(--fuente-texto);
     font-size: 14px;
-    color: var(--admin-texto);
-    transition: box-shadow 0.25s ease;
+    color: var(--color-marca);
+
+    transition: box-shadow var(--transicion);
 }
 
 .AdminCampo input::placeholder,
 .AdminCampo textarea::placeholder {
-    color: var(--admin-texto-suave);
+    color: var(--color-suave);
     opacity: 0.7;
 }
 
@@ -293,7 +297,7 @@
 .AdminCampo textarea:focus,
 .AdminCampo select:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(184, 92, 114, 0.25);
+    box-shadow: 0 0 0 3px rgba(var(--color-boton-rgb), 0.25);
 }
 
 .AdminFilaIcono {
@@ -309,57 +313,121 @@
 .AdminAviso {
     font-size: 13px;
     padding: 10px 14px;
-    border-radius: 14px;
-    background: rgba(184, 92, 114, 0.12);
-    border: 1px solid rgba(184, 92, 114, 0.3);
+
+    border-radius: var(--radio-chico);
+
+    background: rgba(var(--color-boton-rgb), 0.12);
+    border: 1px solid rgba(var(--color-boton-rgb), 0.3);
 }
 
 /* =====================================================
    TABLAS (TablaUsuarios y TablaMensajes)
    ===================================================== */
+
 .AdminTabla {
     width: 100%;
+    min-width: 650px;
+
     border-collapse: collapse;
+    table-layout: auto;
+
     font-size: 13px;
 }
 
+/* Encabezados */
+
 .AdminTabla th {
-    padding: 10px 10px;
+    padding: 14px;
+
     text-align: left;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
-    color: var(--admin-texto-suave);
-    background: rgba(184, 92, 114, 0.1);
-}
 
-.AdminTabla th:first-child {
-    border-radius: 14px 0 0 14px;
-}
+    color: var(--color-suave);
+    background: rgba(var(--color-boton-rgb), 0.1);
 
-.AdminTabla th:last-child {
-    border-radius: 0 14px 14px 0;
-}
-
-.AdminTabla td {
-    padding: 10px;
-    border-bottom: 1px solid rgba(184, 92, 114, 0.15);
-    vertical-align: middle;
-    overflow-wrap: anywhere; /* los correos largos se parten en vez de ensanchar la tabla */
-}
-
-/* La fecha no se parte en dos líneas */
-.AdminTabla td:nth-child(4) {
     white-space: nowrap;
 }
 
-.AdminTabla .AdminBoton {
-    padding: 6px 14px;
-    font-size: 11px;
+.AdminTabla th:first-child {
+    border-radius: var(--radio-chico) 0 0 var(--radio-chico);
 }
+
+.AdminTabla th:last-child {
+    border-radius: 0 var(--radio-chico) var(--radio-chico) 0;
+}
+
+/* Celdas */
+
+.AdminTabla td {
+    padding: 17px 14px;
+
+    border-bottom: 1px solid rgba(var(--color-boton-rgb), 0.13);
+
+    vertical-align: middle;
+    line-height: 1.45;
+}
+
+/* Columna 1: nombre */
+.AdminTabla th:nth-child(1),
+.AdminTabla td:nth-child(1) {
+    min-width: 105px;
+}
+
+/* Columna 2: correo */
+.AdminTabla th:nth-child(2),
+.AdminTabla td:nth-child(2) {
+    min-width: 165px;
+}
+
+.AdminTabla td:nth-child(2) {
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+/* Columna 3: tipo de mensaje */
+.AdminTabla th:nth-child(3),
+.AdminTabla td:nth-child(3) {
+    min-width: 105px;
+}
+
+.AdminTabla td:nth-child(3) {
+    white-space: nowrap;
+}
+
+/* Columna 4: fecha */
+.AdminTabla th:nth-child(4),
+.AdminTabla td:nth-child(4) {
+    min-width: 105px;
+    white-space: nowrap;
+}
+
+.AdminTabla td:nth-child(4) {
+    font-size: 12px;
+}
+
+/* Columna 5: acciones */
+.AdminTabla th:nth-child(5),
+.AdminTabla td:nth-child(5) {
+    min-width: 55px;
+    text-align: center;
+}
+
+/* Efecto hover en filas */
+
+.AdminTabla tbody tr {
+    transition: background 0.2s ease;
+}
+
+.AdminTabla tbody tr:hover {
+    background: rgba(var(--color-boton-rgb), 0.06);
+}
+
+/* Mensajes vacíos y texto de mensajes */
 
 .AdminVacio {
     font-size: 14px;
-    color: var(--admin-texto-suave);
+    color: var(--color-suave);
 }
 
 .AdminMensajeTexto {
@@ -369,103 +437,85 @@
 }
 
 /* =====================================================
-   BADGES (etiquetas pequeñas de tipo y estado)
+   BADGES (etiquetas de tipo y estado)
    ===================================================== */
+
 .AdminBadge {
-    display: inline-block;
-    padding: 3px 12px;
-    border-radius: var(--radio-pill, 9999px);
-    background: rgba(184, 92, 114, 0.18);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px 11px;
+
+    border-radius: var(--radio-pill);
+
+    background: rgba(var(--color-boton-rgb), 0.18);
+
     font-size: 11px;
     font-weight: 700;
+
+    white-space: nowrap;
 }
 
-.AdminBadgeActivo {
-    background: rgba(120, 190, 150, 0.3);
-    color: #2f6b4a;
+/* Verde: activo / disponible */
+.AdminBadgeActivo,
+.AdminPagina .badge-disponible {
+    background: var(--estado-verde-fondo);
+    color: var(--estado-verde-texto);
 }
 
-.AdminBadgeInactivo {
-    background: rgba(160, 130, 200, 0.3);
-    color: #5e4a82;
+/* Lila: inactivo / próximamente */
+.AdminBadgeInactivo,
+.AdminPagina .badge-proximamente {
+    background: var(--estado-lila-fondo);
+    color: var(--estado-lila-texto);
 }
 
 /* =====================================================
-   TARJETAS DE HERRAMIENTAS (HerramientaCard dentro del panel)
-   Se escriben con ".AdminPagina" delante para que SOLO afecten
-   al panel y no cambien cómo se ve la landing.
+   TARJETAS DE HERRAMIENTAS
    ===================================================== */
+
 .AdminPagina .tarjeta-glass {
     display: flex;
     flex-direction: column;
     gap: 6px;
+
     padding: 22px;
-    background: var(--admin-vidrio);
-    backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    border-radius: 24px;
-    box-shadow: 0 12px 32px rgba(120, 80, 140, 0.15);
+
+    border-radius: var(--radio-grande);
+    box-shadow: var(--sombra-media);
 }
 
 .AdminPagina .tarjeta-icono {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     width: 46px;
     height: 46px;
-    border-radius: 50%;
-    background: rgba(184, 92, 114, 0.15);
     font-size: 22px;
 }
 
 .AdminPagina .tarjeta-glass h3 {
     margin: 6px 0 0;
+
     font-family: var(--fuente-titulo);
     font-size: 20px;
     font-weight: 400;
 }
 
-/* Etiqueta "Disponible en catálogo" / "Próximamente" */
+/* Etiqueta de disponibilidad (el color lo da el grupo de badges) */
 .AdminPagina .badge-estado {
     padding: 3px 12px;
-    border-radius: var(--radio-pill, 9999px);
+
+    border-radius: var(--radio-pill);
+
     font-size: 11px;
     font-weight: 700;
 }
 
-.AdminPagina .badge-disponible {
-    background: rgba(120, 190, 150, 0.3);
-    color: #2f6b4a;
-}
-
-.AdminPagina .badge-proximamente {
-    background: rgba(160, 130, 200, 0.3);
-    color: #5e4a82;
-}
-
-/* Botón "Eliminar" de la tarjeta. El !important es necesario porque
-   HerramientaCard le pone un color con style="..." directamente. */
-.AdminPagina .btn-acento {
-    padding: 9px 18px;
-    border: none;
-    border-radius: var(--radio-pill, 9999px);
-    background: #c0707f !important;
-    color: white;
-    font-family: var(--fuente-texto);
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.AdminPagina .btn-acento:hover {
-    opacity: 0.9;
-}
-
 /* =====================================================
-   RESPONSIVE (celular y pantallas angostas)
+   RESPONSIVE: TABLETS
    ===================================================== */
+
 @media (max-width: 800px) {
-    /* El menú lateral pasa a ser una barra superior normal */
+
     .AdminPagina {
         margin-left: 0;
     }
@@ -473,15 +523,14 @@
     .AdminBarra {
         position: static;
         width: auto;
+
         flex-direction: row;
         justify-content: space-between;
+
         padding: 14px 20px;
     }
 
-    .AdminBarra::after {
-        display: none; /* sin castillo en la barra superior */
-    }
-
+    .AdminBarra::after,
     .AdminMarca::before {
         display: none;
     }
@@ -492,6 +541,54 @@
     }
 
     .AdminGrid2 {
+        grid-template-columns: 1fr;
+    }
+
+    .AdminContenedor {
+        padding: 28px 18px 60px;
+    }
+
+    .AdminTarjeta {
+        padding: 20px;
+    }
+}
+
+/* =====================================================
+   RESPONSIVE: CELULARES
+   ===================================================== */
+
+@media (max-width: 520px) {
+
+    .AdminContenedor {
+        padding: 22px 12px 45px;
+    }
+
+    .AdminTarjeta {
+        padding: 16px;
+    }
+
+    .AdminTitulo {
+        font-size: 30px;
+    }
+
+    .AdminSubtitulo {
+        font-size: 22px;
+    }
+
+    .AdminBarra {
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .AdminBarraAcciones {
+        gap: 6px;
+    }
+
+    .AdminResumen {
+        padding: 16px;
+    }
+
+    .AdminGrid3 {
         grid-template-columns: 1fr;
     }
 }

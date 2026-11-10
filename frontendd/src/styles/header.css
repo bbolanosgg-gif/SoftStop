@@ -1,96 +1,351 @@
-/* ===== CONTENEDOR DEL HEADER ===== */
+/* =====================================================
+   HEADER — BARRA DE NAVEGACIÓN DE SOFTSTOP
+   =====================================================
+
+   El Header está organizado en tres bloques:
+
+   1. .header-marca    → Logo y nombre SoftStop.
+   2. .header-nav      → Enlaces de navegación centrales.
+   3. .header-acciones → Botones de sesión o administración.
+
+
+   Comportamiento dinámico del header:
+   - Superpuesto de manera transparente sobre la ilustración.
+   - Sombra sutil en degradado lila que se desvanece hacia abajo.
+   - Se oculta al bajar y reaparece al subir o tras 1 segundo de inactividad.
+   ===================================================== */
+
+
+/* =====================================================
+   1. CONTENEDOR PRINCIPAL DEL HEADER
+   ===================================================== */
+
 .header {
-  position: sticky;                /* se queda pegado arriba mientras haces scroll */
+
+  /* POSITION:
+     fixed mantiene el Header anclado a la parte superior
+     de la ventana del navegador sobre el fondo ilustrado. */
+  position: fixed;
+
+  /* Fijado en la esquina superior izquierda. */
   top: 0;
-  z-index: 100;                    /* siempre por encima del resto del contenido */
-  height: var(--alto-header);      /* altura definida en variables.css */
+  left: 0;
+
+  /* Ocupa todo el ancho disponible de la pantalla. */
+  width: 100%;
+
+  /* z-index alto para garantizar que el Header siempre
+     quede por encima del resto del contenido. */
+  z-index: 100;
+
+  /* Altura del Header (definida en variables.css, 70px). */
+  height: var(--alto-header);
+
+  /* FLEXBOX:
+     Organiza los elementos hijos horizontalmente. */
   display: flex;
-  align-items: center;             /* centra verticalmente logo y nav */
-  justify-content: space-between;  /* logo a la izquierda, nav a la derecha */
-  padding: 0 60px;
-  background: var(--crema-papel);
-  border-bottom: 1px solid rgba(75, 29, 61, 0.1);
+
+  /* Centra verticalmente el logo, enlaces y botones. */
+  align-items: center;
+
+  /* Separa los elementos disponibles: logo a la izquierda, botones a la derecha.
+     La navegación se centra independientemente mediante position: absolute. */
+  justify-content: space-between;
+
+  /* Espaciado interior: 0 arriba y abajo, 55px a izquierda y derecha. */
+  padding: 0 55px;
+
+  /* Sombra o degradado muy sutil en la parte superior:
+     Utiliza tonos lilas y lavanda suaves de la paleta ilustrada de SoftStop,
+     desvaneciéndose suavemente hacia abajo hasta volverse transparente.
+     Sin franjas sólidas, sin bordes y sin efecto vidrio artificial. */
+  background: linear-gradient(
+    180deg,
+    rgba(122, 101, 133, 0.22) 0%,
+    rgba(217, 200, 240, 0.08) 55%,
+    transparent 100%
+  );
+
+  /* Sin líneas divisorias inferiores */
+  border-bottom: none;
+
+  /* Hace que el padding forme parte del ancho total. */
+  box-sizing: border-box;
+
+  /* Transición suave de 300ms al ocultarse o reaparecer */
+  transition: transform 0.3s ease;
+  transform: translateY(0);
 }
 
-/* ===== MARCA: LOGO + NOMBRE ===== */
-.header-marca {
-  display: flex;
-  align-items: center;
-  gap: 40px;                       /* espacio entre el ícono y el texto */
-  background: none;                /* quitamos el estilo por defecto del botón */
-  border: none;
+/* Estado dinámico: al desplazarse hacia abajo, el Header se desliza hacia arriba */
+.header--oculto {
+  transform: translateY(-100%);
+  pointer-events: none; /* Evita clics involuntarios mientras está fuera de la pantalla */
 }
+
+
+/* =====================================================
+   2. MARCA — LOGO Y NOMBRE SOFTSTOP
+   ===================================================== */
+
+.header-marca {
+
+  /* Alinea el logo y el texto horizontalmente. */
+  display: flex;
+
+  /* Centra verticalmente ambos elementos. */
+  align-items: center;
+
+  /* Separación entre el logo y el nombre. */
+  gap: 30px;
+
+  /* Elimina el fondo predeterminado del botón. */
+  background: none;
+
+  /* Elimina el borde predeterminado del botón. */
+  border: none;
+
+  /* Indica que es un elemento interactivo. */
+  cursor: pointer;
+
+  /* Evita que el logo y el nombre se compriman
+     cuando el espacio disponible disminuye. */
+  flex-shrink: 0;
+}
+
+
+/* ===== IMAGEN DEL LOGO ===== */
 
 .header-logo {
+
+  /* Fijamos la altura del logo en 40 píxeles. */
   height: 40px;
-  width: auto;                     /* mantiene la proporción de la imagen */
+
+  /* El ancho se calcula automáticamente
+     para conservar las proporciones originales. */
+  width: auto;
 }
+
+
+/* ===== NOMBRE SOFTSTOP ===== */
 
 .header-nombre {
+
+  /* Utiliza la fuente Mate definida en variables.css. */
   font-family: var(--fuente-marca);
+
+  /* Tamaño del texto del nombre. */
   font-size: 22px;
-  letter-spacing: 0.45em;          /* separación entre letras, como en el diseño */
+
+  /* Color principal de la marca. */
   color: var(--color-marca);
+
+  /* Desplaza visualmente el texto 2px hacia arriba.
+     Es un ajuste óptico para alinearlo mejor
+     con el logo, sin modificar su posición en Flexbox. */
+  transform: translateY(-2px);
 }
 
-/* ===== NAVEGACIÓN ===== */
+
+/* =====================================================
+   3. NAVEGACIÓN CENTRAL
+   ===================================================== */
+
 .header-nav {
+
+  /* Organiza los tres enlaces horizontalmente. */
   display: flex;
+
+  /* Centra los enlaces en el eje vertical. */
   align-items: center;
-  gap: 48px;                       /* separación entre enlaces */
+
+  /* Separa los enlaces entre sí por 48 píxeles. */
+  gap: 48px;
+
+  /* Permite posicionar la navegación de forma
+     independiente respecto al logo y las acciones.
+
+     Su referencia será el Header porque este
+     tiene position: fixed. */
+  position: absolute;
+
+  /* Sitúa el borde izquierdo del menú en el
+     50% del ancho del Header. */
+  left: 50%;
+
+  /* Mueve el menú hacia la izquierda el 50%
+     de su propio ancho.
+
+     Así conseguimos que el CENTRO del menú
+     coincida con el CENTRO de la pantalla. */
+  transform: translateX(-50%);
 }
+
+
+/* ===== ENLACES DE NAVEGACIÓN ===== */
 
 .header-enlace {
+
+  /* Quita el fondo predeterminado de los botones. */
   background: none;
+
+  /* Quita el borde predeterminado. */
   border: none;
+
+  /* Tamaño del texto. */
   font-size: 13px;
+
+  /* Añade separación entre las letras,
+     aportando una apariencia editorial. */
   letter-spacing: 0.1em;
+
+  /* Color principal de SoftStop. */
   color: var(--color-marca);
-  transition: color 0.2s;          /* el cambio de color es suave, no brusco */
+
+  /* Indica que el elemento es clicable. */
+  cursor: pointer;
+
+  /* El cambio de color se anima suavemente
+     durante 0.2 segundos. */
+  transition: color 0.2s;
 }
 
-/* .activo se pega a la clase base: <button class="header-enlace activo"> */
+
+/* ===== ENLACES: HOVER Y ACTIVO ===== */
+
 .header-enlace:hover,
 .header-enlace.activo {
+
+  /* Cambia al color de resalte cuando:
+     - El usuario pasa el cursor (hover).
+     - El enlace tiene la clase activo.
+
+     Nota: la clase activo solo tendrá efecto
+     si React la asigna al enlace. */
   color: var(--color-resalte);
 }
 
-/* Botón con borde, estilo "pill" (Iniciar Sesión / Salir) */
-.header-boton {
-  padding: 8px 20px;
-  background: transparent;
-  border: 1px solid var(--color-suave);
-  border-radius: var(--radio-pill);  /* bordes totalmente redondeados */
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  color: var(--color-marca);
-  transition: background 0.2s;
+
+/* ===== ACCESIBILIDAD: FOCO DEL TECLADO ===== */
+
+.header-enlace:focus-visible,
+.header-marca:focus-visible {
+
+  /* Muestra un contorno cuando el usuario navega
+     utilizando el teclado, por ejemplo con Tab. */
+  outline: 2px solid var(--color-boton);
+
+  /* Separa el contorno del elemento para
+     mejorar su visibilidad. */
+  outline-offset: 5px;
+
+  /* Redondea ligeramente el contorno. */
+  border-radius: 6px;
 }
 
-.header-boton:hover {
-  background: rgba(75, 29, 61, 0.06);
+
+/* =====================================================
+   4. ACCIONES — INICIAR SESIÓN, PANEL ADMIN, SALIR
+   ===================================================== */
+
+.header-acciones {
+
+  /* Organiza horizontalmente los botones de sesión. */
+  display: flex;
+
+  /* Los centra verticalmente. */
+  align-items: center;
+
+  /* Separa los botones cuando hay más de uno.
+     Por ejemplo: Panel Admin y Salir. */
+  gap: 12px;
+
+  /* Empuja este bloque hacia el extremo derecho
+     del espacio disponible en el Header. */
+  margin-left: auto;
+
+  /* Evita que los botones se reduzcan de tamaño. */
+  flex-shrink: 0;
 }
 
-/* ===== TABLET Y MÓVIL ===== */
-@media (max-width: 900px) {
-  .header {
-    padding: 0 24px;
-  }
-  .header-nombre {
-    font-size: 16px;
-    letter-spacing: 0.3em;
-  }
-  .header-marca {
-    gap: 16px;
-  }
+
+/* =====================================================
+   5. DISEÑO RESPONSIVE — TABLET
+   ===================================================== */
+
+@media (max-width: 1100px) {
+
+  /* Cuando la pantalla mide 1100px o menos,
+     reducimos la separación entre los enlaces. */
   .header-nav {
     gap: 20px;
   }
+
+  /* Reducimos el espacio interior del Header. */
+  .header {
+    padding: 0 24px;
+  }
+
+  /* Reducimos la separación entre logo y nombre. */
+  .header-marca {
+    gap: 16px;
+  }
+
+  /* Ajustamos el tamaño de la marca. */
+  .header-nombre {
+    font-size: 18px;
+  }
 }
 
-@media (max-width: 640px) {
-  /* En móvil ocultamos los enlaces de scroll y dejamos solo el botón de sesión */
-  .header-enlace {
+
+/* =====================================================
+   6. DISEÑO RESPONSIVE — PANTALLAS PEQUEÑAS
+   ===================================================== */
+
+@media (max-width: 900px) {
+
+  /* Ocultamos la navegación central para evitar
+     que los enlaces se superpongan con el logo
+     o los botones de sesión.
+
+     Los enlaces siguen existiendo en React,
+     pero no se muestran visualmente. */
+  .header-nav {
     display: none;
+  }
+}
+
+
+/* =====================================================
+   7. DISEÑO RESPONSIVE — MÓVIL
+   ===================================================== */
+
+@media (max-width: 640px) {
+
+  /* Reducimos los márgenes laterales
+     para aprovechar mejor el ancho del celular. */
+  .header {
+    padding: 0 16px;
+  }
+
+  /* Reducimos la altura del logo. */
+  .header-logo {
+    height: 34px;
+  }
+
+  /* Reducimos la fuente del nombre de SoftStop. */
+  .header-nombre {
+    font-size: 16px;
+  }
+
+  /* Reducimos la separación entre logo y nombre. */
+  .header-marca {
+    gap: 10px;
+  }
+
+  /* Reducimos la separación entre botones
+     cuando hay más de una acción disponible. */
+  .header-acciones {
+    gap: 8px;
   }
 }

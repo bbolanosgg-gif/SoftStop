@@ -1,4 +1,4 @@
-
+import Boton from './Boton/Boton';
 import '../styles/hero.css';
 
 // Primera pantalla: título, subtítulo y botones
@@ -26,19 +26,21 @@ export default function Hero({
 
         <div className="hero-botones">
 
-          <button
-            className="btn btn-principal"
-            onClick={() => irASeccion?.('quienes-somos')}
+          <Boton
+            variante="primario"
+            tamano="sm"
+            onClick={() => irASeccion?.('espacios')}
           >
-            Empezar
-          </button>
+            Conocer los espacios
+          </Boton>
 
-          <button
-            className="btn btn-secundario"
+          <Boton
+            variante="secundario"
+            tamano="sm"
             onClick={() => cambiarPagina?.('ia')}
           >
-            Recomendador IA
-          </button>
+            Iniciar mi Check-in
+          </Boton>
 
         </div>
 

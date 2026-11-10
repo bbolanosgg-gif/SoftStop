@@ -1,23 +1,79 @@
-/* Variables globales: se definen una vez y se reutilizan con var(--nombre) */
-:root {
-  /* Tipografías */
-  --fuente-marca: 'Sree Krushnadevaraya', serif;          /* logo SOFTSTOP */
-  --fuente-titulo: 'Libertinus Serif Display', Georgia, serif; /* títulos */
-  --fuente-texto: 'Libre Caslon Text', Georgia, serif;    /* párrafos, nav, botones */
+/* =====================================================
+   VARIABLES GLOBALES DE SOFTSTOP
+   Se definen una vez y se reutilizan con var(--nombre)
+   ===================================================== */
 
-  /* Colores */
+:root {
+  /* ---------- Tipografías ---------- */
+  --fuente-marca: 'Mate', serif;                               /* logo SOFTSTOP */
+  --fuente-titulo: 'Libertinus Serif Display', Georgia, serif; /* títulos */
+  --fuente-texto: 'Libre Caslon Text', Georgia, serif;         /* párrafos, nav, botones */
+
+  /* ---------- Colores principales ---------- */
   --color-tinta: #3f2a4e;
   --color-suave: #7a6585;
-  --color-marca: #4b1d3d;       /* títulos y textos principales */
-  --color-resalte: #c0707f;     /* palabra resaltada ("rápido") */
-  --color-boton: #b85c72;       /* botón principal */
-  --crema-papel: #fbf4ea;       /* fondo del header y tarjetas */
+  --color-marca: #4b1d3d;        /* títulos y textos principales */
+  --color-resalte: #c0707f;      /* palabra resaltada ("rápido") */
+  --crema-papel: #fbf4ea;        /* fondo del header, tarjetas y página */
 
-  /* Formas y sombras */
+  /* ---------- Botones (Estética Morado Ciruela y Lavanda) ---------- */
+  --color-boton: #723d6f;                /* ciruela principal (Default) */
+  --color-boton-hover: #854882;          /* ciruela iluminado (Hover) */
+  --color-boton-active: #5c2d59;         /* ciruela profundo (Presionado) */
+  --color-boton-lavanda: #F9F3FA;        /* Hover secundario */
+  --color-boton-lavanda-active: #F0E2F2; /* Presionado secundario */
+  --color-boton-ring: rgba(224, 168, 238, 0.55); /* halo lila suave (Focus) */
+  --color-boton-disabled: #c4b0c7;       /* ciruela pastel agrisado (Deshabilitado) */
+  --color-peligro: #7a2e45;              /* vino oscuro: botón eliminar */
+  --color-peligro-hover: #63243a;
+
+  /* ---------- Versiones RGB (solo números) ----------
+     Sirven para usar el color con transparencia:
+     rgba(var(--color-boton-rgb), 0.15) */
+  --color-boton-rgb: 114, 61, 111;     /* mismo color de --color-boton */
+  --color-peligro-rgb: 122, 46, 69;    /* mismo color de --color-peligro */
+  --color-marca-rgb: 75, 29, 61;       /* mismo color de --color-marca */
+  --crema-papel-rgb: 251, 244, 234;    /* mismo color de --crema-papel */
+
+  /* ---------- Mensajes (error / éxito) ---------- */
+  --color-error: #c94a4a;
+  --color-error-rgb: 201, 74, 74;
+  --color-exito: #2e7d5b;
+  --color-exito-rgb: 46, 125, 91;
+
+  /* ---------- Fondo degradado ---------- */
+  --fondo-rosa: #f3d9e6;
+  --fondo-lila: #d9c8f0;
+  --fondo-durazno: #f7e3c4;
+
+  /* ---------- Estados (activo / inactivo, disponible / próximamente) ---------- */
+  --estado-verde-fondo: rgba(120, 190, 150, 0.3);
+  --estado-verde-texto: #2f6b4a;
+  --estado-lila-fondo: rgba(160, 130, 200, 0.3);
+  --estado-lila-texto: #5e4a82;
+
+  /* ---------- Efecto "vidrio" (tarjetas) ---------- */
+  --vidrio: rgba(255, 250, 246, 0.85);
+  --vidrio-borde: 1px solid rgba(255, 255, 255, 0.8);
+  --vidrio-desenfoque: blur(14px);
+
+  /* ---------- Formas ---------- */
   --radio-pill: 9999px;
   --radio-tarjeta: 22px;
-  --sombra-suave: 0 8px 24px rgba(120, 80, 140, 0.12);
+  --radio-grande: 26px;   /* tarjetas del panel admin */
+  --radio-medio: 18px;    /* campos de formulario */
+  --radio-chico: 14px;    /* avisos y encabezados de tabla */
 
-  /* Medidas */
-  --alto-header: 84px;
+  /* ---------- Sombras ---------- */
+  --sombra-suave: 0 8px 24px rgba(120, 80, 140, 0.12);
+  --sombra-media: 0 12px 32px rgba(120, 80, 140, 0.15);
+  --sombra-grande: 0 16px 40px rgba(120, 80, 140, 0.15);
+  --sombra-boton: 0 6px 14px rgba(var(--color-boton-rgb), 0.35);
+
+  /* ---------- Medidas ---------- */
+  --alto-header: 70px;
+  --ancho-menu: 210px;    /* menú lateral del admin */
+
+  /* ---------- Transiciones ---------- */
+  --transicion: 0.25s ease;
 }

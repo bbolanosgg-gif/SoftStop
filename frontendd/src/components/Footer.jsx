@@ -31,7 +31,7 @@ export default function Footer({ cambiarPagina, irASeccion }) {
             className="footer-marca-btn"
             onClick={() => cambiarPagina && cambiarPagina('inicio')}
           >
-            <span className="footer-marca-texto">SOFTSTOP</span>
+            <span className="footer-marca-texto">SoftStop</span>
             <img src={logo} alt="Logo de SoftStop" className="footer-logo" />
           </button>
         </div>
@@ -44,7 +44,7 @@ export default function Footer({ cambiarPagina, irASeccion }) {
             <li><button type="button" onClick={() => navegarASeccion('espacios')}>Reset</button></li>
             <li><button type="button" onClick={() => navegarASeccion('espacios')}>Journey</button></li>
             <li><button type="button" onClick={() => navegarASeccion('espacios')}>Journaling</button></li>
-            <li><button type="button" onClick={() => navegarASeccion('espacios')}>Unstuck</button></li>
+            <li><button type="button" onClick={() => navegarASeccion('espacios')}>Check-in</button></li>
           </ul>
         </div>
 

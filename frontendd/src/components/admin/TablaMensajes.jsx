@@ -1,4 +1,5 @@
 import { useState, Fragment } from 'react';
+import Boton from '../Boton/Boton';
 
 // Tabla con los mensajes recibidos desde el formulario de Contacto.
 // Muestra nombre, correo, tipo y fecha. Al presionar la flecha de una fila
@@ -74,13 +75,13 @@ export default function TablaMensajes({ mensajes, onAlternarLeido, onEliminar })
                 </td>
                 <td>{formatearFecha(mensaje.createdAt)}</td>
                 <td>
-                  <button
-                    type="button"
-                    className="AdminBoton"
+                  <Boton
+                    variante="contorno"
+                    tamano="sm"
                     onClick={() => alternarFila(mensaje._id)}
                   >
                     {estaAbierto ? '▲' : '▼'}
-                  </button>
+                  </Boton>
                 </td>
               </tr>
 
@@ -92,21 +93,22 @@ export default function TablaMensajes({ mensajes, onAlternarLeido, onEliminar })
                     <p className="AdminMensajeTexto">{mensaje.mensaje}</p>
 
                     <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
-                      <button
-                        type="button"
-                        className="AdminBoton"
+                      <Boton
+                        variante="contorno"
+                        tamano="sm"
                         onClick={() => onAlternarLeido(mensaje)}
                       >
                         {mensaje.leido ? 'Marcar como no leído' : 'Marcar como leído'}
-                      </button>
+                      </Boton>
 
-                      <button
-                        type="button"
-                        className="AdminBoton"
+                      <Boton
+                        variante="peligro"
+                        tamano="sm"
+                        icono="🗑️"
                         onClick={() => onEliminar(mensaje._id)}
                       >
-                        🗑️ Eliminar
-                      </button>
+                        Eliminar
+                      </Boton>
                     </div>
                   </td>
                 </tr>

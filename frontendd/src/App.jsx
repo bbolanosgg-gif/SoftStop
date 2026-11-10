@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 
-import Header from './components/Header';
-import Footer from './components/Footer';
 import BarraAdmin from './components/BarraAdmin';
 
 import LandingPage from './pages/LandingPage';
+import PlanesPage from './pages/PlanesPage';
 import AsistenteIAPage from './pages/AsistenteIAPage';
 import LoginPage from './pages/LoginPage';
 import RegistroPage from './pages/RegistroPage';
@@ -15,10 +14,30 @@ import AdminPage from './pages/AdminPage';
 const API_URL = 'http://localhost:3000';
 
 export default function App() {
-  const [paginaActual, setPaginaActual] = useState('inicio');
+  // Persistencia básica de sesión usando localStorage
+  const [usuarioAdmin, setUsuarioAdmin] = useState(() => {
+    try {
+      const guardado = localStorage.getItem('softstop_usuario');
+      return guardado ? JSON.parse(guardado) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  // Si el usuario guardado es administrador, lo mantenemos en el panel al refrescar
+  const [paginaActual, setPaginaActual] = useState(() => {
+    try {
+      const guardado = localStorage.getItem('softstop_usuario');
+      if (guardado) {
+        const u = JSON.parse(guardado);
+        if (u?.rol === 'admin') return 'admin';
+      }
+    } catch {}
+    return 'inicio';
+  });
+
   const [herramientas, setHerramientas] = useState([]);
   const [cargando, setCargando] = useState(true);
-  const [usuarioAdmin, setUsuarioAdmin] = useState(null);
 
   // Obtener catálogo de herramientas desde MongoDB
   async function obtenerCatalogo() {
@@ -43,7 +62,7 @@ export default function App() {
     obtenerCatalogo();
   }, []);
 
-  // NUEVO: la landing pública solo debe mostrar las herramientas visibles.
+  // La landing pública solo debe mostrar las herramientas visibles.
   // filter() crea una lista nueva dejando solo las que cumplen la condición.
   // Usamos "!== false" para que las herramientas viejas, sin el campo "activa",
   // también se consideren visibles.
@@ -59,15 +78,25 @@ export default function App() {
     });
   }
 
-  // Login exitoso: el admin va al panel, cualquier otro usuario va al inicio
+  // Login exitoso: guardamos en localStorage y redirigimos según rol
   function manejarLoginExitoso(usuario) {
     setUsuarioAdmin(usuario);
+    try {
+      localStorage.setItem('softstop_usuario', JSON.stringify(usuario));
+    } catch (e) {
+      console.warn('No se pudo guardar la sesión en el navegador');
+    }
     setPaginaActual(usuario.rol === 'admin' ? 'admin' : 'inicio');
   }
 
-  // Cerrar sesión
+  // Cerrar sesión: eliminamos de localStorage y volvemos al inicio
   function manejarCerrarSesion() {
     setUsuarioAdmin(null);
+    try {
+      localStorage.removeItem('softstop_usuario');
+    } catch (e) {
+      console.warn('No se pudo limpiar la sesión');
+    }
     setPaginaActual('inicio');
   }
 
@@ -75,29 +104,12 @@ export default function App() {
   // El "?." evita un error cuando no hay sesión (usuarioAdmin es null)
   const esAdmin = usuarioAdmin?.rol === 'admin';
 
-  // Login, registro, o intento de entrar al panel sin ser admin
-  const esPantallaAcceso =
-    paginaActual === 'login' ||
-    paginaActual === 'registro' ||
-    (paginaActual === 'admin' && !esAdmin);
-
   // Estamos dentro del panel (con permiso)
   const esPanelAdmin = paginaActual === 'admin' && esAdmin;
 
   return (
     <div>
-      {/* Header público: no se dibuja ni en acceso ni en el panel */}
-      {!esPantallaAcceso && !esPanelAdmin && (
-        <Header
-          paginaActual={paginaActual}
-          cambiarPagina={setPaginaActual}
-          irASeccion={irASeccion}
-          usuarioAdmin={usuarioAdmin}
-          cerrarSesion={manejarCerrarSesion}
-        />
-      )}
-
-      {/* Barra propia del panel admin */}
+      {/* Barra propia del panel admin cuando el usuario tiene permisos */}
       {esPanelAdmin && (
         <BarraAdmin
           nombre={usuarioAdmin.nombre}
@@ -106,14 +118,25 @@ export default function App() {
         />
       )}
 
+      {/* El contenido cambia según la página actual en el estado 'paginaActual'.
+          Nota: el Header y el Footer ahora se renderizan directamente dentro de
+          LandingPage para garantizar que aparezcan EXCLUSIVAMENTE en ella. */}
       <main>
         {paginaActual === 'inicio' && (
           <LandingPage
-            herramientas={herramientasVisibles} // NUEVO: antes pasaba "herramientas"
+            herramientas={herramientasVisibles}
             cargando={cargando}
             cambiarPagina={setPaginaActual}
             irASeccion={irASeccion}
             apiUrl={API_URL}
+            usuarioAdmin={usuarioAdmin}
+            cerrarSesion={manejarCerrarSesion}
+          />
+        )}
+
+        {paginaActual === 'planes' && (
+          <PlanesPage
+            cambiarPagina={setPaginaActual}
           />
         )}
 
@@ -155,14 +178,6 @@ export default function App() {
           )
         )}
       </main>
-
-      {/* Footer público: no se dibuja ni en acceso ni en el panel */}
-      {!esPantallaAcceso && !esPanelAdmin && (
-        <Footer
-          cambiarPagina={setPaginaActual}
-          irASeccion={irASeccion}
-        />
-      )}
     </div>
   );
 }
