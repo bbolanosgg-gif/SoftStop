@@ -16,7 +16,16 @@ const manejarErrores = require('./middlewares/manejarErrores.js');
 const app = express();
 
 // Middlewares globales
-app.use(cors()); // Permite que el Frontend en React se comunique con este Backend
+// Permite solicitudes desde nuestra página publicada
+// y desde React cuando desarrollamos localmente.
+app.use(cors({
+  origin: [
+    'https://soft-stop.vercel.app',
+    'http://localhost:5173'
+  ]
+}));
+
+
 app.use(express.json()); // Permite leer datos en formato JSON enviados en req.body
 
 // Endpoint raíz de verificación
