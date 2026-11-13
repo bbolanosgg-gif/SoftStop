@@ -1,223 +1,432 @@
-/* =====================================================
-   ASISTENTE IA (Recomendador Inteligente)
-   Colores, fuentes y variables globales desde variables.css
-   ===================================================== */
+/* =============================================================
+   CHECK-IN DE SOFTSTOP
+   Reutiliza variables.css, Boton.jsx y BotonVolver.jsx.
+   No modifica estilos de las otras páginas.
+   ============================================================= */
 
 .asistente-pagina {
-  position: relative;
-  min-height: calc(100vh - var(--alto-header));
-  padding: 40px 24px 80px;
-  background-color: var(--crema-papel);
+  min-height: 100dvh;
+  padding: 22px clamp(14px, 3.4vw, 54px) 30px;
+  background: var(--crema-papel);
   background-image:
-    radial-gradient(circle at 10% 20%, rgba(243, 217, 230, 0.45) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(217, 200, 240, 0.45) 0%, transparent 40%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    radial-gradient(ellipse at 5% 8%, rgba(243, 217, 230, .74), transparent 42%),
+    radial-gradient(ellipse at 94% 90%, rgba(217, 200, 240, .60), transparent 45%),
+    linear-gradient(130deg, #fffaf5, #fbf4ea 65%, #fff6f8);
+  color: var(--color-marca);
+  font-family: var(--fuente-texto);
 }
 
-.asistente-volver-wrap {
-  width: 100%;
-  max-width: 1080px;
+/* Contenedor general: mantiene el diseño centrado en pantallas grandes. */
+.asistente-contenedor { max-width: 1450px; margin: 0 auto; }
+
+/* Se reutiliza BotonVolver, sin heredar su posición absoluta de login. */
+.asistente-barra-superior {
   display: flex;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 52px;
   margin-bottom: 20px;
 }
+.asistente-pagina .LoginVolver { position: static; top: auto; right: auto; }
+/* Logo real: mantenemos su proporción sin recrearlo con texto. */
 
-/* En el asistente, el botón Volver sigue el flujo normal del contenedor */
-.asistente-pagina .LoginVolver {
-  position: static;
-  align-self: flex-start;
-}
 
-.asistente-encabezado {
-  text-align: center;
-  max-width: 680px;
-  margin-bottom: 36px;
-}
-
-.asistente-eyebrow {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--color-resalte);
-  margin-bottom: 8px;
-}
-
-.asistente-titulo {
-  font-family: var(--fuente-titulo);
-  font-size: clamp(28px, 4vw, 40px);
-  color: var(--color-marca);
-  margin-bottom: 12px;
-  line-height: 1.2;
-}
-
-.asistente-descripcion {
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--color-suave);
-  margin: 0 auto;
-}
-
-/* Grid de 2 columnas */
+/* Dos columnas: panel editorial más estrecho + chat protagonista. */
 .asistente-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  width: 100%;
-  max-width: 1080px;
-  align-items: stretch;
-}
-
-/* Tarjeta con efecto vidrio */
-.asistente-tarjeta {
-  background: var(--vidrio);
-  -webkit-backdrop-filter: var(--vidrio-desenfoque);
-  backdrop-filter: var(--vidrio-desenfoque);
-  border: var(--vidrio-borde);
-  border-radius: var(--radio-tarjeta);
-  box-shadow: var(--sombra-suave);
-  padding: 32px 28px;
-  display: flex;
-  flex-direction: column;
-}
-
-.asistente-tarjeta-titulo {
-  font-family: var(--fuente-titulo);
-  font-size: 22px;
-  color: var(--color-marca);
-  margin-bottom: 20px;
-}
-
-/* Formulario */
-.asistente-form {
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: minmax(280px, .38fr) minmax(0, 1fr);
   gap: 20px;
-  flex: 1;
+  align-items: stretch;
+  min-height: min(780px, calc(100dvh - 128px));
 }
 
-.asistente-campo {
+/* Panel izquierdo: vidrio muy tenue y forma orgánica abstracta. */
+.asistente-lateral {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  text-align: left;
+  min-height: 570px;
+  padding: clamp(26px, 3vw, 44px);
+  border-radius: var(--radio-grande);
+  border: 1px solid rgba(var(--color-boton-rgb), .16);
+  background:
+    radial-gradient(circle at 52% 66%, rgba(255, 224, 233, .65), transparent 51%),
+    linear-gradient(155deg, rgba(255,255,255,.75), rgba(249,233,247,.58));
+  box-shadow: var(--sombra-suave);
 }
-
-.asistente-campo label {
-  font-size: 13.5px;
-  font-weight: 700;
-  color: var(--color-marca);
-}
-
-.asistente-campo input,
-.asistente-campo select {
-  width: 100%;
-  padding: 12px 18px;
-  font-family: var(--fuente-texto);
-  font-size: 14px;
-  color: var(--color-marca);
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(var(--color-boton-rgb), 0.3);
-  border-radius: var(--radio-pill);
-  outline: none;
-  transition: box-shadow var(--transicion), border-color var(--transicion);
-}
-
-.asistente-campo select {
-  cursor: pointer;
-  appearance: auto;
-}
-
-.asistente-campo input:focus,
-.asistente-campo select:focus {
-  border-color: var(--color-boton);
-  box-shadow: 0 0 0 3px rgba(var(--color-boton-rgb), 0.25);
-}
-
-.asistente-campo input::placeholder {
-  color: var(--color-suave);
-  opacity: 0.7;
-}
-
-/* Caja de resultado */
-.asistente-resultado-vacio {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--color-suave);
-  font-size: 14.5px;
-  line-height: 1.6;
-}
-
-.asistente-icono-espera {
-  font-size: 40px;
-  margin-bottom: 14px;
-  opacity: 0.7;
-}
-
-.asistente-resultado-contenido {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  flex: 1;
-}
-
-.asistente-herramienta-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(var(--color-boton-rgb), 0.18);
-  color: var(--color-marca);
-  padding: 6px 14px;
-  border-radius: var(--radio-pill);
-  font-size: 13px;
-  font-weight: 700;
-  width: fit-content;
-}
-
-.asistente-consejo {
-  font-size: 14.5px;
-  line-height: 1.6;
-  color: var(--color-tinta);
-}
-
-.asistente-micropaso {
-  padding: 16px 20px;
-  background: rgba(168, 144, 254, 0.12);
-  border: 1px solid rgba(168, 144, 254, 0.25);
-  border-radius: var(--radio-medio);
-}
-
-.asistente-micropaso-titulo {
-  font-size: 13.5px;
-  font-weight: 700;
-  color: var(--color-marca);
+.asistente-eyebrow {
   display: block;
-  margin-bottom: 6px;
+  color: var(--color-resalte);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
 }
-
-.asistente-micropaso-texto {
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: var(--color-tinta);
+.asistente-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(32px, 3.1vw, 48px);
+  font-weight: 400;
+  line-height: 1.13;
+  margin: 22px 0 16px;
+  max-width: 390px;
+}
+.asistente-descripcion {
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--color-suave);
+  max-width: 340px;
   margin: 0;
 }
 
-/* Responsive */
-@media (max-width: 860px) {
-  .asistente-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
+/* Libro ilustrado: imagen estática, transparente y centrada. */
+.asistente-libro {
+  display: block;
+  width: min(100%, 340px);
+  height: auto;
+  max-height: 330px;
+  object-fit: contain;
+  align-self: center;
+  margin: auto 0;
+}
 
-  .asistente-pagina {
-    padding: 24px 16px 60px;
-  }
+.asistente-lateral-pie {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(var(--color-boton-rgb), .12);
+}
+.asistente-lateral-icono { font-size: 30px; color: var(--color-resalte); }
+.asistente-lateral-pie p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--color-suave); }
+
+/* Contenedor del chat: cabecera / mensajes desplazables / formulario fijo abajo. */
+.asistente-chat {
+  min-width: 0;
+  min-height: 570px;
+  height: min(780px, calc(100dvh - 128px));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(var(--color-boton-rgb), .18);
+  border-radius: var(--radio-grande);
+  background: rgba(255, 252, 249, .76);
+  -webkit-backdrop-filter: var(--vidrio-desenfoque);
+  backdrop-filter: var(--vidrio-desenfoque);
+  box-shadow: var(--sombra-media);
+}
+.asistente-chat-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 20px clamp(18px, 2.4vw, 34px);
+  border-bottom: 1px solid rgba(var(--color-boton-rgb), .12);
+}
+.asistente-chat-identidad { display: flex; align-items: center; gap: 14px; min-width: 0; }
+/* Marco circular creado con CSS alrededor de flor.png. */
+.asistente-avatar {
+  display: grid;
+  place-items: center;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(var(--color-boton-rgb), .19);
+  border-radius: 50%;
+  background: rgba(255, 249, 251, .88);
+  box-shadow: 0 3px 10px rgba(var(--color-boton-rgb), .08);
+  overflow: hidden;
+}
+.asistente-avatar img {
+  display: block;
+  width: 84%;
+  height: 84%;
+  object-fit: contain;
+}
+.asistente-chat-identidad h2 {
+  margin: 0;
+  font: 400 27px/1.2 var(--fuente-titulo);
+}
+.asistente-chat-identidad p { margin: 4px 0 0; color: var(--color-suave); font-size: 12px; }
+
+/* Esta zona crece y hace scroll, mientras el campo de entrada queda abajo. */
+.asistente-chat-mensajes {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 24px clamp(18px, 3vw, 42px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  scrollbar-width: thin;
+  scrollbar-color: #d9b9db transparent;
+}
+
+/* =============================================================
+   BIENVENIDA DEL CHAT (cuando aún no hay mensajes)
+   ============================================================= */
+
+/* Centra el grupo de bienvenida vertical y horizontalmente
+   dentro del área disponible del chat. */
+.asistente-bienvenida {
+  width: 100%;
+  margin: auto;
+  padding: 24px 0;
+  text-align: center;
+}
+
+/* Título principal de la bienvenida.
+   max-width permite que se lea en una sola línea en pantallas amplias,
+   pero que pueda dividirse naturalmente en celulares. */
+.asistente-bienvenida h3 {
+  max-width: 820px;
+  margin: 12px auto 18px; /* 12 arriba y 18 entre título y descripción */
+  font: 400 clamp(25px, 2.4vw, 35px)/1.23 var(--fuente-titulo);
+}
+
+/* Descripción breve, con un ancho limitado para facilitar la lectura. */
+.asistente-bienvenida > p {
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.8;
+  font-size: 14px;
+  color: var(--color-suave);
+}
+
+/* DETALLE DIVISOR: aparece JUSTO DESPUÉS de la descripción.
+   ::after crea un elemento visual sin modificar AsistenteIAPage.jsx.
+
+   Dibujamos tres capas de fondo:
+   1) una línea fina a la izquierda;
+   2) flor.png al centro, más pequeña que la flor del encabezado;
+   3) una línea fina a la derecha.
+
+   La ruta es relativa a src/styles/asistente.css, por eso ../assets/img/.
+   Vite se encarga de procesarla al construir la aplicación. */
+.asistente-bienvenida > p::after {
+  content: '';
+  display: block;
+  width: min(100%, 440px);
+  height: 28px;
+  margin: 28px auto 0; /* separación entre descripción y adorno */
+
+  background-image:
+    linear-gradient(to right, rgba(var(--color-boton-rgb), .24), rgba(var(--color-boton-rgb), .24)),
+    url('../assets/img/flor.png'),
+    linear-gradient(to right, rgba(var(--color-boton-rgb), .24), rgba(var(--color-boton-rgb), .24));
+
+  /* Cada línea termina antes de llegar a la flor central. */
+  background-size:
+    calc(50% - 30px) 1px,
+    28px 28px,
+    calc(50% - 30px) 1px;
+
+  background-position: left center, center center, right center;
+  background-repeat: no-repeat;
+}
+
+/* Agrupa los tres botones en una misma zona flexible.
+   flex-wrap permite que bajen a la línea siguiente en pantallas pequeñas. */
+.asistente-sugerencias {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px; /* espacio horizontal/vertical entre botones */
+  margin-top: 22px; /* distancia desde la flor hasta la etiqueta */
+}
+
+/* Texto explicativo sobre los botones.
+   ::before lo genera desde CSS para no tocar el componente React.
+   flex-basis: 100% hace que ocupe su propia fila. */
+.asistente-sugerencias::before {
+  content: 'O puedes comenzar por aquí:';
+  flex-basis: 100%;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--color-suave);
+}
+
+/* Cada sugerencia conserva el estilo de SoftStop,
+   con bordes redondeados y colores globales de variables.css. */
+.asistente-sugerencia {
+  padding: 12px 18px;
+  border: 1px solid rgba(var(--color-boton-rgb), .22);
+  border-radius: var(--radio-pill);
+  background: rgba(255, 246, 252, .74);
+  color: var(--color-marca);
+  font: 13px/1.5 var(--fuente-texto);
+  cursor: pointer;
+  transition: background var(--transicion);
+}
+
+/* Al pasar el cursor solo cambia el color: sin animaciones. */
+.asistente-sugerencia:hover:not(:disabled) {
+  background: var(--color-boton-lavanda-active);
+}
+
+/* Una sugerencia desactivada no parece clicable. */
+.asistente-sugerencia:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+/* Burbujas de conversación. */
+.asistente-mensaje {
+  max-width: min(86%, 590px);
+  padding: 14px 19px;
+  border-radius: 20px;
+  font-size: 14px;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.asistente-mensaje > p { margin: 0; white-space: pre-wrap; }
+.asistente-mensaje--usuario {
+  align-self: flex-end;
+  background: #efe0ee;
+  border-bottom-right-radius: 6px;
+  color: var(--color-marca);
+}
+.asistente-mensaje--softstop {
+  align-self: flex-start;
+  background: rgba(255,255,255,.94);
+  border: 1px solid rgba(var(--color-boton-rgb), .12);
+  border-bottom-left-radius: 6px;
+  box-shadow: 0 4px 12px rgba(var(--color-boton-rgb), .05);
+}
+.asistente-mensaje-autor {
+  display: block;
+  color: #9968a4;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* Recomendación informativa; no enlazamos a espacios sin implementar. */
+.asistente-recomendacion {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #fbf3fa;
+  border: 1px solid #eed6ee;
+  border-radius: var(--radio-medio);
+  padding: 14px;
+  margin-top: 14px;
+}
+.asistente-recomendacion-icono { flex: 0 0 34px; font-size: 25px; text-align: center; color: #a16bae; }
+.asistente-recomendacion-label { display: block; color: var(--color-suave); font-size: 11px; margin-bottom: 3px; }
+.asistente-recomendacion strong { display: block; font: 400 21px var(--fuente-titulo); }
+.asistente-recomendacion p { font-size: 12px; line-height: 1.6; margin: 6px 0 0; color: var(--color-suave); }
+
+/* Indicador de espera estático, sin animaciones continuas. */
+.asistente-pensando { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; color: var(--color-suave); font-size: 12px; }
+.asistente-pensando .asistente-mensaje-autor { flex-basis: 100%; margin-bottom: 0; }
+.asistente-puntos { display: inline-flex; gap: 4px; }
+.asistente-puntos i { height: 6px; width: 6px; border-radius: 50%; background: #ba8abf; }
+.asistente-puntos i:nth-child(2) { opacity: .7; }
+.asistente-puntos i:nth-child(3) { opacity: .4; }
+
+.asistente-aviso {
+  margin: 0 22px 8px;
+  padding: 11px 15px;
+  border-radius: var(--radio-chico);
+  background: rgba(var(--color-error-rgb), .09);
+  color: var(--color-peligro);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Caja de texto siempre al pie del chat. */
+.asistente-chat-form {
+  padding: 14px clamp(15px, 2.2vw, 28px) 16px;
+  border-top: 1px solid rgba(var(--color-boton-rgb), .1);
+  background: rgba(255, 248, 251, .65);
+}
+.asistente-input-contenedor {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  padding: 10px 10px 10px 20px;
+  border: 1px solid rgba(var(--color-boton-rgb), .27);
+  border-radius: 26px;
+  background: rgba(255,255,255,.93);
+  transition: box-shadow var(--transicion), border-color var(--transicion);
+}
+.asistente-input-contenedor:focus-within {
+  border-color: var(--color-boton);
+  box-shadow: 0 0 0 3px rgba(var(--color-boton-rgb), .12);
+}
+.asistente-input-contenedor textarea {
+  min-width: 0;
+  flex: 1;
+  max-height: 135px;
+  padding: 6px 0;
+  resize: vertical;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--color-marca);
+  font: 14px/1.6 var(--fuente-texto);
+}
+.asistente-input-contenedor textarea::placeholder { color: var(--color-suave); opacity: .8; }
+.asistente-input-contenedor textarea:disabled { opacity: .65; }
+.asistente-input-contenedor .Boton { flex: 0 0 auto; }
+.asistente-form-pie {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 9px;
+  color: var(--color-suave);
+  font-size: 10px;
+}
+.asistente-label-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Adaptación a tablet: el chat sigue teniendo más espacio. */
+@media (max-width: 980px) {
+  .asistente-grid { grid-template-columns: minmax(240px, .4fr) minmax(0, 1fr); gap: 14px; }
+  .asistente-lateral { padding: 26px; }
+  .asistente-titulo { font-size: 33px; }
+  .asistente-chat-cabecera { padding: 17px 20px; }
+}
+
+/* Móvil: chat primero, texto lateral más pequeño. */
+@media (max-width: 720px) {
+  .asistente-pagina { padding: 14px 12px 22px; }
+  .asistente-grid { display: flex; flex-direction: column; }
+  .asistente-lateral { min-height: auto; padding: 22px; }
+  .asistente-titulo { font-size: 29px; margin: 12px 0; }
+  .asistente-descripcion { font-size: 13px; }
+  .asistente-libro, .asistente-lateral-pie { display: none; }
+  .asistente-chat { height: min(680px, 75dvh); min-height: 440px; }
+  .asistente-chat-identidad h2 { font-size: 23px; }
+  .asistente-chat-cabecera .Boton { padding: 8px 12px; font-size: 11px; }
+  .asistente-avatar { flex-basis: 38px; height: 38px; font-size: 22px; }
+  .asistente-mensaje { max-width: 94%; }
+  .asistente-form-pie { font-size: 9px; }
+}
+
+@media (max-width: 420px) {
+  .asistente-chat-cabecera { gap: 8px; padding: 12px; }
+  .asistente-chat-identidad { gap: 8px; }
+  .asistente-chat-identidad p { font-size: 10px; }
+  .asistente-input-contenedor { gap: 6px; padding-left: 12px; }
+  .asistente-input-contenedor .Boton { padding: 10px 12px; font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .asistente-sugerencia { transition: none; }
 }

@@ -38,7 +38,7 @@ async function cambiarEstadoUsuario(req, res, next) {
     const usuarioActualizado = await Usuario.findOneAndUpdate(
       { _id: req.params.id, rol: 'cliente' },
       { estado },
-      { new: true, runValidators: true }
+      { returnDocument: 'after', runValidators: true }
     ).select('-passwordHash');
 
     if (!usuarioActualizado) {

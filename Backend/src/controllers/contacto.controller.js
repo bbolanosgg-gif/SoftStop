@@ -59,7 +59,7 @@ async function marcarMensajeLeido(req, res, next) {
     const mensajeActualizado = await Mensaje.findByIdAndUpdate(
       req.params.id,
       { leido },
-      { new: true, runValidators: true }
+      { returnDocument: 'after', runValidators: true }
     );
 
     if (!mensajeActualizado) {

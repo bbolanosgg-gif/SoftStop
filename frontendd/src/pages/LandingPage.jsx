@@ -4,6 +4,7 @@ import ContactoSection from '../components/ContactoSection';
 import Hero from '../components/Hero';
 import IntroSection from '../components/IntroSection';
 import EspaciosSection from '../components/EspaciosSection';
+import FlorCheckin from '../components/FlorCheckin';
 
 // Página principal (Landing Page) de SoftStop.
 // Ahora renderiza su propio Header y Footer para que aparezcan
@@ -50,6 +51,10 @@ export default function LandingPage({
       <Footer
         cambiarPagina={cambiarPagina}
         irASeccion={irASeccion}
+      />
+      <FlorCheckin
+        apiUrl={apiUrl}
+        cambiarPagina={cambiarPagina}
       />
     </div>
   );

@@ -37,7 +37,7 @@ async function actualizarHerramienta(req, res, next) {
       req.params.id,
       req.body,
       {
-        new: true,          // Devuelve el documento ya actualizado
+        returnDocument: 'after',          // Devuelve el documento ya actualizado
         runValidators: true // Aplica las reglas del esquema (required, enum, maxlength...)
       }
     );
