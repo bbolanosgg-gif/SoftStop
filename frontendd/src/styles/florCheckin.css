@@ -1,56 +1,113 @@
 
 /* =====================================================
-   FLOR FLOTANTE DEL CHECK-IN
+   FLOR FLOTANTE DE SOFTSTOP
 
-   Solo se utiliza en la landing de SoftStop.
-   Reutiliza las variables de variables.css.
+   Efectos:
+   1. Flor que flota suavemente.
+   2. Aura morada con profundidad.
+   3. Halo que respira.
+   4. Iluminación al pasar el mouse.
+   5. Aparición delicada de la nubecita.
    ===================================================== */
 
-/* Contenedor fijo en la esquina inferior derecha. */
+
+/* =====================================================
+   1. CONTENEDOR GENERAL
+   ===================================================== */
+
 .FlorCheckin {
+  /* Mantiene la flor visible durante el scroll. */
   position: fixed;
+
+  /* Esquina inferior derecha. */
   right: 32px;
   bottom: 28px;
+
+  /* Aparece por encima del contenido de la landing. */
   z-index: 90;
 
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+
+  /* Separación entre la nubecita y la flor. */
   gap: 14px;
 }
 
+
 /* =====================================================
-   NUBE DE INVITACIÓN
+   2. NUBECITA DE INVITACIÓN
    ===================================================== */
 
 .FlorCheckin__nube {
   width: min(310px, calc(100vw - 32px));
   padding: 23px 24px;
 
-  /* Fondo de vidrio tenue, acorde con SoftStop. */
+  /* Fondo crema ligeramente transparente. */
   background: rgba(255, 251, 249, 0.96);
+
+  /* Borde delicado acorde con SoftStop. */
   border: 1px solid rgba(var(--color-boton-rgb), 0.17);
+
   border-radius: 24px;
 
+  /* Profundidad y efecto vidrio. */
   box-shadow: var(--sombra-media);
   backdrop-filter: blur(12px);
 
-  /* El texto queda alineado a la izquierda. */
   text-align: left;
+
+  /*
+   * Nueva animación:
+   * aparece con un movimiento pequeño hacia arriba.
+   */
+  animation: aparecerNubecita 0.45s ease-out both;
 }
 
-/* Etiqueta pequeña sobre el título. */
+
+/* =====================================================
+   3. ANIMACIÓN DE APARICIÓN
+   ===================================================== */
+
+@keyframes aparecerNubecita {
+
+  from {
+    /* Comienza invisible y ligeramente abajo. */
+    opacity: 0;
+
+    transform:
+      translateY(12px)
+      scale(0.97);
+  }
+
+  to {
+    /* Termina visible en su posición original. */
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+/* =====================================================
+   4. TEXTOS DE LA NUBECITA
+   ===================================================== */
+
 .FlorCheckin__etiqueta {
   display: block;
+
   margin-bottom: 10px;
 
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.13em;
+
   color: var(--color-resalte);
 }
 
-/* Título principal de la nube. */
+
 .FlorCheckin__nube h3 {
   margin: 0 0 12px;
 
@@ -62,77 +119,341 @@
   color: var(--color-marca);
 }
 
-/* Descripción debajo del título. */
+
 .FlorCheckin__nube p {
   margin: 0 0 18px;
 
   font-family: var(--fuente-texto);
   font-size: 13px;
   line-height: 1.7;
+
   color: var(--color-suave);
 }
 
+
 /* =====================================================
-   BOTÓN CIRCULAR CON LA FLOR REAL
+   5. BOTÓN QUE CONTIENE FLOR.PNG
    ===================================================== */
 
 .FlorCheckin__flor {
+  position: relative;
+
   display: grid;
   place-items: center;
 
-  width: 76px;
-  height: 76px;
-  padding: 9px;
+  width: 100px;
+  height: 100px;
 
-  background: rgba(255, 246, 252, 0.97);
-  border: 1px solid rgba(var(--color-boton-rgb), 0.20);
+  padding: 20px;
+
+  /*
+   * Sin fondo sólido:
+   * solamente veremos la ilustración y su aura.
+   */
+  background: transparent;
+  border: none;
   border-radius: 50%;
+  box-shadow: none;
 
-  box-shadow: var(--sombra-media);
+  color: inherit;
+  text-shadow: none;
+
   cursor: pointer;
 
-  /* Efecto discreto, sin movimiento permanente. */
-  transition:
-    background var(--transicion),
-    box-shadow var(--transicion);
+  /*
+   * Permite mantener el aura detrás de la flor
+   * sin afectar el resto de los elementos.
+   */
+  isolation: isolate;
+
+  /*
+   * Movimiento suave que se repite cada
+   * cuatro segundos.
+   */
+  animation: florFlotando 4s ease-in-out infinite;
+
+  transition: filter 0.3s ease;
 }
 
-/* La imagen conserva su proporción y transparencia. */
-.FlorCheckin__flor img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* Iluminación suave al pasar el mouse. */
-.FlorCheckin__flor:hover {
-  background: #f9e9f5;
-  box-shadow: 0 9px 24px rgba(var(--color-boton-rgb), 0.18);
-}
-
-/* Resalta la flor cuando navegamos con teclado. */
-.FlorCheckin__flor:focus-visible {
-  outline: 3px solid var(--color-boton-ring);
-  outline-offset: 4px;
-}
 
 /* =====================================================
-   RESPONSIVE: PANTALLAS PEQUEÑAS
+   6. ANIMACIÓN DE FLOTACIÓN
+   ===================================================== */
+
+@keyframes florFlotando {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  /*
+   * La flor sube solamente 8 píxeles
+   * para simular que está suspendida.
+   */
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+
+/* =====================================================
+   7. AURA MORADA DETRÁS DE LA FLOR
+   ===================================================== */
+
+.FlorCheckin__flor::before {
+  /*
+   * Generamos una capa decorativa
+   * sin agregar otro elemento al JSX.
+   */
+  content: '';
+
+  position: absolute;
+
+  /* Extendemos el aura alrededor de la flor. */
+  inset: -22px;
+
+  border-radius: 50%;
+
+  /*
+   * Degradado radial:
+   *
+   * Centro: morado profundo de SoftStop.
+   * Medio: lavanda suave.
+   * Exterior: completamente transparente.
+   *
+   * Así obtenemos profundidad sin
+   * regresar al círculo blanco.
+   */
+  background: radial-gradient(
+    circle,
+    rgba(114, 61, 121, 0.58) 0%,
+    rgba(149, 96, 165, 0.42) 30%,
+    rgba(190, 140, 199, 0.23) 55%,
+    rgba(224, 183, 230, 0) 78%
+  );
+
+  /* Difumina los bordes del degradado. */
+  filter: blur(11px);
+
+  /* Coloca la luz detrás de flor.png. */
+  z-index: -1;
+
+  /* No interfiere con los clics. */
+  pointer-events: none;
+
+  /* Hace que el aura se expanda y contraiga. */
+  animation: haloRespirando 4s ease-in-out infinite;
+}
+
+
+/* =====================================================
+   8. ANIMACIÓN DEL HALO
+   ===================================================== */
+
+@keyframes haloRespirando {
+
+  0%,
+  100% {
+    transform: scale(0.96);
+    opacity: 0.70;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+
+/* =====================================================
+   9. IMAGEN ORIGINAL FLOR.PNG
+   ===================================================== */
+
+.FlorCheckin__flor img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  /*
+   * Conserva la proporción de la ilustración.
+   */
+  object-fit: contain;
+
+  position: relative;
+  z-index: 1;
+
+  /*
+   * Pequeña sombra que ayuda a separar
+   * los pétalos del fondo.
+   */
+  filter: drop-shadow(
+    0 5px 7px rgba(89, 42, 105, 0.30)
+  );
+}
+
+
+/* =====================================================
+   10. ILUMINACIÓN AL PASAR EL MOUSE
+   ===================================================== */
+
+.FlorCheckin__flor:hover {
+  background: transparent;
+  box-shadow: none;
+
+  filter:
+    brightness(1.08)
+    drop-shadow(
+      0 0 10px rgba(149, 96, 165, 0.40)
+    );
+}
+
+
+/* =====================================================
+   11. ACCESIBILIDAD CON TECLADO
+   ===================================================== */
+
+.FlorCheckin__flor:focus-visible {
+  /*
+   * Hace visible el botón cuando una persona
+   * navega utilizando la tecla Tab.
+   */
+  outline: 3px solid var(--color-boton-ring);
+  outline-offset: 5px;
+}
+
+
+/* =====================================================
+   12. ADAPTACIÓN PARA CELULARES
    ===================================================== */
 
 @media (max-width: 600px) {
+
   .FlorCheckin {
     right: 16px;
     bottom: 16px;
   }
 
+  /* Flor ligeramente más pequeña. */
   .FlorCheckin__flor {
-    width: 62px;
-    height: 62px;
-    padding: 7px;
+    width: 82px;
+    height: 82px;
+
+    padding: 17px;
   }
 
+  /* Reducimos la extensión del aura. */
+  .FlorCheckin__flor::before {
+    inset: -14px;
+    filter: blur(9px);
+  }
+
+  /* Ajustamos la nubecita. */
   .FlorCheckin__nube {
     padding: 19px;
+  }
+}
+
+
+/* =====================================================
+   13. ACCESIBILIDAD: REDUCIR MOVIMIENTO
+   ===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  /*
+   * Desactivamos las animaciones para personas
+   * que prefieren menos movimiento.
+   */
+  .FlorCheckin__flor,
+  .FlorCheckin__flor::before,
+  .FlorCheckin__nube {
+    animation: none;
+  }
+
+  .FlorCheckin__flor {
+    transition: none;
+  }
+}
+
+/* =====================================================
+   14. COMPLEMENTO: TARJETA DE BIENVENIDA Y BOTONES
+   (Se agregan sin reemplazar las animaciones originales.)
+   ===================================================== */
+
+/* El botón de cerrar se posiciona respecto a la nubecita. */
+.FlorCheckin__nube {
+  position: relative;
+  border-color: rgba(114, 61, 121, 0.16);
+  box-shadow: 0 12px 36px rgba(83, 45, 88, 0.16);
+}
+
+.FlorCheckin__cerrar {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #723d79;
+  font-family: sans-serif;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.FlorCheckin__cerrar:hover {
+  background: rgba(114, 61, 121, 0.09);
+}
+
+.FlorCheckin__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 999px;
+  background: #723d79;
+  color: #fff;
+  font-family: var(--fuente-texto, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 5px 14px rgba(114, 61, 121, 0.16);
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.FlorCheckin__cta:hover {
+  background: #5e2f67;
+  transform: translateY(-2px);
+}
+
+.FlorCheckin__cta:focus-visible,
+.FlorCheckin__cerrar:focus-visible {
+  outline: 3px solid #b78dc0;
+  outline-offset: 3px;
+}
+
+.FlorCheckin__nube .FlorCheckin__estado {
+  margin: 2px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #723d79;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .FlorCheckin__cta {
+    transition: none;
+  }
+
+  .FlorCheckin__cta:hover {
+    transform: none;
   }
 }

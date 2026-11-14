@@ -75,7 +75,7 @@
 @media (max-width: 600px) {
 
   .hero {
-    min-height: calc(100svh - var(--alto-header));
+  
     background-position: center;
   }
 
